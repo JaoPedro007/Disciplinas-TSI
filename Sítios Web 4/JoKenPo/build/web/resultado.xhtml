@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <title>Resultado</title>
+    </h:head>
+    <h:body>
+        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+
+            <h1>Pedra - Papel - Tesoura</h1>
+            <h3>Resultado</h3>
+
+            <h:form>
+                <h:panelGrid columns="2" style="width: 450px;">
+                    <h:outputText value="Sua jogada"/>
+                    <h:outputText value="Jogada do computador"/>
+
+                    <h:graphicImage value="#{jogoBean.imagemJogador}" alt="Imagem do jogador" style="width: 100px;" />
+                    <h:graphicImage value="#{jogoBean.imagemComputador}" alt="Imagem do Computador" style="width: 100px;"/>
+                </h:panelGrid>
+                <h:commandButton value="Jogar novamente" action="#{jogoBean.jogarNovamente()}"/>
+                <br/><br/>
+                <h:outputLabel value="#{jogoBean.resultado}" style="font-weight: bold;"/>
+                
+                
+            </h:form>
+        </div>
+    </h:body>
+</html>

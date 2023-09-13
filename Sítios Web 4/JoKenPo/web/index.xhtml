@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Jogo</title>
+        <style>
+            .classePedra {
+                background-image: url("imgs/pedra_jogador.png");
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+
+            <h3>Escolha seu jogo:</h3>
+            <h:form>
+                <h:panelGrid columns="3" style="width: 450px;">
+                    <h:graphicImage value="/imgs/pedra_jogador.png" style="width: 50px;"/>
+                    <h:graphicImage value="/imgs/papel_jogador.png"  style="width: 50px;"/>
+                    <h:graphicImage value="/imgs/tesoura_jogador.png"  style="width: 50px;"/>
+
+                </h:panelGrid>
+                <h:selectOneRadio value="#{jogoBean.opcaoJogador}" layout="lineDirection" style="width: 450px;" >
+                    <f:selectItem itemValue="Pedra" itemLabel="Pedra"/>
+                    <f:selectItem itemValue="Papel" itemLabel="Papel"/> 
+                    <f:selectItem itemValue="Tesoura" itemLabel="Tesoura"/>
+                </h:selectOneRadio>
+
+                <h:commandButton value="Jogar" action="#{jogoBean.jogar}" style="margin-left: 40%;"/>
+            </h:form>            
+        </div>
+    </h:body>
+</html>

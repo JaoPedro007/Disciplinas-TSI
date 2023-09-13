@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Mercadinho</title>
+        <style>
+            .numero {
+                text-align: right;
+                padding: 2px;
+            }
+            #tabela td {
+                border: 1px solid gray;
+            }
+            #tabela table {
+                border-collapse: collapse;
+                cellspacing: 0;
+            }
+
+        </style>
+    </h:head>
+    <h:body>
+        <h2>Cadastro de Produtos</h2>
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Código: "/>
+                
+                <h:inputText value="#{prodBean.produto.codigo}"  
+                             styleClass="numero" 
+                             rendered="#{not prodBean.editando}"/>
+                
+                <h:outputText value="#{prodBean.produto.codigo}"  
+                             rendered="#{prodBean.editando}"/>
+                
+                <h:outputLabel value="Descrição: "/>
+                <h:inputText value="#{prodBean.produto.descricao}"
+                             required="true"
+                             requiredMessage="Descrição não pode ser vazia."/>
+
+                <h:outputLabel value="Estoque: "/>
+                <h:inputText value="#{prodBean.produto.estoque}"
+                             styleClass="numero">
+                    <f:validateDoubleRange minimum="0"/>
+                </h:inputText>
+
+                <h:outputLabel value="Valor: "/>
+                <h:inputText value="#{prodBean.produto.valor}"
+                             styleClass="numero"/>
+
+                <h:outputLabel value="Data de validade: "/>
+                <h:inputText value="#{prodBean.produto.validade}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </h:inputText>
+            </h:panelGrid>
+            <h:commandButton value="Confirmar" action="#{prodBean.confirmar}"/>
+            
+            <h:commandButton value="Cancelar" rendered="#{prodBean.editando}"
+                             action="#{prodBean.cancelar}" immediate="true"/>
+        </h:form>
+        <h:messages errorStyle="color: red; font-weight: bold;"/>
+        <h:dataTable cellpadding="0" cellspacing="0"
+                     id="tabela" value="#{prodBean.lista}" var="p">
+            <h:column> 
+                <f:facet name="header">
+                    <h:outputText value="Código"/>
+                </f:facet>
+                <h:outputText value="#{p.codigo}"/>
+            </h:column>
+            <h:column> 
+                <f:facet name="header">
+                    <h:outputText value="Descrição"/>
+                </f:facet>
+                <h:outputText value="#{p.descricao}"/>
+            </h:column>
+            <h:column> 
+                <f:facet name="header">
+                    <h:outputText value="Estoque"/>
+                </f:facet>
+                <h:outputText value="#{p.estoque}"/>
+            </h:column>
+            <h:column> 
+                <f:facet name="header">
+                    <h:outputText value="Valor"/>
+                </f:facet>                
+                <h:outputText value="#{p.valor}"/>
+            </h:column>
+            <h:column> 
+                <f:facet name="header">
+                    <h:outputText value="Validade"/>
+                </f:facet>
+                <h:outputText value="#{p.validade}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </h:outputText>
+            </h:column>
+            <h:column> 
+                <f:facet name="header">
+                    <h:outputText value="Ações"/>
+                </f:facet>
+                <h:form rendered="#{not prodBean.editando}">
+                    <h:commandButton value="Editar"
+                                     action="#{prodBean.editar(p)}"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+    </h:body>
+</html>
