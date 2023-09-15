@@ -1,30 +1,77 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <title>Resultado</title>
+        <link rel="stylesheet" href="styles.css"/>
     </h:head>
     <h:body>
-        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+        <div class="jogada" align="center">
 
             <h1>Pedra - Papel - Tesoura</h1>
             <h3>Resultado</h3>
 
             <h:form>
-                <h:panelGrid columns="2" style="width: 450px;">
-                    <h:outputText value="Sua jogada"/>
-                    <h:outputText value="Jogada do computador"/>
+                <div align="center">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Sua jogada"/>
+                        <h:outputText value="Jogada do computador"/>
 
-                    <h:graphicImage value="#{jogoBean.imagemJogador}" alt="Imagem do jogador" style="width: 100px;" />
-                    <h:graphicImage value="#{jogoBean.imagemComputador}" alt="Imagem do Computador" style="width: 100px;"/>
-                </h:panelGrid>
-                <h:commandButton value="Jogar novamente" action="#{jogoBean.jogarNovamente()}"/>
-                <br/><br/>
-                <h:outputLabel value="#{jogoBean.resultado}" style="font-weight: bold;"/>
-                
-                
+                        <h:graphicImage value="#{jogoBean.imagemJogador}" alt="Imagem do jogador" style="width: 150px;" />
+                        <h:graphicImage value="#{jogoBean.imagemComputador}" alt="Imagem do Computador" style="width: 150px;"/>
+                    </h:panelGrid>
+                    <br/><br/>
+                    <h:outputLabel value="#{jogoBean.resultado}" style="font-weight: bold;"/>
+                </div>
+
+                <div class="estatistica" style="margin-top: 40px;">
+                    <h3>Estatísticas: </h3>
+
+                    <h:outputText value="Jogos: " style="font-weight: bold"/>
+                    <h:outputLabel value="#{jogoBean.quantidadeJogos}" style="font-weight: bold;color: purple"/>
+
+                    <h:outputText value="Suas vitórias: " style="font-weight: bold; margin-left: 15px;"/>
+                    <h:outputLabel value="#{jogoBean.quantidadeVitoriasJogador}" style="font-weight: bold; color: green"/>
+
+                    <h:outputText value="Vitórias do computador: " style="font-weight: bold; margin-left: 15px;"/>
+                    <h:outputLabel value="#{jogoBean.quantidadeVitoriasComputador}" style="font-weight: bold; color: red"/>                
+
+                    <h:outputText value="Empates: " style="font-weight: bold; margin-left: 15px;"/>
+                    <h:outputLabel value="#{jogoBean.quantidadeEmpate}" style="font-weight: bold; color: #ffcc33"/>
+                    <br/>
+                    <h:commandButton value="Jogar novamente" action="#{jogoBean.jogarNovamente()}" style="margin-top: 40px;"/>
+                </div>
+
+
+
+                <div class="estatisticaJogadores" style="margin-top: 70px;">
+                    <h3>Estatísticas dos Jogadores</h3>
+                    <h:dataTable value="#{jogoBean}" var="jogador">
+                        <h:column>
+                            <f:facet name="header">Nome</f:facet>
+                            <h:outputText value="#{jogoBean.nomeJogador}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Vitórias</f:facet>
+                            <h:outputText value="" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Empates</f:facet>
+                            <h:outputText value="" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Derrotas</f:facet>
+                            <h:outputText value="" />
+                        </h:column>
+                    </h:dataTable>
+
+
+
+                </div>
+
             </h:form>
         </div>
     </h:body>
