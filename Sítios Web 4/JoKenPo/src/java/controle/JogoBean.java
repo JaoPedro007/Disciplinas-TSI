@@ -39,7 +39,6 @@ public class JogoBean implements Serializable {
 
     public String jogar() {
         escolhaComputador = obterEscolhaComputador();
-        resultado = determinarResultado(escolhaJogador, escolhaComputador);
         atualizarEstatisticas();
         resetarJogo();
         escolherImagemJogador();
@@ -107,7 +106,15 @@ public class JogoBean implements Serializable {
 
     private void atualizarEstatisticas() {
         quantidadeJogos++;
-        jogadorDao.adicionarJogador(nomeJogador); // Usar o nome do jogador aqui
+        jogadorDao.adicionarJogador(nomeJogador);
+        String resultado = determinarResultado(escolhaJogador, escolhaComputador);
+        if (resultado.equals("Você venceu!")) {
+            jogadorDao.adicionarVitoria(nomeJogador);
+        } else if (resultado.equals("Você perdeu!")) {
+            jogadorDao.adicionarDerrota(nomeJogador);
+        } else if (resultado.equals("Empate!")) {
+            jogadorDao.adicionarEmpate(nomeJogador);
+        }
     }
 
     public void resetarJogo() {
@@ -191,4 +198,6 @@ public class JogoBean implements Serializable {
     public void setEscolhaComputador(String escolhaComputador) {
         this.escolhaComputador = escolhaComputador;
     }
+
+
 }

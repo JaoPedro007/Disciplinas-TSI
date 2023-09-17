@@ -1,0 +1,46 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package controle;
+
+/**
+ *
+ * @author João Pedro
+ */
+public class EstatisticasJogador {
+
+    private int vitorias;
+    private int empates;
+    private int derrotas;
+
+    public EstatisticasJogador() {
+        vitorias = 0;
+        empates = 0;
+        derrotas = 0;
+    }
+
+    public int getVitorias() {
+        return vitorias;
+    }
+
+    public void incrementarVitorias() {
+        vitorias++;
+    }
+
+    public int getEmpates() {
+        return empates;
+    }
+
+    public void incrementarEmpates() {
+        empates++;
+    }
+
+    public int getDerrotas() {
+        return derrotas;
+    }
+
+    public void incrementarDerrotas() {
+        derrotas++;
+    }
+}

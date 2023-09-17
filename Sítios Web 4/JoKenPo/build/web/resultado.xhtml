@@ -56,15 +56,15 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Vitórias</f:facet>
-                            <h:outputText value="" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Empates</f:facet>
-                            <h:outputText value="" />
+                            <h:outputText value="#{jogadorDao.getVitorias(jogador)}" />
                         </h:column>
                         <h:column>
                             <f:facet name="header">Derrotas</f:facet>
-                            <h:outputText value="" />
+                            <h:outputText value="#{jogadorDao.getDerrotas(jogador)}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Empates</f:facet>
+                            <h:outputText value="#{jogadorDao.getEmpates(jogador)}" />
                         </h:column>
                     </h:dataTable>
                 </div>
