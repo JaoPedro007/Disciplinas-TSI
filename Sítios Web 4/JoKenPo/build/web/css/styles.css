@@ -1,3 +1,66 @@
-body {
-    color: black;
+.jogada-label {
+    margin-left: 30px;
 }
+
+.jogada-imagem {
+    width: 150px;
+}
+
+.jogada-simbolo {
+    font-size: 50px;
+    padding-left: 25px;
+    padding-right: 20px;
+}
+
+.resultado-label {
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.estatistica-label {
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.estatistica-valor {
+    font-weight: bold;
+}
+
+.estatistica-valor-jogos {
+    color: purple;
+}
+
+.estatistica-valor-vitorias {
+    color: green;
+}
+
+.estatistica-valor-computador {
+    color: red;
+}
+
+.estatistica-valor-empates {
+    color: yellow;
+}
+
+.estatistica-button {
+    margin-top: 40px;
+}
+
+
+.imagem-jogo{
+    width: 70px;
+    padding-left: 20px;
+}
+.botao-jogar{
+    margin-top: 20px;
+}
+
+.escolhas-jogo input[type="radio"] {
+    margin-left: 30px; 
+}
+.escolhas-jogo label[type="radio"] {
+    margin-left: 30px; 
+}
+
+
+

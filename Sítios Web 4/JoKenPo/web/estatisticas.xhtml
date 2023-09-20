@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Estatisticas Gerais</title>
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="bootstrap/styles.css"/>
+
+    </h:head>
+    <h:body>
+        <div class="estatisticas-jogadores" align="center">
+            <h3>Estatísticas dos Jogadores</h3>
+
+            <h:form>
+                <h:dataTable value="#{jogadorDao.jogadores}" var="jogador" styleClass="table">
+                    <h:column>
+                        <f:facet name="header">Nome</f:facet>
+                        <h:outputText value="#{jogador}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Vitórias</f:facet>
+                        <h:outputText value="#{jogadorDao.getVitorias(jogador)}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Derrotas</f:facet>
+                        <h:outputText value="#{jogadorDao.getDerrotas(jogador)}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Empates</f:facet>
+                        <h:outputText value="#{jogadorDao.getEmpates(jogador)}" />
+                    </h:column>
+                </h:dataTable>
+                <h:commandButton value="Zerar minhas estatísticas" action="#{jogoBean.zerarEstatisticas}" styleClass="btn-danger"/>
+                <h:commandButton value="Voltar" action="#{jogoBean.voltarResultado()}" styleClass="btn-dark" style="margin-left: 10px"/>
+            </h:form>
+        </div>
+    </h:body>
+</html>

@@ -5,27 +5,32 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Jogo</title>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="bootstrap/styles.css"/>
 
     </h:head>
     <h:body>
-        <div class="jogo" align="center">
+        <div class="jogo container" align="center">
 
             <h3>Escolha seu jogo:</h3>
             <h:form>
-                <h:panelGrid columns="3" style="width: 400px;">
-                    <h:graphicImage value="/imgs/pedra_jogador.png" style="width: 50px;"/>
-                    <h:graphicImage value="/imgs/papel_jogador.png"  style="width: 50px;"/>
-                    <h:graphicImage value="/imgs/tesoura_jogador.png"  style="width: 50px;"/>
+                <h:panelGrid columns="3" styleClass="imagens_jogo">
+                    <h:graphicImage value="/imgs/pedra_jogador.png" styleClass="imagem-jogo"/>
+                    <h:graphicImage value="/imgs/papel_jogador.png" styleClass="imagem-jogo"/>
+                    <h:graphicImage value="/imgs/tesoura_jogador.png" styleClass="imagem-jogo"/>
                 </h:panelGrid>
-                
-                <h:selectOneRadio value="#{jogoBean.opcaoJogador}" layout="lineDirection" style="width: 400px;" >
+
+                <h:selectOneRadio value="#{jogoBean.escolhaJogador}" layout="lineDirection" styleClass="escolhas-jogo">
                     <f:selectItem itemValue="Pedra" itemLabel="Pedra"/>
                     <f:selectItem itemValue="Papel" itemLabel="Papel"/> 
                     <f:selectItem itemValue="Tesoura" itemLabel="Tesoura"/>
                 </h:selectOneRadio>
 
-                <h:commandButton value="Jogar" action="#{jogoBean.jogar}" style="margin-top: 2%"/>
+                <h:commandButton value="Jogar" action="#{jogoBean.jogar}" styleClass="btn btn-primary botao-jogar"/>
             </h:form>            
         </div>
+
+        <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     </h:body>
 </html>
+
