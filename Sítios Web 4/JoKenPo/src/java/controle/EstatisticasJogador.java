@@ -43,6 +43,7 @@ public class EstatisticasJogador {
     public void incrementarDerrotas() {
         derrotas++;
     }
+<<<<<<< HEAD
    
     public void zerarEstatisticas(){
         derrotas=0;
@@ -50,4 +51,6 @@ public class EstatisticasJogador {
         empates=0;
     }
     
+=======
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
 }

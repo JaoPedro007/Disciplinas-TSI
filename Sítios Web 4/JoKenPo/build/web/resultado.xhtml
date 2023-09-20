@@ -6,8 +6,11 @@
 
     <h:head>
         <title>Resultado</title>
+<<<<<<< HEAD
         <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="bootstrap/styles.css"/>
+=======
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
     </h:head>
     <h:body>
         <div class="container jogada text-center">
@@ -15,6 +18,7 @@
             <h3>Resultado</h3>
 
             <h:form>
+<<<<<<< HEAD
                 <div align="center">
                     <h:panelGrid columns="3">
                         <h:outputText value="Sua jogada" styleClass="jogada-label"/>
@@ -30,12 +34,28 @@
                     <h:outputLabel value="#{jogoBean.resultado}" styleClass="resultado-label" />
                 </div>
                 <div class="estatisticas">
+=======
+                <div class="resultado" align="center">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Sua jogada"/>
+                        <h:outputText value="Jogada do computador"/>
+
+                        <h:graphicImage value="imgs/#{jogoBean.imagemJogador}.png" alt="Imagem do jogador" style="width: 150px;"/>
+                        <h:graphicImage value="imgs/#{jogoBean.imagemComputador}.png" alt="Imagem do Computador" style="width: 150px;"/>
+
+                    </h:panelGrid>
+                </div>
+                <br/><br/>
+                <h:outputLabel value="#{jogoBean.resultado}" style="font-weight: bold; font-size: 40px" />
+
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
 
                     <h3>Estatísticas</h3>
 
                     <h:outputText value="Jogos: " styleClass="estatistica-label"/>
                     <h:outputLabel value="#{jogoBean.quantidadeJogos}" styleClass="estatistica-valor estatistica-valor-jogos"/>
 
+<<<<<<< HEAD
                     <h:outputText value="Suas vitórias: " styleClass="estatistica-label"/>
                     <h:outputLabel value="#{jogoBean.quantidadeVitoriasJogador}" styleClass="estatistica-valor estatistica-valor-vitorias"/>
 
@@ -55,6 +75,44 @@
                     <h:commandButton value="Ver estatísticas gerais" action="#{jogoBean.verEstatisticaGeral()}" styleClass="btn estatistica-button"/>
                 </div>
               
+=======
+                    <h:outputText value="Suas vitórias: " style="font-weight: bold; margin-left: 15px;"/>
+                    <h:outputLabel value="#{jogoBean.quantidadeVitoriasJogador}" style="font-weight: bold; color: green"/>
+
+                    <h:outputText value="Vitórias do computador: " style="font-weight: bold; margin-left: 15px;"/>
+                    <h:outputLabel value="#{jogoBean.quantidadeVitoriasComputador}" style="font-weight: bold; color: red"/>                
+
+                    <h:outputText value="Empates: " style="font-weight: bold; margin-left: 15px;"/>
+                    <h:outputLabel value="#{jogoBean.quantidadeEmpates}" style="font-weight: bold; color: yellow"/>
+                    <br/>
+                    <h:commandButton value="Jogar novamente" action="#{jogoBean.jogarNovamente()}" style="margin-top: 40px;"/>
+                </div>
+
+
+                <div class="estatisticaJogadores" style="margin-top: 70px;">
+                    <h3>Estatísticas dos Jogadores</h3>
+                    <h:dataTable value="#{jogadorDao.jogadores}" var="jogador">
+                        <h:column>
+                            <f:facet name="header">Nome</f:facet>
+                            <h:outputText value="#{jogador}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Vitórias</f:facet>
+                            <h:outputText value="#{jogadorDao.getVitorias(jogador)}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Derrotas</f:facet>
+                            <h:outputText value="#{jogadorDao.getDerrotas(jogador)}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Empates</f:facet>
+                            <h:outputText value="#{jogadorDao.getEmpates(jogador)}" />
+                        </h:column>
+                    </h:dataTable>
+                </div>
+
+
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
             </h:form>
         </div>
     </h:body>

@@ -34,12 +34,20 @@ public class JogoBean implements Serializable {
 
     @PostConstruct
     public void init() {
+<<<<<<< HEAD
         
+=======
+        resetarJogo();
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
     }
 
     public String jogar() {
         escolhaComputador = obterEscolhaComputador();
         atualizarEstatisticas();
+<<<<<<< HEAD
+=======
+        resetarJogo();
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
         escolherImagemJogador();
         escolherImagemComputador();
 
@@ -58,6 +66,10 @@ public class JogoBean implements Serializable {
     }
 
     public void escolherImagemJogador() {
+<<<<<<< HEAD
+=======
+        System.out.println("Escolha do jogador: " + escolhaJogador);
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
         if ("Pedra".equalsIgnoreCase(escolhaJogador)) {
             imagemJogador = "pedra_jogador";
         } else if ("Papel".equalsIgnoreCase(escolhaJogador)) {
@@ -105,7 +117,11 @@ public class JogoBean implements Serializable {
     private void atualizarEstatisticas() {
         quantidadeJogos++;
         jogadorDao.adicionarJogador(nomeJogador);
+<<<<<<< HEAD
         resultado = determinarResultado(escolhaJogador, escolhaComputador);
+=======
+        String resultado = determinarResultado(escolhaJogador, escolhaComputador);
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
         if (resultado.equals("Você venceu!")) {
             jogadorDao.adicionarVitoria(nomeJogador);
         } else if (resultado.equals("Você perdeu!")) {
@@ -114,6 +130,7 @@ public class JogoBean implements Serializable {
             jogadorDao.adicionarEmpate(nomeJogador);
         }
     }
+<<<<<<< HEAD
     public void zerarEstatisticas(){
         jogadorDao.zerarEstatisticas(nomeJogador);
         quantidadeEmpates=0;
@@ -128,6 +145,11 @@ public class JogoBean implements Serializable {
     
     public String voltarResultado(){
         return "resultado.xhtml";
+=======
+
+    public void resetarJogo() {
+
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
     }
 
     public void redirect(String page) {
@@ -207,5 +229,9 @@ public class JogoBean implements Serializable {
     public void setEscolhaComputador(String escolhaComputador) {
         this.escolhaComputador = escolhaComputador;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
 
 }
