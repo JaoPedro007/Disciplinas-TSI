@@ -45,6 +45,13 @@ public class JogadorDAO implements Serializable {
         }
     }
 
+    public void zerarEstatisticas(String nome) {
+        EstatisticasJogador estatisticasJogador = estatisticas.get(nome);
+        if (estatisticasJogador != null) {
+            estatisticasJogador.zerarEstatisticas();
+        }
+    }
+
     public int getVitorias(String nome) {
         EstatisticasJogador estatisticasJogador = estatisticas.get(nome);
         return estatisticasJogador != null ? estatisticasJogador.getVitorias() : 0;

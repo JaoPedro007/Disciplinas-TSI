@@ -1,0 +1,102 @@
+body {
+    background-color: #E0FFFF;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.jogada-label {
+    margin-left: 30px;
+}
+
+.jogada-imagem {
+    width: 150px;
+}
+
+.jogada-simbolo {
+    font-size: 50px;
+    padding-left: 25px;
+    padding-right: 20px;
+}
+
+.resultado-label {
+    font-weight: bold;
+    font-size: 40px;
+}
+.estatisticas{
+    margin-top: 5%;
+}
+.estatistica-label {
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.estatistica-valor {
+    font-weight: bold;
+}
+
+.estatistica-valor-jogos {
+    color: purple;
+}
+
+.estatistica-valor-vitorias {
+    color: green;
+}
+
+.estatistica-valor-computador {
+    color: red;
+}
+
+.estatistica-valor-empates {
+    color: yellow;
+}
+
+.btn-jogar-novamente{
+    margin-top: 25px;
+    margin-bottom: 5%;
+
+}
+.btn-jogar-novamente input[type="submit"]{
+    background-color: green;
+}
+
+.btn-ver-estatisticas input[type="submit"]{
+    background-color: #0dcaf0;
+}
+
+
+.imagem-jogo{
+    margin-top: 40px;
+    width: 90px;
+}
+.botao-jogar{
+    margin-top: 40px;
+}
+
+.escolhas-jogo input[type="radio"] {
+    display: none;
+}
+
+.escolhas-jogo label {
+    margin: 20px 10px;
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #007bff;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.escolhas-jogo label:hover {
+    background-color: green;
+}
+
+.escolhas-jogo input[type="radio"]:checked + label {
+    background-color: green;
+}
+.voltar{
+    margin-left: 10px;
+}
+.estatisticas-jogadores{
+;
+}

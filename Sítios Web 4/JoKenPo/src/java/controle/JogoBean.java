@@ -34,13 +34,12 @@ public class JogoBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        resetarJogo();
+        
     }
 
     public String jogar() {
         escolhaComputador = obterEscolhaComputador();
         atualizarEstatisticas();
-        resetarJogo();
         escolherImagemJogador();
         escolherImagemComputador();
 
@@ -59,7 +58,6 @@ public class JogoBean implements Serializable {
     }
 
     public void escolherImagemJogador() {
-        System.out.println("Escolha do jogador: " + escolhaJogador);
         if ("Pedra".equalsIgnoreCase(escolhaJogador)) {
             imagemJogador = "pedra_jogador";
         } else if ("Papel".equalsIgnoreCase(escolhaJogador)) {
@@ -107,7 +105,7 @@ public class JogoBean implements Serializable {
     private void atualizarEstatisticas() {
         quantidadeJogos++;
         jogadorDao.adicionarJogador(nomeJogador);
-        String resultado = determinarResultado(escolhaJogador, escolhaComputador);
+        resultado = determinarResultado(escolhaJogador, escolhaComputador);
         if (resultado.equals("Você venceu!")) {
             jogadorDao.adicionarVitoria(nomeJogador);
         } else if (resultado.equals("Você perdeu!")) {
@@ -116,9 +114,20 @@ public class JogoBean implements Serializable {
             jogadorDao.adicionarEmpate(nomeJogador);
         }
     }
+    public void zerarEstatisticas(){
+        jogadorDao.zerarEstatisticas(nomeJogador);
+        quantidadeEmpates=0;
+        quantidadeJogos=0;
+        quantidadeVitoriasComputador=0;
+        quantidadeVitoriasJogador=0;
+    }
 
-    public void resetarJogo() {
-
+    public String verEstatisticaGeral(){
+        return "estatisticas.xhtml";
+    }
+    
+    public String voltarResultado(){
+        return "resultado.xhtml";
     }
 
     public void redirect(String page) {
@@ -198,6 +207,5 @@ public class JogoBean implements Serializable {
     public void setEscolhaComputador(String escolhaComputador) {
         this.escolhaComputador = escolhaComputador;
     }
-
 
 }
