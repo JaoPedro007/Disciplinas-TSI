@@ -6,8 +6,16 @@
 
     <h:head>
         <title>Resultado</title>
+<<<<<<< HEAD
         <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="bootstrap/styles.css"/>
+=======
+<<<<<<< HEAD
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="bootstrap/styles.css"/>
+=======
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
+>>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
     </h:head>
     <h:body>
         <div class="container jogada text-center">
@@ -15,10 +23,32 @@
             <h3>Resultado</h3>
 
             <h:form>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
                 <div align="center">
                     <h:panelGrid columns="3">
                         <h:outputText value="Sua jogada" styleClass="jogada-label"/>
                         <h:outputLabel/>
+<<<<<<< HEAD
+=======
+                        <h:outputText value="Jogada do computador"/>
+
+                        <h:graphicImage value="imgs/#{jogoBean.imagemJogador}.png" alt="Imagem do jogador" styleClass="jogada-imagem"/>
+                        <h:outputText value="X" styleClass="jogada-simbolo"/>
+                        <h:graphicImage value="imgs/#{jogoBean.imagemComputador}.png" alt="Imagem do Computador" styleClass="jogada-imagem"/>
+
+                    </h:panelGrid>
+
+                    <h:outputLabel value="#{jogoBean.resultado}" styleClass="resultado-label" />
+                </div>
+                <div class="estatisticas">
+=======
+                <div class="resultado" align="center">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Sua jogada"/>
+>>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
                         <h:outputText value="Jogada do computador"/>
 
                         <h:graphicImage value="imgs/#{jogoBean.imagemJogador}.png" alt="Imagem do jogador" styleClass="jogada-imagem"/>
@@ -31,11 +61,26 @@
                 </div>
                 <div class="estatisticas">
 
+<<<<<<< HEAD
                     <h3>Estatísticas</h3>
 
                     <h:outputText value="Jogos: " styleClass="estatistica-label"/>
                     <h:outputLabel value="#{jogoBean.quantidadeJogos}" styleClass="estatistica-valor estatistica-valor-jogos"/>
 
+                    <h:outputText value="Suas vitórias: " styleClass="estatistica-label"/>
+                    <h:outputLabel value="#{jogoBean.quantidadeVitoriasJogador}" styleClass="estatistica-valor estatistica-valor-vitorias"/>
+
+                    <h:outputText value="Vitórias do computador: " styleClass="estatistica-label"/>
+                    <h:outputLabel value="#{jogoBean.quantidadeVitoriasComputador}" styleClass="estatistica-valor estatistica-valor-computador"/>                
+=======
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
+
+                    <h3>Estatísticas</h3>
+
+                    <h:outputText value="Jogos: " styleClass="estatistica-label"/>
+                    <h:outputLabel value="#{jogoBean.quantidadeJogos}" styleClass="estatistica-valor estatistica-valor-jogos"/>
+
+<<<<<<< HEAD
                     <h:outputText value="Suas vitórias: " styleClass="estatistica-label"/>
                     <h:outputLabel value="#{jogoBean.quantidadeVitoriasJogador}" styleClass="estatistica-valor estatistica-valor-vitorias"/>
 
@@ -55,6 +100,30 @@
                     <h:commandButton value="Ver estatísticas gerais" action="#{jogoBean.verEstatisticaGeral()}" styleClass="btn estatistica-button"/>
                 </div>
               
+=======
+                    <h:outputText value="Suas vitórias: " style="font-weight: bold; margin-left: 15px;"/>
+                    <h:outputLabel value="#{jogoBean.quantidadeVitoriasJogador}" style="font-weight: bold; color: green"/>
+>>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
+
+                    <h:outputText value="Empates: " styleClass="estatistica-label"/>
+                    <h:outputLabel value="#{jogoBean.quantidadeEmpates}" styleClass="estatistica-valor estatistica-valor-empates"/>
+
+                </div>
+
+                <div class="btn-jogar-novamente">
+                    <h:commandButton value="Jogar novamente" action="#{jogoBean.jogarNovamente()}" styleClass="btn estatistica-button"/>
+                </div>
+<<<<<<< HEAD
+                
+                <div class="btn-ver-estatisticas">
+                    <h:commandButton value="Ver estatísticas gerais" action="#{jogoBean.verEstatisticaGeral()}" styleClass="btn estatistica-button"/>
+                </div>
+              
+=======
+
+
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
+>>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
             </h:form>
         </div>
     </h:body>

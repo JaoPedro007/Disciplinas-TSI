@@ -45,6 +45,10 @@ public class JogadorDAO implements Serializable {
         }
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
     public void zerarEstatisticas(String nome) {
         EstatisticasJogador estatisticasJogador = estatisticas.get(nome);
         if (estatisticasJogador != null) {
@@ -52,6 +56,11 @@ public class JogadorDAO implements Serializable {
         }
     }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
+>>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
     public int getVitorias(String nome) {
         EstatisticasJogador estatisticasJogador = estatisticas.get(nome);
         return estatisticasJogador != null ? estatisticasJogador.getVitorias() : 0;
