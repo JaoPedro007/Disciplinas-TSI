@@ -14,19 +14,21 @@ public class App {
     private static Lavador lavador;
     private static Thread threadEnxugador, threadLavador;
 
-    public static void iniciar() throws InterruptedException {
+    public static void work() throws InterruptedException {
         enxugador = new Enxugador();
         lavador = new Lavador();
 
         threadEnxugador = new Thread(enxugador);
         threadLavador = new Thread(lavador);
 
-        threadEnxugador.start();
+        threadLavador.start();
 
-        Thread.sleep(1000);
+        Thread.sleep(10000);
+        System.err.print("ERRO: A aplicação travou e será encerrada");
+        System.exit(1);
     }
 
-    public static void parar() throws InterruptedException {
+    public static void stop() throws InterruptedException {
 
         enxugador.parar(false);
 
@@ -35,13 +37,8 @@ public class App {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        System.out.println("Começando a lavar");
-        iniciar();
+        work();
 
-        System.out.println("Parando de lavar");
-        parar();
-
-        System.out.print("Processos finalizados");
     }
 
 }
