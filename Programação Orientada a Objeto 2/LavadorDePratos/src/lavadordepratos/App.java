@@ -15,13 +15,13 @@ public class App {
     static Lavador lavador = new Lavador(escorredor);
 
     public static void work() throws InterruptedException {
-        
+
         Thread threadEnxugador = new Thread(enxugador);
         Thread threadLavador = new Thread(lavador);
         threadLavador.start();
         threadEnxugador.start();
 
-        Thread.sleep(120000);
+        Thread.sleep(2000);
         stop();
     }
 

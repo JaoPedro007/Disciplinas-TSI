@@ -16,26 +16,31 @@ public class Escorredor {
     private int quantidadePratos;
     private int espacoOcupado;
 
-    public Prato pegarPrato() throws InterruptedException {
-        quantidadePratos--;
-        espacoOcupado--;
-        System.out.println(verificarSituacaoCapacidade(true));
-        return null;
-    }
-
-    public Prato colocarPrato(Prato prato) throws InterruptedException {
-
-        if (espacoOcupado > MAX) {
-            System.err.println("Erro: Capacidade máxima do escorredor foi violada, o limite é " + MAX + " pratos.\nA aplicação será encerrada.");
-            System.exit(1);
-        } else {
-            espacoOcupado++;
-            quantidadePratos++;
-            System.out.println(verificarSituacaoCapacidade(false));
-
+    public void pegarPrato() throws InterruptedException {
+        while (quantidadePratos == 0) {
+            wait();
+        }
+        try {
+            quantidadePratos--;
+            espacoOcupado--;
+            System.out.println(verificarSituacaoCapacidade(true));
+        } catch (Exception e) {
         }
 
-        return null;
+    }
+
+    public void colocarPrato(Prato prato) throws InterruptedException {
+        synchronized (this) {
+            while (espacoOcupado == MAX) {
+                wait();
+            }
+            try {
+                espacoOcupado++;
+                quantidadePratos++;
+                System.out.println(verificarSituacaoCapacidade(false));
+            } catch (Exception e) {
+            }
+        }
     }
 
     private String verificarSituacaoCapacidade(boolean isRetirandoPratos) {

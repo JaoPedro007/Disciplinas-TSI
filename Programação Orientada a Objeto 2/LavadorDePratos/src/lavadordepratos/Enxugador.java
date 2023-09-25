@@ -24,41 +24,39 @@ public class Enxugador implements Runnable {
     @Override
     public void run() {
         while (!done) {
-            synchronized (this.escorredor) {
-                while (!escorredor.temPrato() && !done) {
+            while (!escorredor.temPrato()) {
+                synchronized (escorredor) {
                     try {
-                        escorredor.notifyAll();
                         escorredor.wait();
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Enxugador.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                if (!done) {
-                    try {
-                        enxugarPrato();
-                        escorredor.pegarPrato();
-
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Enxugador.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+            }
+            
+            try {
+                enxugarPrato();
+                escorredor.pegarPrato();
+                synchronized (escorredor) {
+                    escorredor.notify();
                 }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Enxugador.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
     private void enxugarPrato() {
-        long time = ThreadLocalRandom.current().nextLong(3000, 11000);
+        long time = ThreadLocalRandom.current().nextLong(3, 11);
         try {
             System.out.print("Enxugando prato\n");
             Thread.sleep(time);
         } catch (InterruptedException ex) {
             Logger.getLogger(Enxugador.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public void parar(boolean done) {
         this.done = done;
     }
-
 }
