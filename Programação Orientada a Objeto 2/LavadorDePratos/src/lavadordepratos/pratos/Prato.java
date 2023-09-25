@@ -13,8 +13,8 @@ import java.util.Random;
 public class Prato {
 
     private static int nextNumeroSerie = 1;
-    private int numeroSerie;
-    private NivelSujeira nivelSujeira;
+    private final int numeroSerie;
+    private final NivelSujeira nivelSujeira;
 
     public Prato() {
         this.numeroSerie = nextNumeroSerie++;

@@ -13,23 +13,17 @@ import lavadordepratos.pratos.Prato;
 public class Escorredor {
 
     static final int MAX = 10;
-    private int quantidadePratos = 0;
-    private int espacoOcupado = 0;
-    private String situacaoEscorredor;
+    private int quantidadePratos;
+    private int espacoOcupado;
 
-    public synchronized Prato pegarPrato() throws InterruptedException {
-        if (quantidadePratos <= 0) {
-            wait();
-        } else {
-            quantidadePratos--;
-            espacoOcupado--;
-            notifyAll();
-            System.out.println(verificarSituacaoCapacidade(true));
-        }
+    public Prato pegarPrato() throws InterruptedException {
+        quantidadePratos--;
+        espacoOcupado--;
+        System.out.println(verificarSituacaoCapacidade(true));
         return null;
     }
 
-    public synchronized Prato colocarPrato(Prato prato) throws InterruptedException {
+    public Prato colocarPrato(Prato prato) throws InterruptedException {
 
         if (espacoOcupado > MAX) {
             System.err.println("Erro: Capacidade máxima do escorredor foi violada, o limite é " + MAX + " pratos.\nA aplicação será encerrada.");
@@ -37,15 +31,14 @@ public class Escorredor {
         } else {
             espacoOcupado++;
             quantidadePratos++;
-            notifyAll();
             System.out.println(verificarSituacaoCapacidade(false));
-            
+
         }
 
         return null;
     }
 
-    public synchronized String verificarSituacaoCapacidade(boolean isRetirandoPratos) {
+    private String verificarSituacaoCapacidade(boolean isRetirandoPratos) {
         if (espacoOcupado == 0) {
             return "O Escorredor está vazio, possui " + this.getEspacoOcupado() + " de lotação";
         }
@@ -58,13 +51,17 @@ public class Escorredor {
             return "COLOCANDO PRATO NO ESCORREDOR";
         }
     }
-    
-    public boolean temEspacoLivre(){
+
+    public boolean temPrato() {
+        return this.getQuantidadePratos() > 0;
+    }
+
+    public boolean temEspacoLivre() {
         return espacoOcupado < MAX;
     }
 
     public int getEspacoOcupado() {
-        return espacoOcupado = quantidadePratos;
+        return espacoOcupado;
     }
 
     public int getQuantidadePratos() {

@@ -4,7 +4,9 @@
  */
 package lavadordepratos;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -12,26 +14,51 @@ import java.util.Random;
  */
 public class Enxugador implements Runnable {
 
-    private Escorredor escorredor = new Escorredor();
-    private Random rand = new Random();
-    private boolean enxugar = true;
+    private boolean done = false;
+    private final Escorredor escorredor;
+
+    public Enxugador(Escorredor escorredor) {
+        this.escorredor = escorredor;
+    }
 
     @Override
     public void run() {
-        while (enxugar == true) {
-            try {
-                int tempo = rand.nextInt(701)+300;
-                escorredor.pegarPrato();
-                Thread.sleep(tempo);
+        while (!done) {
+            synchronized (this.escorredor) {
+                while (!escorredor.temPrato() && !done) {
+                    try {
+                        escorredor.notifyAll();
+                        escorredor.wait();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Enxugador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (!done) {
+                    try {
+                        enxugarPrato();
+                        escorredor.pegarPrato();
 
-            } catch (Exception e) {
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Enxugador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
+        }
+    }
+
+    private void enxugarPrato() {
+        long time = ThreadLocalRandom.current().nextLong(3000, 11000);
+        try {
+            System.out.print("Enxugando prato\n");
+            Thread.sleep(time);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Enxugador.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    public void parar(boolean enxugar) {
-        this.enxugar = enxugar;
+    public void parar(boolean done) {
+        this.done = done;
     }
 
 }

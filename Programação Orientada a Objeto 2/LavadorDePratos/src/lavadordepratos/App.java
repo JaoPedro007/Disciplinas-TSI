@@ -10,30 +10,24 @@ package lavadordepratos;
  */
 public class App {
 
-    private static Enxugador enxugador;
-    private static Lavador lavador;
-    private static Thread threadEnxugador, threadLavador;
+    static Escorredor escorredor = new Escorredor();
+    static Enxugador enxugador = new Enxugador(escorredor);
+    static Lavador lavador = new Lavador(escorredor);
 
     public static void work() throws InterruptedException {
-        enxugador = new Enxugador();
-        lavador = new Lavador();
-
-        threadEnxugador = new Thread(enxugador);
-        threadLavador = new Thread(lavador);
-
+        
+        Thread threadEnxugador = new Thread(enxugador);
+        Thread threadLavador = new Thread(lavador);
         threadLavador.start();
+        threadEnxugador.start();
 
-        Thread.sleep(10000);
-        System.err.print("ERRO: A aplicação travou e será encerrada");
-        System.exit(1);
+        Thread.sleep(120000);
+        stop();
     }
 
-    public static void stop() throws InterruptedException {
-
-        enxugador.parar(false);
-
-        threadEnxugador.join();
-
+    private static void stop() throws InterruptedException {
+        enxugador.parar(true);
+        lavador.parar(true);
     }
 
     public static void main(String[] args) throws InterruptedException {
