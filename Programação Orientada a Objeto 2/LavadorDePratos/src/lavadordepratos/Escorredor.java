@@ -12,13 +12,13 @@ import lavadordepratos.pratos.Prato;
  */
 public class Escorredor {
 
-    static final int MAX = 10;
-    private int quantidadePratos;
-    private int espacoOcupado;
+    private static final int MAX = 10;
+    private int quantidadePratos = 0;
+    private int espacoOcupado = 0;
 
     public void pegarPrato() throws InterruptedException {
-        while (quantidadePratos == 0) {
-            wait();
+        if (espacoOcupado > MAX) {
+            throw new RuntimeException("A capacidade máxima do escorredor foi violada");
         }
         try {
             quantidadePratos--;
@@ -30,16 +30,15 @@ public class Escorredor {
     }
 
     public void colocarPrato(Prato prato) throws InterruptedException {
-        synchronized (this) {
-            while (espacoOcupado == MAX) {
-                wait();
-            }
-            try {
-                espacoOcupado++;
-                quantidadePratos++;
-                System.out.println(verificarSituacaoCapacidade(false));
-            } catch (Exception e) {
-            }
+        if (espacoOcupado > MAX) {
+            throw new RuntimeException("A capacidade máxima do escorredor foi violada");
+        }
+        try {
+            espacoOcupado++;
+            quantidadePratos++;
+            System.out.println(verificarSituacaoCapacidade(false));
+        } catch (Exception e) {
+
         }
     }
 

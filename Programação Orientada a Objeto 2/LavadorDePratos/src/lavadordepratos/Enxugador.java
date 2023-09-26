@@ -33,10 +33,10 @@ public class Enxugador implements Runnable {
                     }
                 }
             }
-            
+
             try {
-                enxugarPrato();
                 escorredor.pegarPrato();
+                enxugarPrato();
                 synchronized (escorredor) {
                     escorredor.notify();
                 }
