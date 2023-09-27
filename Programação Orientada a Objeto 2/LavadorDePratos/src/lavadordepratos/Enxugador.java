@@ -31,14 +31,18 @@ public class Enxugador implements Runnable {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Enxugador.class.getName()).log(Level.SEVERE, null, ex);
                     }
+
                 }
             }
 
             try {
-                escorredor.pegarPrato();
-                enxugarPrato();
                 synchronized (escorredor) {
-                    escorredor.notify();
+                    if (!escorredor.temPrato()) {
+                        escorredor.notify();
+                    } else {
+                        escorredor.pegarPrato();
+                        enxugarPrato();
+                    }
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Enxugador.class.getName()).log(Level.SEVERE, null, ex);

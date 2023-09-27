@@ -18,7 +18,7 @@ public class Escorredor {
 
     public void pegarPrato() throws InterruptedException {
         if (espacoOcupado > MAX) {
-            throw new RuntimeException("A capacidade máxima do escorredor foi violada");
+            throw new RuntimeException("A capacidade maxima do escorredor foi violada");
         }
         try {
             quantidadePratos--;
@@ -31,7 +31,7 @@ public class Escorredor {
 
     public void colocarPrato(Prato prato) throws InterruptedException {
         if (espacoOcupado > MAX) {
-            throw new RuntimeException("A capacidade máxima do escorredor foi violada");
+            throw new RuntimeException("A capacidade maxima do escorredor foi violada");
         }
         try {
             espacoOcupado++;
@@ -44,10 +44,10 @@ public class Escorredor {
 
     private String verificarSituacaoCapacidade(boolean isRetirandoPratos) {
         if (espacoOcupado == 0) {
-            return "O Escorredor está vazio, possui " + this.getEspacoOcupado() + " de lotação";
+            return "O Escorredor esta vazio, possui " + this.getEspacoOcupado() + " de lotacao";
         }
         if (espacoOcupado == MAX) {
-            return "O Escorredor está cheio, possui " + this.getEspacoOcupado() + " de lotação";
+            return "O Escorredor esta cheio, possui " + this.getEspacoOcupado() + " de lotacao";
         }
         if (isRetirandoPratos) {
             return "RETIRANDO PRATO DO ESCORREDOR";
