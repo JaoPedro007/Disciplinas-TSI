@@ -46,11 +46,11 @@ public class Enxugador implements Runnable {
     public void enxugarPrato() {
         long time = ThreadLocalRandom.current().nextLong(3, 11);
         try {
-            System.out.print("Enxugando prato\n");
+//            System.out.print("Enxugando prato\n");
             Thread.sleep(time);
 
         } catch (InterruptedException ex) {
-            
+
         }
     }
 

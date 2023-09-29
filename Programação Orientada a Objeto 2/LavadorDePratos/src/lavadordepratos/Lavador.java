@@ -32,11 +32,10 @@ public class Lavador implements Runnable {
                 }
 
                 Prato prato = PratosSujosFactory.getPratosSujos();
-                int numeroSerie = prato.getNumeroSerie();
 
                 try {
                     if (escorredor.getEspacoOcupado() < 10) {
-                        lavarPrato(prato, numeroSerie);
+                        lavarPrato(prato, prato.getNumeroSerie());
                     }
                     escorredor.colocarPrato(prato);
                     escorredor.notify();
@@ -50,15 +49,15 @@ public class Lavador implements Runnable {
         try {
             switch (prato.getNivelSujeira()) {
                 case BAIXO -> {
-                    System.out.println("Lavando prato " + serie + " com nivel de sujeira BAIXO");
+//                    System.out.println("Lavando prato " + serie + " com nivel de sujeira BAIXO");
                     Thread.sleep(3);
                 }
                 case MEDIO -> {
-                    System.out.println("Lavando prato " + serie + " com nivel de sujeira MEDIO");
+//                    System.out.println("Lavando prato " + serie + " com nivel de sujeira MEDIO");
                     Thread.sleep(5);
                 }
                 case ENGORDURADO -> {
-                    System.out.println("Lavando prato " + serie + " com nivel de sujeira ENGORDURADO");
+//                    System.out.println("Lavando prato " + serie + " com nivel de sujeira ENGORDURADO");
                     Thread.sleep(10);
                 }
             }

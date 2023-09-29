@@ -17,18 +17,19 @@ public class Escorredor {
 
     public void pegarPrato() throws InterruptedException {
         if (espacoOcupado > MAX) {
-            throw new RuntimeException("A capacidade maxima do escorredor foi violada");
+//            System.err.print("A capacidade maxima do escorredor foi violada\n");
+            System.exit(1);
         } else {
             try {
                 if (espacoOcupado > 0) {
 
                     espacoOcupado--;
-                    System.out.println(verificarSituacao(true));
+//                    System.out.println(verificarSituacao(true));
                 }
                 if (espacoOcupado == 0) {
-                    System.out.println("O Escorredor esta vazio.");
+//                    System.out.println("O Escorredor esta vazio. | espacoOcupado: " + espacoOcupado);
                 }
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
             }
         }
 
@@ -36,16 +37,17 @@ public class Escorredor {
 
     public void colocarPrato(Prato prato) throws InterruptedException {
         if (espacoOcupado > MAX) {
-            throw new RuntimeException("A capacidade maxima do escorredor foi violada");
+//            System.err.print("A capacidade maxima do escorredor foi violada\n");
+            System.exit(1);
         }
         try {
             if (espacoOcupado < MAX) {
                 espacoOcupado++;
-                System.out.println(verificarSituacao(false));
+//                System.out.println(verificarSituacao(false));
             }
 
             if (espacoOcupado >= 10) {
-                System.out.println("O Escorredor esta cheio.");
+//                System.out.println("O Escorredor esta cheio. | espacoOcupado: " + espacoOcupado);
             }
         } catch (Exception e) {
         }
@@ -61,7 +63,7 @@ public class Escorredor {
     }
 
     public boolean temPrato() {
-        return this.getEspacoOcupado()> 0;
+        return this.getEspacoOcupado() > 0;
     }
 
     public int getEspacoOcupado() {
