@@ -13,7 +13,6 @@ import lavadordepratos.pratos.Prato;
 public class Escorredor {
 
     private static final int MAX = 10;
-    private int quantidadePratos = 0;
     private int espacoOcupado = 0;
 
     public void pegarPrato() throws InterruptedException {
@@ -21,11 +20,12 @@ public class Escorredor {
             throw new RuntimeException("A capacidade maxima do escorredor foi violada");
         } else {
             try {
-                if (quantidadePratos > 0) {
-                    quantidadePratos--;
+                if (espacoOcupado > 0) {
+
                     espacoOcupado--;
-                    System.out.println(verificarSituacaoCapacidade(true));
-                } if(espacoOcupado==0) {
+                    System.out.println(verificarSituacao(true));
+                }
+                if (espacoOcupado == 0) {
                     System.out.println("O Escorredor esta vazio.");
                 }
             } catch (Exception e) {
@@ -41,16 +41,17 @@ public class Escorredor {
         try {
             if (espacoOcupado < MAX) {
                 espacoOcupado++;
-                quantidadePratos++;
-                System.out.println(verificarSituacaoCapacidade(false));
-            } if(espacoOcupado==10) {
+                System.out.println(verificarSituacao(false));
+            }
+
+            if (espacoOcupado >= 10) {
                 System.out.println("O Escorredor esta cheio.");
             }
         } catch (Exception e) {
         }
     }
 
-    private String verificarSituacaoCapacidade(boolean isRetirandoPratos) {
+    private String verificarSituacao(boolean isRetirandoPratos) {
         if (isRetirandoPratos) {
             return "RETIRANDO PRATO DO ESCORREDOR | espacoOcupado: " + espacoOcupado;
         } else {
@@ -60,7 +61,7 @@ public class Escorredor {
     }
 
     public boolean temPrato() {
-        return this.getQuantidadePratos() > 0;
+        return this.getEspacoOcupado()> 0;
     }
 
     public int getEspacoOcupado() {
@@ -69,14 +70,6 @@ public class Escorredor {
 
     public boolean temEspacoLivre() {
         return espacoOcupado < MAX;
-    }
-
-    public int getQuantidadePratos() {
-        return quantidadePratos;
-    }
-
-    public void setQuantidadePratos(int quantidadePratos) {
-        this.quantidadePratos = quantidadePratos;
     }
 
 }

@@ -13,7 +13,7 @@ import lavadordepratos.pratos.Prato;
  */
 public class Lavador implements Runnable {
 
-    private boolean done=false;
+    private boolean done = false;
     private final Escorredor escorredor;
 
     public Lavador(Escorredor escorredor) {
@@ -24,26 +24,25 @@ public class Lavador implements Runnable {
     public void run() {
         while (!done) {
             synchronized (escorredor) {
-                if (!escorredor.temEspacoLivre()) {
+                while (!escorredor.temEspacoLivre()) {
                     try {
                         escorredor.wait();
                     } catch (InterruptedException ex) {
-                    }                    
-                    
-                } else {
-                    Prato prato = PratosSujosFactory.getPratosSujos();
-                    int numeroSerie = prato.getNumeroSerie();
-
-                    try {
-                        lavarPrato(prato, numeroSerie);
-                        escorredor.colocarPrato(prato);
-                        escorredor.notify();
-
-                    } catch (InterruptedException ex) {
                     }
                 }
-            }
 
+                Prato prato = PratosSujosFactory.getPratosSujos();
+                int numeroSerie = prato.getNumeroSerie();
+
+                try {
+                    if (escorredor.getEspacoOcupado() < 10) {
+                        lavarPrato(prato, numeroSerie);
+                    }
+                    escorredor.colocarPrato(prato);
+                    escorredor.notify();
+                } catch (InterruptedException ex) {
+                }
+            }
         }
     }
 

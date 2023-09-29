@@ -5,8 +5,6 @@
 package lavadordepratos;
 
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,24 +23,23 @@ public class Enxugador implements Runnable {
     public void run() {
         while (!done) {
             synchronized (escorredor) {
-                if (!escorredor.temPrato()) {
+                while (!escorredor.temPrato()) {
                     try {
                         escorredor.wait();
                     } catch (InterruptedException ex) {
                     }
-                } else {
-                    try {
-                        escorredor.pegarPrato();
-                        if (escorredor.getEspacoOcupado() > 0) {
-                            enxugarPrato();
-                            escorredor.notify();
-                        }
-                    } catch (InterruptedException ex) {
-                    }
                 }
 
-            }
+                try {
+                    escorredor.pegarPrato();
+                    if (escorredor.getEspacoOcupado() > 0) {
+                        enxugarPrato();
 
+                    }
+                    escorredor.notify();
+                } catch (InterruptedException ex) {
+                }
+            }
         }
     }
 
@@ -53,8 +50,7 @@ public class Enxugador implements Runnable {
             Thread.sleep(time);
 
         } catch (InterruptedException ex) {
-            Logger.getLogger(Enxugador.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            
         }
     }
 

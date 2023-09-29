@@ -22,7 +22,7 @@ public class App {
         threadLavador.start();
         threadEnxugador.start();
 
-        Thread.sleep(2000);
+        Thread.sleep(120000);
         stop();
     }
 
