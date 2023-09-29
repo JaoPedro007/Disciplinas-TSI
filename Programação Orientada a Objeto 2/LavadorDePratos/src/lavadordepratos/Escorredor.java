@@ -19,12 +19,17 @@ public class Escorredor {
     public void pegarPrato() throws InterruptedException {
         if (espacoOcupado > MAX) {
             throw new RuntimeException("A capacidade maxima do escorredor foi violada");
-        }
-        try {
-            quantidadePratos--;
-            espacoOcupado--;
-            System.out.println(verificarSituacaoCapacidade(true));
-        } catch (Exception e) {
+        } else {
+            try {
+                if (quantidadePratos > 0) {
+                    quantidadePratos--;
+                    espacoOcupado--;
+                    System.out.println(verificarSituacaoCapacidade(true));
+                } if(espacoOcupado==0) {
+                    System.out.println("O Escorredor esta vazio.");
+                }
+            } catch (Exception e) {
+            }
         }
 
     }
@@ -34,38 +39,36 @@ public class Escorredor {
             throw new RuntimeException("A capacidade maxima do escorredor foi violada");
         }
         try {
-            espacoOcupado++;
-            quantidadePratos++;
-            System.out.println(verificarSituacaoCapacidade(false));
+            if (espacoOcupado < MAX) {
+                espacoOcupado++;
+                quantidadePratos++;
+                System.out.println(verificarSituacaoCapacidade(false));
+            } if(espacoOcupado==10) {
+                System.out.println("O Escorredor esta cheio.");
+            }
         } catch (Exception e) {
-
         }
     }
 
     private String verificarSituacaoCapacidade(boolean isRetirandoPratos) {
-        if (espacoOcupado == 0) {
-            return "O Escorredor esta vazio, possui " + this.getEspacoOcupado() + " de lotacao";
-        }
-        if (espacoOcupado == MAX) {
-            return "O Escorredor esta cheio, possui " + this.getEspacoOcupado() + " de lotacao";
-        }
         if (isRetirandoPratos) {
-            return "RETIRANDO PRATO DO ESCORREDOR";
+            return "RETIRANDO PRATO DO ESCORREDOR | espacoOcupado: " + espacoOcupado;
         } else {
-            return "COLOCANDO PRATO NO ESCORREDOR";
+            return "COLOCANDO PRATO NO ESCORREDOR | espacoOcupado: " + espacoOcupado;
         }
+
     }
 
     public boolean temPrato() {
         return this.getQuantidadePratos() > 0;
     }
 
-    public boolean temEspacoLivre() {
-        return espacoOcupado < MAX;
-    }
-
     public int getEspacoOcupado() {
         return espacoOcupado;
+    }
+
+    public boolean temEspacoLivre() {
+        return espacoOcupado < MAX;
     }
 
     public int getQuantidadePratos() {

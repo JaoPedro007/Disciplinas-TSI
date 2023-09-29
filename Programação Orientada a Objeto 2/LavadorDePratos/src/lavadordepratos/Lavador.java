@@ -5,8 +5,6 @@
 package lavadordepratos;
 
 import lavadordepratos.pratos.PratosSujosFactory;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import lavadordepratos.pratos.Prato;
 
 /**
@@ -15,10 +13,8 @@ import lavadordepratos.pratos.Prato;
  */
 public class Lavador implements Runnable {
 
-    private boolean done = false;
+    private boolean done=false;
     private final Escorredor escorredor;
-    Prato prato = PratosSujosFactory.getPratosSujos();
-    int numeroSerie = prato.getNumeroSerie();
 
     public Lavador(Escorredor escorredor) {
         this.escorredor = escorredor;
@@ -28,15 +24,22 @@ public class Lavador implements Runnable {
     public void run() {
         while (!done) {
             synchronized (escorredor) {
-
                 if (!escorredor.temEspacoLivre()) {
-                    escorredor.notify();
-                } else {
-                    lavarPrato(prato, numeroSerie);
                     try {
-                        escorredor.colocarPrato(prato);
+                        escorredor.wait();
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(Lavador.class.getName()).log(Level.SEVERE, null, ex);
+                    }                    
+                    
+                } else {
+                    Prato prato = PratosSujosFactory.getPratosSujos();
+                    int numeroSerie = prato.getNumeroSerie();
+
+                    try {
+                        lavarPrato(prato, numeroSerie);
+                        escorredor.colocarPrato(prato);
+                        escorredor.notify();
+
+                    } catch (InterruptedException ex) {
                     }
                 }
             }
@@ -47,21 +50,20 @@ public class Lavador implements Runnable {
     private void lavarPrato(Prato prato, int serie) {
         try {
             switch (prato.getNivelSujeira()) {
-                case BAIXO:
+                case BAIXO -> {
                     System.out.println("Lavando prato " + serie + " com nivel de sujeira BAIXO");
                     Thread.sleep(3);
-                    break;
-                case MEDIO:
+                }
+                case MEDIO -> {
                     System.out.println("Lavando prato " + serie + " com nivel de sujeira MEDIO");
                     Thread.sleep(5);
-                    break;
-                case ENGORDURADO:
+                }
+                case ENGORDURADO -> {
                     System.out.println("Lavando prato " + serie + " com nivel de sujeira ENGORDURADO");
                     Thread.sleep(10);
-                    break;
+                }
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 

@@ -10,7 +10,7 @@ package lavadordepratos;
  */
 public class App {
 
-    static Escorredor escorredor = new Escorredor();
+    final static Escorredor escorredor = new Escorredor();
     static Enxugador enxugador = new Enxugador(escorredor);
     static Lavador lavador = new Lavador(escorredor);
 
@@ -18,6 +18,7 @@ public class App {
 
         Thread threadEnxugador = new Thread(enxugador);
         Thread threadLavador = new Thread(lavador);
+        
         threadLavador.start();
         threadEnxugador.start();
 
