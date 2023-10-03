@@ -15,8 +15,6 @@ public class PratosSujosFactory {
 
     public static Queue<Prato> pratosSujos = new LinkedList<>();
 
-    //Usei o método offer() para adicionar o prato na fila. E o método poll() para remover o prato da fila
-    
     public static Prato getPratosSujos() {
         if (pratosSujos.isEmpty()) {
             pratosSujos.offer(new Prato());
