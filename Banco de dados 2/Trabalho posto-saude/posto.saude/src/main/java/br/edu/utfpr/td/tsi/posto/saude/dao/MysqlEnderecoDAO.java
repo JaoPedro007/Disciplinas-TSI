@@ -18,7 +18,7 @@ public class MysqlEnderecoDAO implements EnderecoDAO {
 
 	@Override
 	public void inserir(Endereco endereco, Long idPaciente) {
-		String sql = "insert into endereco (logradouro, numero, cep, idBairro, idPaciente) values (?, ?, ?, ?, ?)";
+		String sql = "insert into endereco (logradouro, numero, cep, paciente_id, bairro_id) values (?, ?, ?, ?, ?)";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -38,18 +38,18 @@ public class MysqlEnderecoDAO implements EnderecoDAO {
 	}
 
 	@Override
-	public void atualizar(Long idPaciente, Endereco end) {
+	public void atualizar(Long paciente_id, Endereco end) {
 		// TODO
 	}
 
 	@Override
-	public void remover(Long idPaciente) {
+	public void remover(Long paciente_id) {
 		// TODO
 
 	}
 
 	@Override
-	public Endereco procurar(Long idPaciente) {
+	public Endereco procurar(Long paciente_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

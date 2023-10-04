@@ -3,12 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <title>Posto de Saúde Web</title>
+
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
+
 <body>
 	<h1>Cadastrar bairro</h1>
 
 	<form method="POST" action="cadastrarBairro">
-		<input type="text" name="nome" /> 
+		<input type="text" name="nome" placeholder="Nome do bairro" /> 
 		<input type="submit" value="cadastrar" />
 	</form>
 </body>

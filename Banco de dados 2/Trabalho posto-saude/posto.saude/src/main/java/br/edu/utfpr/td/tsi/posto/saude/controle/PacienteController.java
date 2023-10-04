@@ -25,6 +25,13 @@ public class PacienteController {
 
 	@Autowired
 	private BairroDAO bairroDAO;
+	
+	@GetMapping(value = "/listarPacientes")
+	public String listar(Model model) {
+		List<Paciente> pacientes = pacienteDAO.listarTodos();
+		model.addAttribute("pacientes", pacientes);	
+		return "listarPacientes";
+	}
 
 	@GetMapping(value = "/cadastrarPaciente")
 	public String exibirPaginaCadastro(Model model) {
@@ -37,7 +44,7 @@ public class PacienteController {
 	public String cadastrar(Paciente p) {
 		Long idPaciente = pacienteDAO.inserir(p);
 		enderecoDAO.inserir(p.getEndereco(), idPaciente);
-		return "redirect:/listarbairros";
+		return "redirect:/listarPacientes";
 	}
 
 }

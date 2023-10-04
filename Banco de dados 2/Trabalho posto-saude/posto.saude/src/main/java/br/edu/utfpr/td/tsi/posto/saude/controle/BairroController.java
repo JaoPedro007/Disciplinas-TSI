@@ -24,7 +24,7 @@ public class BairroController {
 		return "listarBairros";
 	}
 
-	@GetMapping(value = "/cadastrarbairro")
+	@GetMapping(value = "/cadastrarBairro")
 	public String exibirPaginaVadastro() {
 		return "cadastrarBairro";
 	}

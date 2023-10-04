@@ -24,24 +24,29 @@ public class MysqlPacienteDAO implements PacienteDAO {
 
 	@Override
 	public Long inserir(Paciente p) {
-		long idPaciente = 0;
-		String sql = "insert into paciente (nome, sobrenome, data_nascimento) values (?, ?, ?)";
-		try {
-			Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+	    long id = 0;
+	    String sql = "insert into paciente (nome, sobrenome, telefone, data_nascimento) values (?, ?, ?, ?)";
+	    try {
+	        Connection conn = dataSource.getConnection();
+	        PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
-			preparedStatement.setString(1, p.getNome());
-			preparedStatement.setString(2, p.getSobrenome());
-			preparedStatement.setDate(3, Date.valueOf(p.getDataNascimento()));
-			idPaciente = preparedStatement.executeUpdate();
+	        preparedStatement.setString(1, p.getNome());
+	        preparedStatement.setString(2, p.getSobrenome());
+	        preparedStatement.setString(3, p.getTelefone());
+	        
+	        // Converter LocalDate para java.sql.Date
+	        java.sql.Date sqlDate = java.sql.Date.valueOf(p.getData_nascimento());
+	        preparedStatement.setDate(4, sqlDate);
 
-			conn.close();
-			preparedStatement.close();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return Long.valueOf(idPaciente);
+	        id = preparedStatement.executeUpdate();
+
+	        conn.close();
+	        preparedStatement.close();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return Long.valueOf(id);
 	}
 
 	@Override
@@ -61,13 +66,15 @@ public class MysqlPacienteDAO implements PacienteDAO {
 		try {
 			Connection conn = dataSource.getConnection();
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select idPaciente, nome, sobrenome, data_nascimento from paciente");
+			ResultSet rs = stmt.executeQuery("select id, nome, sobrenome, telefone, data_nascimento from paciente");
 			while (rs.next()) {
 				Long id = rs.getLong(1);
 				String nome = rs.getString(2);
 				String sobrenome = rs.getString(3);
-				LocalDate datanascimento = rs.getDate(4).toLocalDate();
-				pacientes.add(new Paciente(id, nome, sobrenome, datanascimento));
+				String telefone = rs.getString(4);
+	            Date dataNascimentoDate = rs.getDate(5);
+	            LocalDate dataNascimento = dataNascimentoDate.toLocalDate();
+	            pacientes.add(new Paciente(id, nome, sobrenome, telefone, dataNascimento));
 			}
 			conn.close();
 			stmt.close();

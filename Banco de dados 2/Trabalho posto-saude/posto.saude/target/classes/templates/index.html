@@ -3,9 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <title>Posto de Saúde Web</title>
+   <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .button-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .button-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-	<h1>Bem vindo ao Posto de Saúde Web</h1>	
+    <div class="container">
+        <h1>Gerenciamento de Dados</h1>
+
+        <div class="button-container">
+            <a href="cadastrarPaciente">
+                <button>Cadastrar Paciente</button>
+            </a>
+            <a href="cadastrarBairro">
+                <button>Cadastrar Bairro</button>
+            </a>
+            <a href="listarbairros">
+                <button>Listar Bairros</button>
+            </a>
+             <a href="listarPacientes">
+                <button>Listar Pacientes</button>
+            </a>
+        </div>
+    </div>
 </body>
 </html>
 

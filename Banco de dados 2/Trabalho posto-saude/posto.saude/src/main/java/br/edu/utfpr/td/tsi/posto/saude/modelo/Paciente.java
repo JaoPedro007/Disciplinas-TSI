@@ -1,26 +1,33 @@
 package br.edu.utfpr.td.tsi.posto.saude.modelo;
 
+
 import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
 
 public class Paciente {
 	private Long id;
 	private String nome;
 	private String sobrenome;
+	private String telefone;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate dataNascimento;
+	private LocalDate data_nascimento;
+    
+
 	private Endereco endereco;
 
 	public Paciente() {
 	}
 
-	public Paciente(Long id, String nome, String sobrenome, LocalDate dataNascimento) {
+	public Paciente(Long id, String nome, String sobrenome, String telefone, LocalDate data_nascimento) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
-		this.dataNascimento = dataNascimento;
+		this.telefone = telefone;
+		this.data_nascimento = data_nascimento;
 	}
 
 	public Long getId() {
@@ -47,20 +54,27 @@ public class Paciente {
 		this.sobrenome = sobrenome;
 	}
 
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
-
 	public Endereco getEndereco() {
 		return endereco;
 	}
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+	
+	public LocalDate getData_nascimento() {
+		return data_nascimento;
+	}
+
+	public void setData_nascimento(LocalDate data_nascimento) {
+		this.data_nascimento = data_nascimento;
 	}
 
 }
