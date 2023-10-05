@@ -28,6 +28,25 @@
         tr:hover {
             background-color: #f5f5f5;
         }
+         .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -36,11 +55,18 @@
 	<table>
 		<tr>
 			<th>ID</th>
-			<th>Nome</th>			
+			<th>Nome</th>
+			<th>Ações</th>			
 		</tr>
 		<tr th:each="bairro : ${bairros}">
         <td th:text="${bairro.id}"></td>
         <td th:text="${bairro.nome}"></td>
+        <td>
+                <a th:href="@{'/editarBairro/' + ${bairro.id}}" class="btn btn-primary">Editar</a>
+                <form th:action="@{'/removerBairro/' + ${bairro.id}}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja remover este bairro?')">Remover</button>
+                </form>
+            </td>
       </tr>
 	</table>
 </body>

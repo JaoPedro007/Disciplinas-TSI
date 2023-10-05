@@ -18,9 +18,6 @@ public class Paciente {
 
 	private Endereco endereco;
 
-	public Paciente() {
-	}
-
 	public Paciente(Long id, String nome, String sobrenome, String telefone, LocalDate data_nascimento) {
 		super();
 		this.id = id;
@@ -30,6 +27,9 @@ public class Paciente {
 		this.data_nascimento = data_nascimento;
 	}
 
+	public Paciente() {
+		
+	}
 	public Long getId() {
 		return id;
 	}
@@ -76,5 +76,6 @@ public class Paciente {
 	public void setData_nascimento(LocalDate data_nascimento) {
 		this.data_nascimento = data_nascimento;
 	}
+
 
 }

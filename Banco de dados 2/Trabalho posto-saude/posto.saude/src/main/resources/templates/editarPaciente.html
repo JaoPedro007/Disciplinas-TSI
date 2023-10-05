@@ -50,25 +50,24 @@
 <body>
 	<h1>Cadastrar paciente</h1>
 
-	<form method="POST" action="cadastrarPaciente">
-		<label>Nome:</label>
-		<input type="text" name="nome" required/> <br>
+<form method="POST" action="atualizarPaciente">
+    <label>Nome:</label>
+	<input type="text" name="nome" required value="${paciente.nome}" />
+    
+    <label>Sobrenome:</label>
+    <input type="text" name="sobrenome" required value="${paciente.sobrenome}" /> <br>
 
-		<label>Sobrenome:</label>
-		<input type="text" name="sobrenome" required/> <br>
+    <label>Data Nascimento:</label>
+    <input type="date" name="data_nascimento" required value="${#temporals.format(paciente.data_nascimento, 'yyyy-MM-dd')}" /> <br>
+    
+    <label>Telefone:</label>
+    <input type="text" name="telefone" required value="${paciente.telefone}" /> <br>
 
-		<label>Data Nascimento:</label>
-		<input type="date" name="data_nascimento" required /> <br>
-		
-		<label>Telefone:</label>
-		<input type="text" name="telefone" required/> <br>
+    <br>
 
-		<br>
-		
+    <input type="submit" value="Salvar" />
+</form>
 
-		<input type="submit" value="cadastrar" />
-	</form>
-	
 </body>
 
 </html>

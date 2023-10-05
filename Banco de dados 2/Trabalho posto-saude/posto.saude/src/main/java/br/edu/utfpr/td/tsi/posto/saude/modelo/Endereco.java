@@ -5,7 +5,23 @@ public class Endereco {
 	private String logradouro;
 	private String numero;
 	private String cep;
+	private String complemento;
 	private Bairro bairro;
+	private Paciente paciente;
+	
+
+	public Endereco(Long id, String logradouro, String numero, String cep, String complemento, Paciente paciente, Bairro bairro) {
+		this.id=id;
+		this.logradouro=logradouro;
+		this.numero=numero;
+		this.cep=cep;
+		this.complemento=complemento;
+		this.paciente=paciente;
+		this.bairro=bairro;
+	}
+
+	public Endereco() {
+	}
 
 	public Long getId() {
 		return id;
@@ -46,5 +62,22 @@ public class Endereco {
 	public void setBairro(Bairro bairro) {
 		this.bairro = bairro;
 	}
+	
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+
 
 }
