@@ -65,7 +65,7 @@
 		<label>Paciente:</label>
 		<select name="paciente.id" required>
     	<option value="" disabled selected>Escolha um Paciente</option>
-			<option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome}"></option>
+			<option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}"></option>
 		</select>
 
 		<label>Bairro:</label>

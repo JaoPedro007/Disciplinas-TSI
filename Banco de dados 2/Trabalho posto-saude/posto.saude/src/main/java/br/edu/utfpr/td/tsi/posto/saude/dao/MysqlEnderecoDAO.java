@@ -24,7 +24,8 @@ public class MysqlEnderecoDAO implements EnderecoDAO {
 
 	@Override
 	public void inserir(Endereco endereco) {
-		String sql = "insert into endereco (logradouro, numero, cep, complemento, paciente_id, bairro_id) values (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO endereco (logradouro, numero, cep, complemento, bairro_id, paciente_id) VALUES (?, ?, ?, ?, ?, ?)";
+
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -35,6 +36,7 @@ public class MysqlEnderecoDAO implements EnderecoDAO {
 			preparedStatement.setString(4, endereco.getComplemento());
 			preparedStatement.setLong(5, endereco.getBairro().getId());
 			preparedStatement.setLong(6, endereco.getPaciente().getId());
+
 			preparedStatement.executeUpdate();
 
 			conn.close();

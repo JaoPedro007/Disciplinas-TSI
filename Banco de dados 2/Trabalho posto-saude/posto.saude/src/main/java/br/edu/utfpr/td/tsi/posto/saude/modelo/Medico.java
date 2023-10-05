@@ -21,6 +21,10 @@ public class Medico {
 
 	}
 
+	public Medico() {
+		
+	}
+
 	public String getNome() {
 		return nome;
 	}

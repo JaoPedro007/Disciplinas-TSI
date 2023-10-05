@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Posto de Saúde Web</title>
@@ -22,7 +23,7 @@
         }
 
         input[type="text"],
-        input[type="date"],
+        input[type="datetime-local"],
         select {
             width: 100%;
             padding: 10px;
@@ -47,37 +48,37 @@
 </head>
 
 <body>
-	<h1>Cadastrar Endereço</h1>
+	<h1>Cadastrar consulta</h1>
 
-	<form method="POST" action="cadastrarEndereco">
-		<label>Logradouro</label>
-		<input type="text" name="logradouro" required/> <br>
+	<form method="POST" action="cadastrarConsulta">
 
-		<label>Cep:</label>
-		<input type="text" name="cep" required/> <br>
-
-		<label>Número:</label>
-		<input type="text" name="numero" required/> <br>
+		<label>Data Consulta:</label>
+		<input type="datetime-local" name="data_consulta" required /> <br>
 		
-		<label>Complemento:</label>
-		<input type="text" name="complemento" required/> <br>
-		
+					
 		<label>Paciente:</label>
 		<select name="paciente.id" required>
     	<option value="" disabled selected>Escolha um Paciente</option>
 			<option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}"></option>
 		</select>
-
-		<label>Bairro:</label>
-		<select name="bairro.id" required>
-    		<option value="" disabled selected>Escolha um bairro</option>
-			<option th:each="bairro : ${bairros}" th:value="${bairro.id}" th:text="${bairro.nome}"></option>
+		
+				
+		<label>Medico:</label>
+		<select name="medico.id" required>
+    	<option value="" disabled selected>Escolha um Médico</option>
+			<option th:each="medico : ${medicos}" th:value="${medico.id}" th:text="${medico.nome} + ' ' +  ${medico.sobrenome}"></option>
 		</select>
+
+		
+		<label>Descrição:</label>
+		<input type="text" name="descricao" required/> <br>
+		
 		<br>
 		
 
-		<input type="submit" value="cadastrar" />
+		<input type="submit" value="Cadastrar" />
 	</form>
 	
 </body>
+
 </html>
