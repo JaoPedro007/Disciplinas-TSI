@@ -61,6 +61,16 @@
             text-decoration: none;
             cursor: pointer;
         }
+        
+          .btn-secundary {
+            background-color: rgb(0, 128, 0);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -70,22 +80,34 @@
             <th>ID</th>
             <th>Data Consulta</th>
             <th>Paciente</th>
-            <th>Médico</th>                        
+            <th>Médico</th> 
+            <th>Descrição</th>                        
+            <th>Status</th>                        
+                       
             <th>Ações</th>
         </tr>
-        <tr th:each="consulta : ${consultas}">
-            <td th:text="${consulta.id}"></td>
-            <td th:text="${#temporals.format(consulta.data_consulta, 'dd/MM/yyyy')}"></td>
-            <td th:text="${consulta.paciente.nome} + ' ' + ${consulta.paciente.sobrenome}"></td>
-            <td th:text="${consulta.medico.nome}"></td>
-            
-            <td>
-                <a th:href="@{'/editarPaciente/' + ${paciente.id}}" class="btn btn-primary">Editar</a>
-                <form th:action="@{'/removerPaciente/' + ${paciente.id}}" method="post" style="display: inline;">
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja remover este paciente?')">Remover</button>
-                </form>
-            </td>
-        </tr>
+		<tr th:each="consulta : ${consultas}">
+		    <td th:text="${consulta.id}"></td>
+			<td th:text="${#dates.format(consulta.data_consulta, 'dd/MM/yyyy HH:mm:ss')}"></td>
+		    <td th:text="${consulta.paciente.nome} + ' ' + ${consulta.paciente.sobrenome}"></td>
+		    <td th:text="${consulta.medico.nome}"></td>
+		    <td th:text="${consulta.descricao}"></td>
+		    <td th:text="${consulta.status}"></td>
+
+		    
+		    <td>
+		        <a th:href="@{'/editarConsulta/' + ${consulta.id}}" class="btn btn-primary">Editar</a>
+		        
+		        <form th:action="@{'/cancelarConsulta/' + ${consulta.id}}" method="post" style="display: inline;">
+		            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja cancelar esta consulta?')">Cancelar</button>
+		        </form>
+		        
+		        <form th:action="@{'/finalizarConsulta/' + ${consulta.id}}" method="post" style="display: inline;">
+		            <button type="submit" class="btn btn-secundary" onclick="return confirm('Tem certeza que deseja finalizar esta consulta?')">Finalizar</button>
+		        </form>
+		    </td>
+		</tr>
+
     </table>
 </body>
 </html>

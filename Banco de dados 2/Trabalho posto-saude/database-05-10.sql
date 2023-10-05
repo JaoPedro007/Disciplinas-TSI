@@ -1,0 +1,2 @@
+ALTER TABLE CONSULTA
+CHANGE COLUMN data_consulta data_consulta DATE

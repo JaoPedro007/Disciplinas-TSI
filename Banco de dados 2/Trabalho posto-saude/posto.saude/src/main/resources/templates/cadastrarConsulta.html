@@ -44,6 +44,13 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+        
+        .alert-danger {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+    }
+        
     </style>
 </head>
 
@@ -61,6 +68,9 @@
     	<option value="" disabled selected>Escolha um Paciente</option>
 			<option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}"></option>
 		</select>
+		<div th:if="${error}" class="alert alert-danger">
+	   		 <p th:text="${error}"></p>
+		</div>
 		
 				
 		<label>Medico:</label>

@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
+import br.edu.utfpr.td.tsi.posto.saude.modelo.Status;
 
 @Component
 public class MysqlPacienteDAO implements PacienteDAO {
@@ -47,9 +48,10 @@ public class MysqlPacienteDAO implements PacienteDAO {
 	}
 
 	@Override
-	public void atualizar(Long id, Paciente p) {
-		// TODO
+	public void atualizar(Paciente paciente) {
+
 	}
+
 
 	@Override
 	public void remover(Long id) {
@@ -108,6 +110,29 @@ public class MysqlPacienteDAO implements PacienteDAO {
 
 	    return null;
 	}
+	
+	@Override
+	public boolean temConsultaAgendada(Long pacienteId) {
+	    try {
+	        Connection conn = dataSource.getConnection();
+	        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM consulta WHERE paciente_id = ? AND status = ?");
+	        stmt.setLong(1, pacienteId);
+	        stmt.setString(2, Status.AGENDADA.name());
+	        ResultSet rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            int count = rs.getInt(1);
+	            return count > 0;
+	        }
+
+	        conn.close();
+	        stmt.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+
 
 	
 }

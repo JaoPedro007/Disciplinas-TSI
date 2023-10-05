@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.edu.utfpr.td.tsi.posto.saude.dao.ConsultaDAO;
 import br.edu.utfpr.td.tsi.posto.saude.dao.MedicoDAO;
@@ -15,6 +17,7 @@ import br.edu.utfpr.td.tsi.posto.saude.dao.PacienteDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Consulta;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Medico;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
+import br.edu.utfpr.td.tsi.posto.saude.modelo.Status;
 
 @Controller
 public class ConsultaController {
@@ -47,9 +50,75 @@ public class ConsultaController {
 	}
 
 	@PostMapping("/cadastrarConsulta")
-	public String cadastrar(@ModelAttribute("e")Consulta consulta) {
-		consultaDao.inserir(consulta);
-		return "redirect:/listarConsultas";
+	public String cadastrar(@ModelAttribute("e") Consulta consulta,@RequestParam("paciente.id") Long pacienteId,@RequestParam("medico.id") Long medicoId, Model model) {
+	    Paciente paciente = new Paciente();
+	    paciente.setId(pacienteId);
+
+	    Medico medico = new Medico();
+	    medico.setId(medicoId);
+
+	    consulta.setPaciente(paciente);
+	    consulta.setMedico(medico);
+	    
+	    if (pacienteDao.temConsultaAgendada(paciente.getId())) {
+	        model.addAttribute("error", "O paciente já possui uma consulta agendada.");
+	        return "cadastrarConsulta";
+	    } else {
+	        consulta.setStatus(Status.AGENDADA);
+	        consultaDao.inserir(consulta);
+
+	        return "redirect:/listarConsultas";
+	    }
 	}
+	
+	
+	@PostMapping("/finalizarConsulta/{consultaId}")
+	public String finalizarConsulta(@PathVariable Long consultaId) {
+	    Consulta consulta = consultaDao.procurar(consultaId);
+
+	    consulta.setStatus(Status.REALIZADA);	  
+	    
+	    consultaDao.atualizar(consulta.getId(), consulta);
+	    
+	    return "redirect:/listarConsultas";
+	}
+	
+	@PostMapping("/cancelarConsulta/{consultaId}")
+	public String cancelarConsulta(@PathVariable Long consultaId) {
+	    Consulta consulta = consultaDao.procurar(consultaId);
+	    
+	    if (consulta.getStatus() != Status.REALIZADA) {
+	        consulta.setStatus(Status.CANCELADA);
+	        consultaDao.atualizar(consultaId, consulta);
+	    }
+
+	    
+	    return "redirect:/listarConsultas";
+	}
+	
+	@GetMapping("/editarConsulta/{consultaId}")
+	public String exibirPaginaEdicao(@PathVariable Long consultaId, Model model) {
+	    Consulta consulta = consultaDao.procurar(consultaId);
+	    
+	        List<Paciente> pacientes = pacienteDao.listarTodos();
+	        List<Medico> medicos = medicoDao.listarTodos();
+	        
+	        model.addAttribute("consulta", consulta);
+	        model.addAttribute("pacientes", pacientes);
+	        model.addAttribute("medicos", medicos);
+	           
+	    
+	    return "redirect:/listarConsultas";
+	}
+	
+	@PostMapping("/editarConsulta")
+	public String editarConsulta(@ModelAttribute("consulta") Consulta consulta) {
+	    consultaDao.atualizar(consulta.getId(), consulta);
+	    return "redirect:/listarConsultas";
+	}
+
+
+	
+
 
 }

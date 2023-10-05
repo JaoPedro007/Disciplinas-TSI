@@ -12,39 +12,30 @@ public class Consulta {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date data_consulta;
-	private Paciente paciente_id;
-	private Medico medico_id;
+	private Paciente paciente;
+	private Medico medico;
 	private String descricao;
 	private Status status;
-	
-	
+		
 	
 	
 	public Consulta(Long id, Date data_consulta, Paciente paciente, Medico medico, String descricao, Status status) {
 		this.id=id;
 		this.data_consulta=data_consulta;
-		this.paciente_id=paciente;
-		this.medico_id=medico;
+		this.paciente=paciente;
+		this.medico=medico;
 		this.descricao=descricao;
 		this.status=status;
+	}
+	
+	public Consulta() {
+		
 	}
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public Paciente getPaciente_id() {
-		return paciente_id;
-	}
-	public void setPaciente_id(Paciente paciente_id) {
-		this.paciente_id = paciente_id;
-	}
-	public Medico getMedico_id() {
-		return medico_id;
-	}
-	public void setMedico_id(Medico medico_id) {
-		this.medico_id = medico_id;
 	}
 	public String getDescricao() {
 		return descricao;
@@ -64,7 +55,21 @@ public class Consulta {
 	public void setData_consulta(Date data_consulta) {
 		this.data_consulta = data_consulta;
 	}
-	
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
+
+	public Medico getMedico() {
+		return medico;
+	}
+
+	public void setMedico(Medico medico) {
+		this.medico = medico;
+	}
 
 
 	
