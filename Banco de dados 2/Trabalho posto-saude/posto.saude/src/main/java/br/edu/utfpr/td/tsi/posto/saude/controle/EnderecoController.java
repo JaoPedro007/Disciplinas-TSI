@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import br.edu.utfpr.td.tsi.posto.saude.dao.BairroDAO;
@@ -49,6 +50,24 @@ public class EnderecoController {
 		enderecoDao.inserir(endereco);
 		return "redirect:/listarEnderecos";
 	}
+	
+	@GetMapping("/editarEndereco/{id}")
+	public String exibirPaginaEdicaoEndereco(@PathVariable Long id, Model model) {
+	    List<Paciente> pacientes = pacienteDao.listarTodos();
+	    List<Bairro> bairros = bairroDao.listarTodos();
+	    Endereco endereco = enderecoDao.procurar(id);
+	    model.addAttribute("endereco", endereco);
+	    model.addAttribute("pacientes", pacientes);
+	    model.addAttribute("bairros", bairros);
+	    return "editarEndereco";
+	}
+
+	@PostMapping("/salvarEndereco")
+	public String editarConsulta(@ModelAttribute("endereco") Endereco endereco) {
+	    enderecoDao.atualizar(endereco.getId(), endereco);
+	    return "redirect:/listarEnderecos";
+	}
+
 
 	
 	

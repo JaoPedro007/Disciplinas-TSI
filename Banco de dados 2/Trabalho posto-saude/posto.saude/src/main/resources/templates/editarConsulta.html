@@ -1,59 +1,93 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<meta charset="UTF-8">
+	<title>Posto de Saúde Web</title>
+	
+	    <style>
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            width: 60%;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="datetime-local"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        
+        .alert-danger {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+    }
+        
+    </style>
 </head>
+
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Editar Consulta</h1>
-        <form method="post" action="/editarConsulta" class="needs-validation" novalidate>
-            <!-- Campos de formulário para editar os detalhes da consulta -->
-            <input type="hidden" name="id" th:value="${consulta.id}" />
+    <h1>Editar consulta</h1>
 
-            <div class="form-group">
-                <label for="data_consulta">Data da Consulta:</label>
-                <input type="datetime-local" id="data_consulta" name="data_consulta" class="form-control" th:value="${#dates.format(consulta.data_consulta, 'yyyy-MM-dd\'T\'HH:mm')}" required />
-                <div class="invalid-feedback">
-                    Por favor, informe a data da consulta.
-                </div>
-            </div>
+    <form method="POST" action="/posto-saude/salvarConsulta">
+        <!-- Campo oculto para o ID da consulta -->
+        <input type="hidden" name="id" th:value="${consulta.id}" />
 
-            <div class="form-group">
-                <label for="pacienteId">Paciente:</label>
-                <select id="pacienteId" name="paciente.id" class="form-control" required>
-                    <option value="" disabled>Escolha um Paciente</option>
-                    <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}" th:selected="${paciente.id == consulta.paciente.id}"></option>
-                </select>
-                <div class="invalid-feedback">
-                    Por favor, escolha um paciente.
-                </div>
-            </div>
+		<label>Data Consulta:</label>
+		<input type="datetime-local" name="data_consulta" required /> <br>
 
-            <div class="form-group">
-                <label for="medicoId">Médico:</label>
-                <select id="medicoId" name="medico.id" class="form-control" required>
-                    <option value="" disabled>Escolha um Médico</option>
-                    <option th:each="medico : ${medicos}" th:value="${medico.id}" th:text="${medico.nome} + ' ' +  ${medico.sobrenome}" th:selected="${medico.id == consulta.medico.id}"></option>
-                </select>
-                <div class="invalid-feedback">
-                    Por favor, escolha um médico.
-                </div>
-            </div>
 
-            <div class="form-group">
-                <label for="descricao">Descrição:</label>
-                <input type="text" id="descricao" name="descricao" class="form-control" th:value="${consulta.descricao}" required />
-                <div class="invalid-feedback">
-                    Por favor, informe a descrição.
-                </div>
-            </div>
 
-            <!-- Adicione outros campos de formulário conforme necessário -->
 
-            <br>
-            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-        </form>
-    </div>
+        <label>Paciente:</label>
+        <select name="paciente.id" required>
+            <option value="" disabled>Escolha um Paciente</option>
+            <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}" th:selected="${paciente.id == consulta.paciente.id}"></option>
+        </select>
+
+        <label>Médico:</label>
+        <select name="medico.id" required>
+            <option value="" disabled>Escolha um Médico</option>
+            <option th:each="medico : ${medicos}" th:value="${medico.id}" th:text="${medico.nome} + ' ' +  ${medico.sobrenome}" th:selected="${medico.id == consulta.medico.id}"></option>
+        </select>
+
+        <label>Descrição:</label>
+        <input type="text" name="descricao" th:value="${consulta.descricao}" required /> <br>
+
+        <br>
+
+        <input type="submit" value="Salvar Alterações" />
+    </form>
+
 </body>
+
+
 </html>

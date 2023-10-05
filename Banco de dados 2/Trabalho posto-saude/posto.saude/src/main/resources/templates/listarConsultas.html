@@ -71,6 +71,11 @@
             text-decoration: none;
             cursor: pointer;
         }
+        .alert-danger {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+    }
     </style>
 </head>
 <body>
@@ -97,6 +102,9 @@
 		    
 		    <td>
 		        <a th:href="@{'/editarConsulta/' + ${consulta.id}}" class="btn btn-primary">Editar</a>
+		        <div th:if="${error}" class="alert alert-danger">
+	   		 		<p th:text="${error}"></p>
+			   </div>
 		        
 		        <form th:action="@{'/cancelarConsulta/' + ${consulta.id}}" method="post" style="display: inline;">
 		            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja cancelar esta consulta?')">Cancelar</button>

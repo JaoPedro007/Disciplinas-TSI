@@ -3,6 +3,7 @@ package br.edu.utfpr.td.tsi.posto.saude.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,12 @@ public class MysqlEnderecoDAO implements EnderecoDAO {
 
 	@Autowired
 	private DataSource dataSource;
+	
+	@Autowired
+	private PacienteDAO pacienteDao;
+	
+	@Autowired
+	private BairroDAO bairroDao;
 
 	@Override
 	public void inserir(Endereco endereco) {
@@ -80,20 +87,77 @@ public class MysqlEnderecoDAO implements EnderecoDAO {
 	
 
 	@Override
-	public void atualizar(Endereco end) {
-		// TODO
+	public void atualizar(Long id, Endereco endereco) {
+	    String sql = "UPDATE endereco SET logradouro= ?, numero= ?, cep= ?, complemento= ?, paciente_id= ?, bairro_id= ? WHERE id = ?";
+	    
+	    try (Connection conn = dataSource.getConnection();
+	         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	        
+	        preparedStatement.setString(1, endereco.getLogradouro());
+	        preparedStatement.setString(2, endereco.getNumero());
+	        preparedStatement.setString(3, endereco.getCep());	        
+	        preparedStatement.setString(4, endereco.getComplemento());
+	        preparedStatement.setLong(5, endereco.getPaciente().getId());
+	        preparedStatement.setLong(6, endereco.getBairro().getId());
+	        
+        
+	        preparedStatement.executeUpdate();
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	@Override
-	public void remover(Long idEndereco) {
-		// TODO
-
+	public void remover(Long id) {
+	    String sql = "DELETE FROM endereco WHERE id = ?";
+	    
+	    try (Connection conn = dataSource.getConnection();
+	         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	        
+	        preparedStatement.setLong(1, id);
+	        
+	        preparedStatement.executeUpdate();
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
+
 
 	@Override
 	public Endereco procurar(Long idEndereco) {
-		// TODO Auto-generated method stub
-		return null;
+	    Endereco endereco = null;
+	    String sql = "SELECT * FROM endereco WHERE id = ?";
+	    
+	    try (Connection conn = dataSource.getConnection();
+	         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	        
+	        preparedStatement.setLong(1, idEndereco);
+	        ResultSet rs = preparedStatement.executeQuery();
+	        
+	        if (rs.next()) {
+	            Long id = rs.getLong("id");
+	            String logradouro = rs.getString("logradouro");
+	            String numero = rs.getString("numero");
+	            String cep = rs.getString("cep");
+	            String complemento = rs.getString("complemento");
+	            
+	            Long pacienteId = rs.getLong("paciente_id");
+	            Long bairroId = rs.getLong("bairro_id");
+	            
+	            Paciente paciente = pacienteDao.procurar(pacienteId);
+	            Bairro bairro = bairroDao.procurar(bairroId);
+	            
+	            endereco = new Endereco(id, logradouro, numero, cep, complemento, paciente, bairro);
+	        }
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return endereco;
 	}
+
 
 }

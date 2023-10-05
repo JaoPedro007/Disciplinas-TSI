@@ -10,6 +10,8 @@ public interface ConsultaDAO {
 	public Long inserir(Consulta c);
 
 	public void atualizar(Long id, Consulta c);
+	
+	public void editarConsulta(Long id, Consulta c);
 
 	public void remover(Long id);
 

@@ -11,7 +11,7 @@ public interface EnderecoDAO {
 
 	public void inserir(Endereco endereco);
 
-	public void atualizar(Endereco endereco);
+	public void atualizar(Long id, Endereco endereco);
 
 	public void remover(Long idEndereco);
 		

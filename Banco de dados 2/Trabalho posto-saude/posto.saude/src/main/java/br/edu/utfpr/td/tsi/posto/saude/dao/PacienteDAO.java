@@ -8,7 +8,7 @@ public interface PacienteDAO {
 
 	public Long inserir(Paciente p);
 
-	public void atualizar(Paciente p);
+	public void atualizar(Long id, Paciente p);
 
 	public void remover(Long id);
 

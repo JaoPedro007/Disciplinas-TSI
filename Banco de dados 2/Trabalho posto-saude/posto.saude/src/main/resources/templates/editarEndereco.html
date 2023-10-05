@@ -48,25 +48,36 @@
 </head>
 
 <body>
-	<h1>Editar paciente</h1>
+	<h1>Editar endereço</h1>
 
-<form method="POST" action="/posto-saude/salvarPaciente">
+<form method="POST" action="/posto-saude/salvarEndereco">
 	 <input type="hidden" name="id" th:value="${paciente.id}" />
 
 	
-    <label>Nome:</label>
-    <input type="text" name="nome" th:value="${paciente.nome}" required />
+    <label>Logradouro:</label>
+    <input type="text" name="logradouro" th:value="${endereco.logradouro}" required />
     
-    <label>Sobrenome:</label>
-    <input type="text" name="sobrenome" th:value="${paciente.sobrenome}" required /> <br>
+    <label>Numero:</label>
+    <input type="text" name="numero" th:value="${endereco.numero}" required /> <br>
 
-    <label>Data Nascimento:</label>
-    <input type="date" name="data_nascimento" th:value="${#temporals.format(paciente.data_nascimento, 'yyyy-MM-dd')}" required /> <br>
+    <label>Cep:</label>
+    <input type="text" name="cep" th:value="${endereco.cep}" required /> <br>
+
+    <label>Complemento:</label>
+    <input type="text" name="complemento" th:value="${endereco.complemento}" required /> <br>
     
-    <label>Telefone:</label>
-    <input type="text" name="telefone" th:value="${paciente.telefone}" required /> <br>
+	<label>Paciente:</label>
+	<select name="paciente.id" required>
+	    <option value="" disabled>Escolha um Paciente</option>
+	    <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}" th:selected="${paciente.id == paciente.id}"></option>
+	</select>
+	
+	<label>Bairro:</label>
+	<select name="bairro.id" required>
+	    <option value="" disabled>Escolha um Bairro</option>
+	    <option th:each="bairro : ${bairros}" th:value="${bairro.id}" th:text="${bairro.nome}" th:selected="${bairro.id == bairro.id}"></option>
+	</select>
 
-    <br>
 
     <input type="submit" value="Salvar" />
 </form>

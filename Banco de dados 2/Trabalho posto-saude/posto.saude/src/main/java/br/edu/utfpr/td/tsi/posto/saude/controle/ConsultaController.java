@@ -73,14 +73,20 @@ public class ConsultaController {
 	
 	
 	@PostMapping("/finalizarConsulta/{consultaId}")
-	public String finalizarConsulta(@PathVariable Long consultaId) {
+	public String finalizarConsulta(@PathVariable Long consultaId, Model model) {
 	    Consulta consulta = consultaDao.procurar(consultaId);
 
-	    consulta.setStatus(Status.REALIZADA);	  
-	    
-	    consultaDao.atualizar(consulta.getId(), consulta);
-	    
-	    return "redirect:/listarConsultas";
+	    if(consulta.getStatus() == Status.AGENDADA) {
+		    consulta.setStatus(Status.REALIZADA);	  
+		    
+		    consultaDao.atualizar(consulta.getId(), consulta);
+		    
+		    return "redirect:/listarConsultas";
+	    }else{
+	        model.addAttribute("error", "Não é possível Finalizar uma consulta Realizada ou Cancelada.");
+	    	return "redirect:/listarConsultas";	    	
+	    }
+
 	}
 	
 	@PostMapping("/cancelarConsulta/{consultaId}")
@@ -96,26 +102,32 @@ public class ConsultaController {
 	    return "redirect:/listarConsultas";
 	}
 	
-	@GetMapping("/editarConsulta/{consultaId}")
-	public String exibirPaginaEdicao(@PathVariable Long consultaId, Model model) {
-	    Consulta consulta = consultaDao.procurar(consultaId);
+	@GetMapping("/editarConsulta/{id}")
+	public String exibirPaginaEdicaoConsulta(@PathVariable Long id, Model model) {
+	    Consulta consulta = consultaDao.procurar(id);
 	    
-	        List<Paciente> pacientes = pacienteDao.listarTodos();
-	        List<Medico> medicos = medicoDao.listarTodos();
-	        
-	        model.addAttribute("consulta", consulta);
-	        model.addAttribute("pacientes", pacientes);
-	        model.addAttribute("medicos", medicos);
-	           
-	    
-	    return "redirect:/listarConsultas";
+	    if(consulta.getStatus() == Status.AGENDADA) {
+		    model.addAttribute("consulta", consulta);
+		    
+		    List<Paciente> pacientes = pacienteDao.listarTodos();
+		    List<Medico> medicos = medicoDao.listarTodos();
+		    model.addAttribute("pacientes", pacientes);
+		    model.addAttribute("medicos", medicos);
+		    return "editarConsulta"; 
+
+	    }else {
+	        model.addAttribute("error", "Não é possível editar uma consulta Realizada ou Cancelada.");
+	        return "redirect:/listarConsultas";
+	    }
+
 	}
-	
-	@PostMapping("/editarConsulta")
+
+	@PostMapping("/salvarConsulta")
 	public String editarConsulta(@ModelAttribute("consulta") Consulta consulta) {
-	    consultaDao.atualizar(consulta.getId(), consulta);
+	    consultaDao.editarConsulta(consulta.getId(), consulta);
 	    return "redirect:/listarConsultas";
 	}
+
 
 
 	

@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import br.edu.utfpr.td.tsi.posto.saude.dao.PacienteDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
@@ -44,5 +43,17 @@ public class PacienteController {
 	    return "editarPaciente";
 	}
 
+	@PostMapping("/salvarPaciente")
+	public String salvar(Paciente p) {
+	    pacienteDAO.atualizar(p.getId(), p);
+		return "redirect:/listarPacientes";
+	}
+	
+	
+	@PostMapping("/removerPaciente/{id}")
+	public String remover(Paciente p) {
+	    pacienteDAO.remover(p.getId());
+		return "redirect:/listarPacientes";
+	}
 
 }

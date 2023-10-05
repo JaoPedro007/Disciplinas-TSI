@@ -48,20 +48,23 @@
 </head>
 
 <body>
-	<h1>Cadastrar paciente</h1>
+	<h1>Editar paciente</h1>
 
-<form method="POST" action="atualizarPaciente">
+<form method="POST" action="/posto-saude/salvarPaciente">
+	 <input type="hidden" name="id" th:value="${paciente.id}" />
+
+	
     <label>Nome:</label>
-	<input type="text" name="nome" required value="${paciente.nome}" />
+    <input type="text" name="nome" th:value="${paciente.nome}" required />
     
     <label>Sobrenome:</label>
-    <input type="text" name="sobrenome" required value="${paciente.sobrenome}" /> <br>
+    <input type="text" name="sobrenome" th:value="${paciente.sobrenome}" required /> <br>
 
     <label>Data Nascimento:</label>
-    <input type="date" name="data_nascimento" required value="${#temporals.format(paciente.data_nascimento, 'yyyy-MM-dd')}" /> <br>
+    <input type="date" name="data_nascimento" th:value="${#temporals.format(paciente.data_nascimento, 'yyyy-MM-dd')}" required /> <br>
     
     <label>Telefone:</label>
-    <input type="text" name="telefone" required value="${paciente.telefone}" /> <br>
+    <input type="text" name="telefone" th:value="${paciente.telefone}" required /> <br>
 
     <br>
 

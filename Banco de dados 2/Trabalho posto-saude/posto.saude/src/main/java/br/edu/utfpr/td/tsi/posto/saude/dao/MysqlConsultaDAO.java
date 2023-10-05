@@ -75,9 +75,6 @@ public class MysqlConsultaDAO implements ConsultaDAO {
 	            String descricao = rs.getString(6);
 	            String statusConsulta = rs.getString(7);
 	            
-	            System.err.print("Data da consulta" + data_consulta);
-
-
 	            Status status = Status.valueOf(statusConsulta);
 
 	            Paciente paciente = new Paciente();
@@ -111,6 +108,28 @@ public class MysqlConsultaDAO implements ConsultaDAO {
 	        preparedStatement.setString(4, c.getDescricao());
 	        preparedStatement.setString(5, c.getStatus().name());
 	        preparedStatement.setLong(6, id);
+
+	        preparedStatement.executeUpdate();
+
+	        conn.close();
+	        preparedStatement.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	@Override
+	public void editarConsulta(Long id, Consulta c) {
+	    String sql = "UPDATE consulta SET data_consulta = ?, paciente_id = ?, medico_id = ?, descricao = ? WHERE id = ?";
+	    try {
+	        Connection conn = dataSource.getConnection();
+	        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+	        
+	        preparedStatement.setTimestamp(1, new Timestamp(c.getData_consulta().getTime()));
+	        preparedStatement.setLong(2, c.getPaciente().getId());
+	        preparedStatement.setLong(3, c.getMedico().getId());
+	        preparedStatement.setString(4, c.getDescricao());
+	        preparedStatement.setLong(5, id);
 
 	        preparedStatement.executeUpdate();
 

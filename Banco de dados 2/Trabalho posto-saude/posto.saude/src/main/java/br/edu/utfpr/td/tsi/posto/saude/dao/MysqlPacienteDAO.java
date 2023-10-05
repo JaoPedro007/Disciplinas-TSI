@@ -48,16 +48,44 @@ public class MysqlPacienteDAO implements PacienteDAO {
 	}
 
 	@Override
-	public void atualizar(Paciente paciente) {
-
+	public void atualizar(Long id, Paciente paciente) {
+	    String sql = "UPDATE paciente SET nome = ?, sobrenome = ?, telefone = ?, data_nascimento = ? WHERE id = ?";
+	    
+	    try (Connection conn = dataSource.getConnection();
+	         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	        
+	        preparedStatement.setString(1, paciente.getNome());
+	        preparedStatement.setString(2, paciente.getSobrenome());
+	        preparedStatement.setString(3, paciente.getTelefone());
+	        
+	        java.sql.Date sqlDate = java.sql.Date.valueOf(paciente.getData_nascimento());
+	        preparedStatement.setDate(4, sqlDate);
+	        
+	        preparedStatement.setLong(5, paciente.getId());
+	        
+	        preparedStatement.executeUpdate();
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
-
 
 	@Override
 	public void remover(Long id) {
-		// TODO
-
+	    String sql = "DELETE FROM paciente WHERE id = ?";
+	    
+	    try (Connection conn = dataSource.getConnection();
+	         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	        
+	        preparedStatement.setLong(1, id);
+	        
+	        preparedStatement.executeUpdate();
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
+
 
 	@Override
 	public List<Paciente> listarTodos() {
