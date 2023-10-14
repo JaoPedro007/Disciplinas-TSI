@@ -93,6 +93,10 @@ public class MysqlEnderecoDAO implements EnderecoDAO {
 	    try (Connection conn = dataSource.getConnection();
 	         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 	        
+	    	System.err.print("Paciente " + endereco.getPaciente().getId());
+	    	System.err.print("Bairro " + endereco.getBairro().getId());
+
+	    	
 	        preparedStatement.setString(1, endereco.getLogradouro());
 	        preparedStatement.setString(2, endereco.getNumero());
 	        preparedStatement.setString(3, endereco.getCep());	        

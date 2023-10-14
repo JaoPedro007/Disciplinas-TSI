@@ -57,7 +57,7 @@ public class EnderecoController {
 	    List<Bairro> bairros = bairroDao.listarTodos();
 	    Endereco endereco = enderecoDao.procurar(id);
 	    model.addAttribute("endereco", endereco);
-	    model.addAttribute("pacientes", pacientes);
+	    model.addAttribute("paciente", pacientes);
 	    model.addAttribute("bairros", bairros);
 	    return "editarEndereco";
 	}

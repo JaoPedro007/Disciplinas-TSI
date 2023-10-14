@@ -51,8 +51,10 @@
 	<h1>Editar endereço</h1>
 
 <form method="POST" action="/posto-saude/salvarEndereco">
-	 <input type="hidden" name="id" th:value="${paciente.id}" />
+	
+	<span th:text="${paciente.id}"></span>
 
+	
 	
     <label>Logradouro:</label>
     <input type="text" name="logradouro" th:value="${endereco.logradouro}" required />
@@ -67,10 +69,11 @@
     <input type="text" name="complemento" th:value="${endereco.complemento}" required /> <br>
     
 	<label>Paciente:</label>
-	<select name="paciente.id" required>
+	<select name="endereco.paciente.id" required>
 	    <option value="" disabled>Escolha um Paciente</option>
-	    <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}" th:selected="${paciente.id == paciente.id}"></option>
+	    <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}"></option>
 	</select>
+
 	
 	<label>Bairro:</label>
 	<select name="bairro.id" required>
