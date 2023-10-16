@@ -57,17 +57,22 @@ public class EnderecoController {
 	    List<Bairro> bairros = bairroDao.listarTodos();
 	    Endereco endereco = enderecoDao.procurar(id);
 	    model.addAttribute("endereco", endereco);
-	    model.addAttribute("paciente", pacientes);
+	    model.addAttribute("pacientes", pacientes);
 	    model.addAttribute("bairros", bairros);
 	    return "editarEndereco";
 	}
 
 	@PostMapping("/salvarEndereco")
 	public String editarConsulta(@ModelAttribute("endereco") Endereco endereco) {
-	    enderecoDao.atualizar(endereco.getId(), endereco);
+		enderecoDao.atualizar(endereco.getId(), endereco);
 	    return "redirect:/listarEnderecos";
 	}
-
+	
+	@PostMapping("/removerEndereco/{id}")
+	public String remover(Endereco endereco) {
+	    enderecoDao.remover(endereco.getId());
+		return "redirect:/listarEnderecos";
+	}
 
 	
 	

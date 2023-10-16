@@ -2,101 +2,45 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Endereços cadastrados</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 24px;
-        }
-
-        table {
-            width: 80%;
-            margin: 0 auto;
-            border-collapse: collapse;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-        
-       .btn-primary {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
+<title>Posto de Saúde Web</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-	
-	
-		<h1>Endereços cadastrados</h1>
-	<table>
-		<tr>
-			<th>ID</th>
-			<th>Logradouro</th>
-			<th>Numero</th>
-			<th>Cep</th>						
-			<th>Complemento</th>
-			<th>Paciente</th>
-			<th>Bairro</th>
-			<th>Ações</th>
 
-			
-		</tr>
-		<tr th:each="endereco : ${enderecos}">
-        <td th:text="${endereco.id}"></td>
-        <td th:text="${endereco.logradouro}"></td>
-        <td th:text="${endereco.numero}"></td>
-        <td th:text="${endereco.cep}"></td>
-        <td th:text="${endereco.complemento}"></td>
-        <td th:text="${endereco.paciente.nome}"></td>
-        <td th:text="${endereco.bairro.nome}"></td>
-        <td>
-                <a th:href="@{'/editarEndereco/' + ${endereco.id}}" class="btn btn-primary">Editar</a>
-                <form th:action="@{'/removerEndereco/' + ${endereco.id}}" method="post" style="display: inline;">
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja remover este endereco?')">Remover</button>
-                </form>
-            </td>
-      </tr>
-	</table>
-
+<div class="container mt-4">
+    <h1 class="text-center">Endereços cadastrados</h1>
+    <table class="table table-bordered table-hover">
+        <thead class="bg-light">
+            <tr>
+                <th>ID</th>
+                <th>Logradouro</th>
+                <th>Número</th>
+                <th>CEP</th>
+                <th>Complemento</th>
+                <th>Paciente</th>
+                <th>Bairro</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="endereco : ${enderecos}">
+                <td th:text="${endereco.id}"></td>
+                <td th:text="${endereco.logradouro}"></td>
+                <td th:text="${endereco.numero}"></td>
+                <td th:text="${endereco.cep}"></td>
+                <td th:text="${endereco.complemento}"></td>
+                <td th:text="${endereco.paciente.nome}"></td>
+                <td th:text="${endereco.bairro.nome}"></td>
+                <td>
+                    <a th:href="@{'/editarEndereco/' + ${endereco.id}}" class="btn btn-primary">Editar</a>
+                    <form th:action="@{'/removerEndereco/' + ${endereco.id}}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja remover este endereço?')">Remover</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>

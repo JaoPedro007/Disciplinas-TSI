@@ -2,93 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Posto de Saúde Web</title>
-	
-	    <style>
-        h1 {
-            text-align: center;
-        }
-
-        form {
-            width: 60%;
-            margin: 0 auto;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        input[type="text"],
-        input[type="datetime-local"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        
-        .alert-danger {
-        background-color: #f8d7da;
-        border-color: #f5c6cb;
-        color: #721c24;
-    }
-        
-    </style>
+    <meta charset="UTF-8">
+    <title>Posto de Saúde Web</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
-	<h1>Cadastrar consulta</h1>
+    <div class="container">
+        <h1 class="text-center">Cadastrar consulta</h1>
 
-	<form method="POST" action="cadastrarConsulta">
+        <form method="POST" action="cadastrarConsulta" class="w-50 mx-auto">
+            <div class="form-group">
+                <label>Data Consulta:</label>
+                <input type="datetime-local" name="data_consulta" class="form-control" required />
+            </div>
 
-		<label>Data Consulta:</label>
-		<input type="datetime-local" name="data_consulta" required /> <br>
-		
-					
-		<label>Paciente:</label>
-		<select name="paciente.id" required>
-    	<option value="" disabled selected>Escolha um Paciente</option>
-			<option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}"></option>
-		</select>
-		<div th:if="${error}" class="alert alert-danger">
-	   		 <p th:text="${error}"></p>
-		</div>
-		
-				
-		<label>Medico:</label>
-		<select name="medico.id" required>
-    	<option value="" disabled selected>Escolha um Médico</option>
-			<option th:each="medico : ${medicos}" th:value="${medico.id}" th:text="${medico.nome} + ' ' +  ${medico.sobrenome}"></option>
-		</select>
+            <div class="form-group">
+                <label>Paciente:</label>
+                <select name="paciente.id" class="form-control" required>
+                    <option value="" disabled selected>Escolha um Paciente</option>
+                    <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}"></option>
+                </select>
+            </div>
 
-		
-		<label>Descrição:</label>
-		<input type="text" name="descricao" required/> <br>
-		
-		<br>
-		
+            <div th:if="${error}" class="alert alert-danger">
+                <p th:text="${error}"></p>
+            </div>
 
-		<input type="submit" value="Cadastrar" />
-	</form>
-	
+            <div class="form-group">
+                <label>Médico:</label>
+                <select name="medico.id" class="form-control" required>
+                    <option value="" disabled selected>Escolha um Médico</option>
+                    <option th:each="medico : ${medicos}" th:value="${medico.id}" th:text="${medico.nome} + ' ' +  ${medico.sobrenome}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Descrição:</label>
+                <input type="text" name="descricao" class="form-control" required />
+            </div>
+
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+        </form>
+    </div>
+
 </body>
-
 </html>

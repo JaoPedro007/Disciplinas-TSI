@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import br.edu.utfpr.td.tsi.posto.saude.dao.BairroDAO;
@@ -25,13 +26,33 @@ public class BairroController {
 	}
 
 	@GetMapping(value = "/cadastrarBairro")
-	public String exibirPaginaVadastro() {
+	public String exibirPaginaCadastro() {
 		return "cadastrarBairro";
 	}
 
 	@PostMapping("/cadastrarBairro")
 	public String cadastrar(Bairro bairro) {
 		bairroDAO.inserir(bairro);
+		return "redirect:/listarbairros";
+	}
+	
+	@GetMapping("/editarBairro/{id}")
+	public String editarBairro(@PathVariable Long id, Model model) {
+	    Bairro bairro = bairroDAO.procurar(id);
+	    model.addAttribute("bairro", bairro);
+	    return "editarBairro";
+	}
+
+	@PostMapping("/salvarBairro")
+	public String salvar(Bairro b) {
+	    bairroDAO.atualizar(b.getId(), b);
+		return "redirect:/listarbairros";
+	}
+	
+	
+	@PostMapping("/removerBairro/{id}")
+	public String remover(Bairro b) {
+	    bairroDAO.remover(b.getId());
 		return "redirect:/listarbairros";
 	}
 

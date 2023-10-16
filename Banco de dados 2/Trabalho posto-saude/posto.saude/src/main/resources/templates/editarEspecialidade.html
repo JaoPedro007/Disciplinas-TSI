@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Posto de Saúde Web</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">Editar Especialidade</h1>
+
+        <form method="POST" action="/posto-saude/salvarEspecialidade" class="w-60 mx-auto">
+            <input type="hidden" name="id" th:value="${especialidade.id}" />
+            
+            <div class="form-group">
+                <label>Descrição:</label>
+                <input type="text" name="descricao" th:value="${especialidade.descricao}" class="form-control" required />
+            </div>
+
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

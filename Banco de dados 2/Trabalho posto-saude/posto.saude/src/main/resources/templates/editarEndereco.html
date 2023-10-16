@@ -2,88 +2,58 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Posto de Saúde Web</title>
-	
-	    <style>
-        h1 {
-            text-align: center;
-        }
-
-        form {
-            width: 60%;
-            margin: 0 auto;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>Posto de Saúde Web</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
-	<h1>Editar endereço</h1>
+    <div class="container">
+        <h1 class="text-center">Editar endereço</h1>
 
-<form method="POST" action="/posto-saude/salvarEndereco">
-	
-	<span th:text="${paciente.id}"></span>
+        <form method="POST" action="/posto-saude/salvarEndereco" class="w-60 mx-auto">
+            <input type="hidden" name="id" th:value="${endereco.id}" />
+            
+            <div class="form-group">
+                <label>Logradouro:</label>
+                <input type="text" name="logradouro" th:value="${endereco.logradouro}" class="form-control" required />
+            </div>
 
-	
-	
-    <label>Logradouro:</label>
-    <input type="text" name="logradouro" th:value="${endereco.logradouro}" required />
-    
-    <label>Numero:</label>
-    <input type="text" name="numero" th:value="${endereco.numero}" required /> <br>
+            <div class="form-group">
+                <label>Numero:</label>
+                <input type="text" name="numero" th:value="${endereco.numero}" class="form-control" required />
+            </div>
 
-    <label>Cep:</label>
-    <input type="text" name="cep" th:value="${endereco.cep}" required /> <br>
+            <div class="form-group">
+                <label>Cep:</label>
+                <input type="text" name="cep" th:value="${endereco.cep}" class="form-control" required />
+            </div>
 
-    <label>Complemento:</label>
-    <input type="text" name="complemento" th:value="${endereco.complemento}" required /> <br>
-    
-	<label>Paciente:</label>
-	<select name="endereco.paciente.id" required>
-	    <option value="" disabled>Escolha um Paciente</option>
-	    <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}"></option>
-	</select>
-
-	
-	<label>Bairro:</label>
-	<select name="bairro.id" required>
-	    <option value="" disabled>Escolha um Bairro</option>
-	    <option th:each="bairro : ${bairros}" th:value="${bairro.id}" th:text="${bairro.nome}" th:selected="${bairro.id == bairro.id}"></option>
-	</select>
-
-
-    <input type="submit" value="Salvar" />
-</form>
+            <div class="form-group">
+                <label>Complemento:</label>
+                <input type="text" name="complemento" th:value="${endereco.complemento}" class="form-control" required />
+            </div>
+            
+            <div class="form-group">
+                <label>Paciente:</label>
+                <select name="paciente.id" class="form-control" required>
+                    <option value="" disabled>Escolha um Paciente</option>
+                    <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}"></option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Bairro:</label>
+                <select name="bairro.id" class="form-control" required>
+                    <option value="" disabled>Escolha um Bairro</option>
+                    <option th:each="bairro : ${bairros}" th:value="${bairro.id}" th:text="${bairro.nome}" th:selected="${bairro.id == endereco.bairro.id}"></option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </form>
+    </div>
 
 </body>
 

@@ -4,80 +4,53 @@
 	<meta charset="UTF-8">
 	<title>Posto de Saúde Web</title>
 	
-	    <style>
-        h1 {
-            text-align: center;
-        }
-
-        form {
-            width: 60%;
-            margin: 0 auto;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
-	<h1>Cadastrar Endereço</h1>
+	<div class="container">
+		<h1 class="text-center">Cadastrar Endereço</h1>
 
-	<form method="POST" action="cadastrarEndereco">
-		<label>Logradouro</label>
-		<input type="text" name="logradouro" required/> <br>
+		<form method="POST" action="cadastrarEndereco" class="w-60 mx-auto">
+			<div class="form-group">
+				<label>Logradouro</label>
+				<input type="text" name="logradouro" class="form-control" required />
+			</div>
 
-		<label>Cep:</label>
-		<input type="text" name="cep" required/> <br>
+			<div class="form-group">
+				<label>Cep:</label>
+				<input type="text" name="cep" class="form-control" required />
+			</div>
 
-		<label>Número:</label>
-		<input type="text" name="numero" required/> <br>
-		
-		<label>Complemento:</label>
-		<input type="text" name="complemento" required/> <br>
-		
-		<label>Paciente:</label>
-		<select name="paciente.id" required>
-    	<option value="" disabled selected>Escolha um Paciente</option>
-			<option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}"></option>
-		</select>
+			<div class="form-group">
+				<label>Número:</label>
+				<input type="text" name="numero" class="form-control" required />
+			</div>
+			
+			<div class="form-group">
+				<label>Complemento:</label>
+				<input type="text" name="complemento" class="form-control" required />
+			</div>
 
-		<label>Bairro:</label>
-		<select name="bairro.id" required>
-    		<option value="" disabled selected>Escolha um bairro</option>
-			<option th:each="bairro : ${bairros}" th:value="${bairro.id}" th:text="${bairro.nome}"></option>
-		</select>
-		<br>
-		
+			<div class="form-group">
+				<label>Paciente:</label>
+				<select name="paciente.id" class="form-control" required>
+					<option value="" disabled selected>Escolha um Paciente</option>
+					<option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome} + ' ' +  ${paciente.sobrenome}"></option>
+				</select>
+			</div>
 
-		<input type="submit" value="cadastrar" />
-	</form>
-	
+			<div class="form-group">
+				<label>Bairro:</label>
+				<select name="bairro.id" class="form-control" required>
+					<option value="" disabled selected>Escolha um bairro</option>
+					<option th:each="bairro : ${bairros}" th:value="${bairro.id}" th:text="${bairro.nome}"></option>
+				</select>
+			</div>
+
+			<button type="submit" class="btn btn-success">Cadastrar</button>
+		</form>
+	</div>
+
 </body>
 </html>

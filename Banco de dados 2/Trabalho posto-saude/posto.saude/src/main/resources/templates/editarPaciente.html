@@ -2,74 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Posto de Saúde Web</title>
-	
-	    <style>
-        h1 {
-            text-align: center;
-        }
-
-        form {
-            width: 60%;
-            margin: 0 auto;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>Posto de Saúde Web</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
-	<h1>Editar paciente</h1>
+    <div class="container">
+        <h1 class="text-center">Editar Paciente</h1>
 
-<form method="POST" action="/posto-saude/salvarPaciente">
-	 <input type="hidden" name="id" th:value="${paciente.id}" />
+        <form method="POST" action="/posto-saude/salvarPaciente" class="w-60 mx-auto">
+            <input type="hidden" name="id" th:value="${paciente.id}" />
+            
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" name="nome" th:value="${paciente.nome}" class="form-control" required />
+            </div>
 
-	
-    <label>Nome:</label>
-    <input type="text" name="nome" th:value="${paciente.nome}" required />
-    
-    <label>Sobrenome:</label>
-    <input type="text" name="sobrenome" th:value="${paciente.sobrenome}" required /> <br>
+            <div class="form-group">
+                <label>Sobrenome:</label>
+                <input type="text" name="sobrenome" th:value="${paciente.sobrenome}" class="form-control" required />
+            </div>
 
-    <label>Data Nascimento:</label>
-    <input type="date" name="data_nascimento" th:value="${#temporals.format(paciente.data_nascimento, 'yyyy-MM-dd')}" required /> <br>
-    
-    <label>Telefone:</label>
-    <input type="text" name="telefone" th:value="${paciente.telefone}" required /> <br>
+            <div class="form-group">
+                <label>Data Nascimento:</label>
+                <input type="date" name="data_nascimento" th:value="${#temporals.format(paciente.data_nascimento, 'yyyy-MM-dd')}" class="form-control" required />
+            </div>
 
-    <br>
+            <div class="form-group">
+                <label>Telefone:</label>
+                <input type="text" name="telefone" th:value="${paciente.telefone}" class="form-control" required />
+            </div>
 
-    <input type="submit" value="Salvar" />
-</form>
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </form>
+    </div>
 
 </body>
 

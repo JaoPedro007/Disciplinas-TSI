@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Posto de Saúde Web</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">Editar Médico</h1>
+
+        <form method="POST" action="/posto-saude/salvarMedico" class="w-60 mx-auto">
+            <input type="hidden" name="id" th:value="${medico.id}" />
+            
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" name="nome" th:value="${medico.nome}" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label>Sobrenome:</label>
+                <input type="text" name="sobrenome" th:value="${medico.sobrenome}" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label>CRM:</label>
+                <input type="text" name="crm" th:value="${medico.crm}" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label>CPF:</label>
+                <input type="text" name="cpf" th:value="${medico.cpf}" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label>Telefone:</label>
+                <input type="text" name="telefone" th:value="${medico.telefone}" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label>Especialidade:</label>
+                <select name="especialidade.id" class="form-control" required>
+                    <option value="" disabled>Escolha uma especialidade</option>
+                    <option th:each="especialidade : ${especialidades}" th:value="${especialidade.id}" th:text="${especialidade.descricao}" th:selected="${especialidade.id == medico.especialidade.id}"></option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

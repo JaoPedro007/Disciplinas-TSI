@@ -40,7 +40,7 @@ public class ConsultaController {
 	}
 
 	@GetMapping(value = "/cadastrarConsulta")
-	public String exibirPaginaCadastro(Model model) {
+	public String exibirPaginaConsulta(Model model) {
 		List<Paciente> pacientes = pacienteDao.listarTodos();
 		model.addAttribute("pacientes", pacientes);
 		

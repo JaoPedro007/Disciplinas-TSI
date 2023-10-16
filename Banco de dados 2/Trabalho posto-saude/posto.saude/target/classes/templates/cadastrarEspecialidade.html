@@ -1,51 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Posto de Saúde Web</title>
-
-    <style>
-        h1 {
-            text-align: center;
-        }
-
-        form {
-            width: 50%;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <meta charset="ISO-8859-1">
+    <title>Posto de Saúde Web</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
-	<h1>Cadastrar especialidade</h1>
+    <div class="container">
+        <h1 class="text-center">Cadastrar especialidade</h1>
 
-	<form method="POST" action="cadastrarEspecialidade">
-		<input type="text" name="descricao" placeholder="Descrição da especialidade" required/> 
-		<input type="submit" value="cadastrar" />
-	</form>
-</body>
+        <form method="POST" action="cadastrarEspecialidade" class="w-50 mx-auto">
+            <div class="form-group">
+                <input type="text" name="descricao" class="form-control" placeholder="Descrição da especialidade" required/> 
+            </div>
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+        </form>
+    </div>
 
 </body>
 </html>

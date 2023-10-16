@@ -2,120 +2,46 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Consultas cadastrados</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+<title>Posto de Saúde Web</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 24px;
-        }
-
-        table {
-            width: 80%;
-            margin: 0 auto;
-            border-collapse: collapse;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
-          .btn-secundary {
-            background-color: rgb(0, 128, 0);
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .alert-danger {
-        background-color: #f8d7da;
-        border-color: #f5c6cb;
-        color: #721c24;
-    }
-    </style>
 </head>
 <body>
-    <h1>Consultas cadastrados</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Data Consulta</th>
-            <th>Paciente</th>
-            <th>Médico</th> 
-            <th>Descrição</th>                        
-            <th>Status</th>                        
-                       
-            <th>Ações</th>
-        </tr>
-		<tr th:each="consulta : ${consultas}">
-		    <td th:text="${consulta.id}"></td>
-			<td th:text="${#dates.format(consulta.data_consulta, 'dd/MM/yyyy HH:mm:ss')}"></td>
-		    <td th:text="${consulta.paciente.nome} + ' ' + ${consulta.paciente.sobrenome}"></td>
-		    <td th:text="${consulta.medico.nome}"></td>
-		    <td th:text="${consulta.descricao}"></td>
-		    <td th:text="${consulta.status}"></td>
+    <div class="container">
+        <h1 class="text-center mt-5 mb-3">Consultas cadastradas</h1>
+        <table class="table table-bordered table-hover">
+            <thead class="bg-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Data Consulta</th>
+                    <th>Paciente</th>
+                    <th>Médico</th>
+                    <th>Descrição</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="consulta : ${consultas}">
+                    <td th:text="${consulta.id}"></td>
+                    <td th:text="${#dates.format(consulta.data_consulta, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                    <td th:text="${consulta.paciente.nome} + ' ' + ${consulta.paciente.sobrenome}"></td>
+                    <td th:text="${consulta.medico.nome}"></td>
+                    <td th:text="${consulta.descricao}"></td>
+                    <td th:text="${consulta.status}"></td>
+                    <td>
+                        <a th:href="@{'/editarConsulta/' + ${consulta.id}}" class="btn btn-primary">Editar</a>
+                        <form th:action="@{'/cancelarConsulta/' + ${consulta.id}}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja cancelar esta consulta?')">Cancelar</button>
+                        </form>
+                        <form th:action="@{'/finalizarConsulta/' + ${consulta.id}}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-success" onclick="return confirm('Tem certeza que deseja finalizar esta consulta?')">Finalizar</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-		    
-		    <td>
-		        <a th:href="@{'/editarConsulta/' + ${consulta.id}}" class="btn btn-primary">Editar</a>
-		        <div th:if="${error}" class="alert alert-danger">
-	   		 		<p th:text="${error}"></p>
-			   </div>
-		        
-		        <form th:action="@{'/cancelarConsulta/' + ${consulta.id}}" method="post" style="display: inline;">
-		            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja cancelar esta consulta?')">Cancelar</button>
-		        </form>
-		        
-		        <form th:action="@{'/finalizarConsulta/' + ${consulta.id}}" method="post" style="display: inline;">
-		            <button type="submit" class="btn btn-secundary" onclick="return confirm('Tem certeza que deseja finalizar esta consulta?')">Finalizar</button>
-		        </form>
-		    </td>
-		</tr>
-
-    </table>
 </body>
 </html>

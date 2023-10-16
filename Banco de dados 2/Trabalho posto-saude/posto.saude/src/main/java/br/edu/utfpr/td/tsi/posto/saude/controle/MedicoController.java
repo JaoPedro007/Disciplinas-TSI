@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import br.edu.utfpr.td.tsi.posto.saude.dao.EspecialidadeDAO;
@@ -44,5 +45,28 @@ public class MedicoController {
 	    medicoDao.inserir(m);
 		return "redirect:/listarMedicos";
 	}
+	
+	@GetMapping("/editarMedico/{id}")
+	public String editarMedico(@PathVariable Long id, Model model) {
+	    Medico medico= medicoDao.procurar(id);
+	    List<Especialidade> especialidade = especialidadeDao.listarTodas();
+	    model.addAttribute("especialidades", especialidade);
+	    model.addAttribute("medico", medico);
+	    return "editarMedico";
+	}
+
+	@PostMapping("/salvarMedico")
+	public String salvar(Medico m) {
+	    medicoDao.atualizar(m.getId(), m);
+		return "redirect:/listarMedicos";
+	}
+	
+	
+	@PostMapping("/removerMedico/{id}")
+	public String remover(Medico m) {
+	    medicoDao.remover(m.getId());
+		return "redirect:/listarMedicos";
+	}
+
 
 }
