@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -34,27 +33,15 @@ public class JogoBean implements Serializable {
 
     @PostConstruct
     public void init() {
-<<<<<<< HEAD
-        
-=======
-<<<<<<< HEAD
-        
-=======
         resetarJogo();
->>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
->>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
+
     }
 
     public String jogar() {
         escolhaComputador = obterEscolhaComputador();
         atualizarEstatisticas();
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
+
         resetarJogo();
->>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
->>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
         escolherImagemJogador();
         escolherImagemComputador();
 
@@ -73,13 +60,8 @@ public class JogoBean implements Serializable {
     }
 
     public void escolherImagemJogador() {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
+
         System.out.println("Escolha do jogador: " + escolhaJogador);
->>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
->>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
         if ("Pedra".equalsIgnoreCase(escolhaJogador)) {
             imagemJogador = "pedra_jogador";
         } else if ("Papel".equalsIgnoreCase(escolhaJogador)) {
@@ -127,15 +109,9 @@ public class JogoBean implements Serializable {
     private void atualizarEstatisticas() {
         quantidadeJogos++;
         jogadorDao.adicionarJogador(nomeJogador);
-<<<<<<< HEAD
         resultado = determinarResultado(escolhaJogador, escolhaComputador);
-=======
-<<<<<<< HEAD
         resultado = determinarResultado(escolhaJogador, escolhaComputador);
-=======
         String resultado = determinarResultado(escolhaJogador, escolhaComputador);
->>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
->>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
         if (resultado.equals("Você venceu!")) {
             jogadorDao.adicionarVitoria(nomeJogador);
         } else if (resultado.equals("Você perdeu!")) {
@@ -144,10 +120,6 @@ public class JogoBean implements Serializable {
             jogadorDao.adicionarEmpate(nomeJogador);
         }
     }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
     public void zerarEstatisticas(){
         jogadorDao.zerarEstatisticas(nomeJogador);
         quantidadeEmpates=0;
@@ -155,7 +127,8 @@ public class JogoBean implements Serializable {
         quantidadeVitoriasComputador=0;
         quantidadeVitoriasJogador=0;
     }
-<<<<<<< HEAD
+
+    
 
     public String verEstatisticaGeral(){
         return "estatisticas.xhtml";
@@ -163,20 +136,10 @@ public class JogoBean implements Serializable {
     
     public String voltarResultado(){
         return "resultado.xhtml";
-=======
 
-    public String verEstatisticaGeral(){
-        return "estatisticas.xhtml";
     }
-    
-    public String voltarResultado(){
-        return "resultado.xhtml";
-=======
-
     public void resetarJogo() {
-
->>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
->>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
+        
     }
 
     public void redirect(String page) {
@@ -256,12 +219,4 @@ public class JogoBean implements Serializable {
     public void setEscolhaComputador(String escolhaComputador) {
         this.escolhaComputador = escolhaComputador;
     }
-<<<<<<< HEAD
-=======
-
-<<<<<<< HEAD
-=======
->>>>>>> 6bbbda572160a6fc7044ac87d5010fe5024c78e4
-
->>>>>>> 74e182d09d3a61e1bdbcfae83bf27305889e599c
 }

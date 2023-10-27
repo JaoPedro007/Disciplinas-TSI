@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./modelo.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+
+
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Nome: "/>
+                <p:inputText value="#{cursoBean.curso.nome}"/>
+
+                <p:outputLabel value="Ementa: "/>
+                <p:inputText value="#{cursoBean.curso.ementa}"/>
+
+                <p:outputLabel value="Carga Horária: "/>
+                <p:inputText value="#{cursoBean.curso.cargaHoraria}"/>
+
+            </p:panelGrid>
+            <br/>
+            <p:commandButton value="Cadastrar" action="#{cursoBean.cadastrar}" ajax="false"/>
+        </h:form>
+        
+        
+        
+        <p:dataTable id="listarCursos" value="#{cursoBean.listaCursos}" var="c">
+            <p:column headerText="Id">
+                <h:outputText value="#{c.id}"/>
+            </p:column>
+            <p:column headerText="Nome">
+                <h:outputText value="#{c.nome}"/>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{c.ementa}"/>
+            </p:column>
+            <p:column headerText="Carga Horária">
+                <h:outputText value="#{c.cargaHoraria}"/>
+            </p:column>
+
+            <p:column>
+                <h:form><p:commandButton value="Excluir" update="listarCursos mensagens" action="#{cursoBean.excluir(c)}" styleClass="ui-button-flat">
+                        <p:confirm header="Confirma&ccedil;&atilde;o" message="Tem certeza que deseja remover este curso?" icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+                </h:form>
+            </p:column>
+            <p:column>
+                <h:form><p:commandButton value="Editar" ajax="false"
+                                         action="#{prodBean.editar(c)}"/>
+                </h:form>
+            </p:column>
+        </p:dataTable>
+
+
+    </ui:define>
+</ui:composition>

@@ -2,3 +2,6 @@ Aluno: João Pedro Rodrigues Leite
 E-mail: joaopedroleite@alunos.utfpr.edu.br
 RA: a2487055
 
+Aluno: Marco Vinícius
+E-mail: marcovcb@gmail.com
+RA: a2411962
