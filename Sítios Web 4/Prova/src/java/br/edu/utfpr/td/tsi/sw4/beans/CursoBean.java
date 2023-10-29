@@ -6,12 +6,14 @@ package br.edu.utfpr.td.tsi.sw4.beans;
 
 import br.edu.utfpr.td.tsi.sw4.modelo.Curso;
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -88,8 +90,23 @@ public class CursoBean implements Serializable {
         }
         return null;
     }
-    
-    public String iniciarEdicao(Curso c){
+
+    public List<SelectItem> getCursos() {
+        LinkedList<SelectItem> cursos = new LinkedList<>();
+        try {
+            List<Curso> curso = em.createQuery(
+                    "select p from Curso p order by p.nome")
+                    .getResultList();
+            for (Curso c : curso) {
+                cursos.add(new SelectItem(c, c.getNome()));
+            }
+        } catch (Exception ex) {
+
+        }
+        return cursos;
+    }
+
+    public String iniciarEdicao(Curso c) {
         curso = c;
         return null;
     }

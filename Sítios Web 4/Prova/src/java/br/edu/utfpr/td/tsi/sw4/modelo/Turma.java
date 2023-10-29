@@ -5,11 +5,15 @@
 package br.edu.utfpr.td.tsi.sw4.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -18,30 +22,28 @@ import javax.persistence.Id;
 @Entity
 public class Turma implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date dataInicio;
-    private Date dataFim;
+
+    @ManyToOne
+    @JoinColumn(name = "professor_id", referencedColumnName = "id")
+    Professor professor;
+
+    @ManyToOne
+    @JoinColumn(name = "curso_id", referencedColumnName = "id")
+    Curso curso;
+
+    @NotNull
+    private LocalDate dataInicio;
+
+    @NotNull
+    private LocalDate dataFim;
+
     private double valor;
+
+    @NotNull
     private int vagas;
-
-    public Date getDataInicio() {
-        return dataInicio;
-    }
-
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public Date getDataFim() {
-        return dataFim;
-    }
-
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
-    }
 
     public double getValor() {
         return valor;
@@ -58,12 +60,45 @@ public class Turma implements Serializable {
     public void setVagas(int vagas) {
         this.vagas = vagas;
     }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDate getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public LocalDate getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(LocalDate dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
     @Override
@@ -75,7 +110,6 @@ public class Turma implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Turma)) {
             return false;
         }
@@ -90,5 +124,5 @@ public class Turma implements Serializable {
     public String toString() {
         return "br.edu.utfpr.td.tsi.sw4.modelo.Turma[ id=" + id + " ]";
     }
-    
+
 }

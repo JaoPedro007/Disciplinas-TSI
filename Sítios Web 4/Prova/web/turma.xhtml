@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./modelo.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form>
+            <p:panelGrid columns="2">
+
+                <p:outputLabel value="Data Início: "/>
+                <p:calendar id="dataInicio" value="#{turmaBean.turma.dataInicio}" pattern="dd/MM/yyyy" mask="99/99/9999"/>
+
+                <p:outputLabel value="Data Fim: "/>
+                <p:calendar id="dataFim" value="#{turmaBean.turma.dataFim}" pattern="dd/MM/yyyy" mask="99/99/9999"/>
+
+                <p:outputLabel value="Vagas: "/>
+                <p:inputText value="#{turmaBean.turma.vagas}"/>
+
+                <p:outputLabel value="Professor: "/>
+                <p:selectOneMenu value="#{turmaBean.professorAtual}"
+                                 converter="#{profConverter}">
+                    <f:ajax event="change" render=":listaTurmas" 
+                            disabled="#{turmaBean.editando}"/>
+                    <f:selectItems value="#{professorBean.professores}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Curso: "/>
+                <p:selectOneMenu value="#{turmaBean.cursoAtual}"
+                                 converter="#{cursoConverter}">
+                    <f:ajax event="change" render=":listaTurmas" 
+                            disabled="#{turmaBean.editando}"/>
+                    <f:selectItems value="#{cursoBean.cursos}"/>
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <br/>
+            <p:commandButton value="Confirmar" action="#{turmaBean.confirmar}" ajax="false"/>
+        </h:form>
+
+
+
+        <p:dataTable value="#{turmaBean.listaTurmas}" var="t" id="tabTurmas">
+            <p:column headerText="Id">
+                <h:outputText value="#{t.id}"/>
+            </p:column>
+            <p:column headerText="Data Início">
+                <h:outputText value="#{t.dataInicio}"/>
+            </p:column>
+            <p:column headerText="Data Fim">
+                <h:outputText value="#{t.dataFim}"/>
+            </p:column>
+            <p:column headerText="Valor">
+                <h:outputText value="#{t.valor}">
+                    <f:convertNumber currencySymbol="R$" minFractionDigits="2" maxFractionDigits="2"/>
+                </h:outputText>            
+            </p:column>
+            <p:column headerText="Vagas">
+                <h:outputText value="#{t.vagas}"/>
+            </p:column>
+            <p:column headerText="Professor">
+                <h:outputText value="#{t.professor.nome}"/>
+            </p:column>
+            <p:column headerText="Curso">
+                <h:outputText value="#{t.curso.nome}"/>
+            </p:column>
+
+
+            <p:column>
+                <h:form><p:commandButton value="Excluir" update="tabTurmas mensagens" action="#{turmaBean.excluir(c)}" styleClass="ui-button-flat">
+                        <p:confirm header="Confirmar exclusão" message="Tem certeza que deseja remover este curso?" icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+                </h:form>
+            </p:column>
+            <p:column>
+                <h:form><p:commandButton value="Editar" ajax="false"
+                                         action="#{turmaBean.editar(t)}"/>
+                </h:form>
+            </p:column>
+        </p:dataTable>
+
+    </ui:define>
+</ui:composition>

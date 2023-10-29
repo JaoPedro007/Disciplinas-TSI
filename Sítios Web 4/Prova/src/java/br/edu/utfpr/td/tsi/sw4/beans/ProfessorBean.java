@@ -6,12 +6,14 @@ package br.edu.utfpr.td.tsi.sw4.beans;
 
 import br.edu.utfpr.td.tsi.sw4.modelo.Professor;
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -99,6 +101,21 @@ public class ProfessorBean implements Serializable {
         return null;
     }
 
+    public List<SelectItem> getProfessores() {
+        LinkedList<SelectItem> professores = new LinkedList<>();
+        try {
+            List<Professor> prof = em.createQuery(
+                    "select p from Professor p order by p.nome")
+                    .getResultList();
+            for (Professor p : prof) {
+                professores.add(new SelectItem(p, p.getNome()));
+            }
+        } catch (Exception ex) {
+
+        }
+        return professores;
+    }
+
     public String iniciarEdicao(Professor p) {
         professor = p;
         return null;
@@ -108,12 +125,12 @@ public class ProfessorBean implements Serializable {
         return professor;
     }
 
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
-    }
-
     public List<Professor> getListaProfessores() {
         return listaProfessores;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 
     public void setListaProfessores(List<Professor> listaProfessores) {
