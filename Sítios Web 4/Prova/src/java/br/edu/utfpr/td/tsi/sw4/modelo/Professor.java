@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 
 /**
  *
@@ -17,16 +19,25 @@ import javax.persistence.Id;
 @Entity
 public class Professor implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
     private String cpf;
-    private String nome;
-    private String email;
-    private String telefone;
-    private double valorHora;
     
+    @NotEmpty
+    private String nome;
+    
+    @NotEmpty
+    private String email;
+    
+    @NotEmpty
+    private String telefone;
+    
+    @Min(value = 1, message = "A carga horária deve ser maior que zero")
+    private double valorHora;
+
     public String getCpf() {
         return cpf;
     }
@@ -67,7 +78,6 @@ public class Professor implements Serializable {
         this.valorHora = valorHora;
     }
 
-
     public Long getId() {
         return id;
     }
@@ -100,5 +110,5 @@ public class Professor implements Serializable {
     public String toString() {
         return "br.edu.utfpr.td.tsi.sw4.modelo.Professor[ id=" + id + " ]";
     }
-    
+
 }

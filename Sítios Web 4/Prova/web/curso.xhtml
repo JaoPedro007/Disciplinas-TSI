@@ -8,10 +8,9 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-
-
         <h:form>
             <p:panelGrid columns="2">
+
                 <p:outputLabel value="Nome: "/>
                 <p:inputText value="#{cursoBean.curso.nome}"/>
 
@@ -23,19 +22,19 @@
 
             </p:panelGrid>
             <br/>
-            <p:commandButton value="Cadastrar" action="#{cursoBean.cadastrar}" ajax="false"/>
+            <p:commandButton value="Confirmar" action="#{cursoBean.confirmar}" ajax="false"/>
         </h:form>
-        
-        
-        
-        <p:dataTable id="listarCursos" value="#{cursoBean.listaCursos}" var="c">
+
+
+
+        <p:dataTable value="#{cursoBean.listaCursos}" var="c" id="tabCursos">
             <p:column headerText="Id">
                 <h:outputText value="#{c.id}"/>
             </p:column>
             <p:column headerText="Nome">
                 <h:outputText value="#{c.nome}"/>
             </p:column>
-            <p:column>
+            <p:column headerText="Ementa">
                 <h:outputText value="#{c.ementa}"/>
             </p:column>
             <p:column headerText="Carga Horária">
@@ -43,18 +42,17 @@
             </p:column>
 
             <p:column>
-                <h:form><p:commandButton value="Excluir" update="listarCursos mensagens" action="#{cursoBean.excluir(c)}" styleClass="ui-button-flat">
-                        <p:confirm header="Confirma&ccedil;&atilde;o" message="Tem certeza que deseja remover este curso?" icon="pi pi-exclamation-triangle"/>
+                <h:form><p:commandButton value="Excluir" update="tabCursos mensagens" action="#{cursoBean.excluir(c)}" styleClass="ui-button-flat">
+                        <p:confirm header="Confirmar exclusão" message="Tem certeza que deseja remover este curso?" icon="pi pi-exclamation-triangle"/>
                     </p:commandButton>
                 </h:form>
             </p:column>
             <p:column>
                 <h:form><p:commandButton value="Editar" ajax="false"
-                                         action="#{prodBean.editar(c)}"/>
+                                         action="#{cursoBean.iniciarEdicao(c)}"/>
                 </h:form>
             </p:column>
         </p:dataTable>
-
 
     </ui:define>
 </ui:composition>

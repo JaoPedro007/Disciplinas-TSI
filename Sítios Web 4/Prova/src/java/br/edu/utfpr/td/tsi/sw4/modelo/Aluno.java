@@ -10,6 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -18,16 +22,28 @@ import javax.persistence.Id;
 @Entity
 public class Aluno implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
     private String cpf;
+
+    @NotEmpty
     private String nome;
+
+    @NotEmpty
     private String email;
+
+    @NotEmpty
     private String telefone;
+
+    @NotNull
+    @Temporal(TemporalType.DATE)
     private Date dataNascimento;
-    private String nomeReponsavel;
+
+    @NotEmpty
+    private String nomeResponsavel;
 
     public String getCpf() {
         return cpf;
@@ -69,14 +85,13 @@ public class Aluno implements Serializable {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getNomeReponsavel() {
-        return nomeReponsavel;
+    public String getNomeResponsavel() {
+        return nomeResponsavel;
     }
 
-    public void setNomeReponsavel(String nomeReponsavel) {
-        this.nomeReponsavel = nomeReponsavel;
+    public void setNomeResponsavel(String nomeResponsavel) {
+        this.nomeResponsavel = nomeResponsavel;
     }
-
 
     public Long getId() {
         return id;
@@ -110,5 +125,5 @@ public class Aluno implements Serializable {
     public String toString() {
         return "br.edu.utfpr.td.tsi.sw4.modelo.Aluno[ id=" + id + " ]";
     }
-    
+
 }

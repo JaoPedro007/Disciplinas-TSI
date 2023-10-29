@@ -23,7 +23,7 @@ import javax.transaction.UserTransaction;
  */
 @Named(value = "cursoBean")
 @SessionScoped
-public class CursoBean implements Serializable{
+public class CursoBean implements Serializable {
 
     @PersistenceContext
     EntityManager em;
@@ -47,8 +47,8 @@ public class CursoBean implements Serializable{
         } catch (Throwable t) {
         }
     }
-    
-    public String cadastrar() {
+
+    public String confirmar() {
         try {
             boolean adicionar = false;
             utx.begin();
@@ -59,36 +59,41 @@ public class CursoBean implements Serializable{
                 curso = em.merge(curso);
             }
             utx.commit();
-            if (adicionar)
-                listaCursos.add( curso );
+            if (adicionar) {
+                listaCursos.add(curso);
+            }
             curso = new Curso();
         } catch (Exception ex) {
-            try { 
-                // mandar uma FacesMessage para a View
+            try {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao cadastrar curso", null));
                 utx.rollback();
-            } catch(Throwable t) { }
+            } catch (Throwable t) {
+            }
         }
         return null;
     }
-    
-    
-        public String excluir(Curso c) {
+
+    public String excluir(Curso c) {
         try {
-            utx.begin(); 
-            c = em.merge(c); // agora d está gerenciado
-            // d = em.find( Departamento.class, d.getId());
-            em.remove( c );
+            utx.begin();
+            c = em.merge(c);
+            em.remove(c);
             utx.commit();
-            listaCursos.remove( c );
-        } catch(Exception ex) { 
-             FacesContext.getCurrentInstance().addMessage(null, 
-                   new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                           "Curso não foi excluído", 
-                           "Não foi possível excluir o Curso. Deve haver Turma relacionadas."));
+            listaCursos.remove(c);
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "Curso não foi excluído",
+                            "Não foi possível excluir o Curso. Deve haver Turma relacionadas."));
         }
         return null;
     }
     
+    public String iniciarEdicao(Curso c){
+        curso = c;
+        return null;
+    }
+
     public List<Curso> getListaCursos() {
         return listaCursos;
     }
@@ -105,7 +110,4 @@ public class CursoBean implements Serializable{
         this.curso = curso;
     }
 
-    public String verCursos() {
-        return "cadastrarCurso.xhtml";
-    }
 }

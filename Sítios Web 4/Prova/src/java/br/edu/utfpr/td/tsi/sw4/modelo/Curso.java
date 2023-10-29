@@ -1,15 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.edu.utfpr.td.tsi.sw4.modelo;
 
 import java.io.Serializable;
-import javax.persistence.Column;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 
 /**
  *
@@ -19,17 +17,16 @@ import javax.persistence.Id;
 public class Curso implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    
-    @Column(length = 100, nullable = false)
+
+    @NotEmpty
     private String nome;
-    
-    @Column(length = 100, nullable = false)
+
+    @NotEmpty
     private String ementa;
-    
-    @Column(nullable = false)
+
+    @Min(value = 1, message = "A carga horária deve ser maior que zero")
     private int cargaHoraria;
 
     public String getNome() {
@@ -66,27 +63,24 @@ public class Curso implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Curso)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Curso other = (Curso) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Curso other = (Curso) obj;
+        return Objects.equals(this.id, other.id);
     }
 
-    @Override
-    public String toString() {
-        return "br.edu.utfpr.td.tsi.sw4.modelo.Curso[ id=" + id + " ]";
-    }
-    
 }
