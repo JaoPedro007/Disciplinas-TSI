@@ -8,6 +8,8 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
+        <h1>Cursos</h1>
+
         <h:form>
             <p:panelGrid columns="2">
 
@@ -24,9 +26,8 @@
             <br/>
             <p:commandButton value="Confirmar" action="#{cursoBean.confirmar}" ajax="false"/>
         </h:form>
-
-
-
+        
+        <br/>
         <p:dataTable value="#{cursoBean.listaCursos}" var="c" id="tabCursos">
             <p:column headerText="Id">
                 <h:outputText value="#{c.id}"/>

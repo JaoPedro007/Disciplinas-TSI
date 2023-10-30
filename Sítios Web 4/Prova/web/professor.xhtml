@@ -8,6 +8,8 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
+        <h1>Professores</h1>
+
         <h:form>
             <p:panelGrid columns="2">
                 <p:outputLabel value="Nome "/>
@@ -31,7 +33,7 @@
         </h:form>
 
 
-
+        <br/>
         <p:dataTable value="#{professorBean.listaProfessores}" var="p" id="tabProfessores">
             <p:column headerText="Id">
                 <h:outputText value="#{p.id}"/>

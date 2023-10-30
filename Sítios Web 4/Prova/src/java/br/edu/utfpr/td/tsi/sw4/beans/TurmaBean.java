@@ -6,11 +6,13 @@ import br.edu.utfpr.td.tsi.sw4.modelo.Turma;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
@@ -38,7 +40,28 @@ public class TurmaBean implements Serializable {
     public String confirmar() {
         try {
             utx.begin();
+            
+            if (turma.getDataInicio().isAfter(turma.getDataFim())) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "A data de início não pode ser após a data de término.", null));
+                return null;
+            }
 
+            LocalDate dataAtual = LocalDate.now();
+            if (turma.getDataInicio().isBefore(dataAtual)) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "A data de início não pode ser anterior à data atual.", null));
+                return null;
+            }
+            if (turma.getId() == null) {
+                Turma turmaExiste = em.createQuery("SELECT t FROM Turma t WHERE t.descricao = :descricao", Turma.class)
+                        .setParameter("descricao", turma.getDescricao())
+                        .setMaxResults(1)
+                        .getResultStream().findFirst().orElse(null);
+
+                if (turmaExiste != null) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Turma já existe", null));
+                    return null;
+                }
+            }
             Curso curso = em.find(Curso.class, cursoAtual.getId());
             Professor professor = em.find(Professor.class, professorAtual.getId());
             turma.setProfessor(professorAtual);
@@ -98,6 +121,21 @@ public class TurmaBean implements Serializable {
         return null;
     }
 
+    public List<SelectItem> getTurmas() {
+        LinkedList<SelectItem> turmas = new LinkedList<>();
+        try {
+            List<Turma> turma = em.createQuery(
+                    "select t from Turma t order by t.descricao")
+                    .getResultList();
+            for (Turma t : turma) {
+                turmas.add(new SelectItem(t, t.getDescricao()));
+            }
+        } catch (Exception ex) {
+
+        }
+        return turmas;
+    }
+
     public Curso getCursoAtual() {
         return cursoAtual;
     }
@@ -136,8 +174,4 @@ public class TurmaBean implements Serializable {
         return null;
     }
 
-    public String definirProfessor(Professor p) {
-        professorAtual = p;
-        return "turma.xhtml";
-    }
 }

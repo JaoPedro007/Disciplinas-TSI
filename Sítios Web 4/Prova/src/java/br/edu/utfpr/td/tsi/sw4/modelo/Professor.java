@@ -35,7 +35,7 @@ public class Professor implements Serializable {
     @NotEmpty
     private String telefone;
     
-    @Min(value = 1, message = "A carga horária deve ser maior que zero")
+    @Min(value = 1, message = "O valor da hora deve ser maior que zero")
     private double valorHora;
 
     public String getCpf() {

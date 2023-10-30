@@ -8,8 +8,13 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
+        <h1>Turmas</h1>
+
         <h:form>
             <p:panelGrid columns="2">
+
+                <p:outputLabel value="Descrição "/>
+                <p:inputText id="descricao" value="#{turmaBean.turma.descricao}"/>
 
                 <p:outputLabel value="Data Início: "/>
                 <p:calendar id="dataInicio" value="#{turmaBean.turma.dataInicio}" pattern="dd/MM/yyyy" mask="99/99/9999"/>
@@ -41,11 +46,13 @@
             <p:commandButton value="Confirmar" action="#{turmaBean.confirmar}" ajax="false"/>
         </h:form>
 
-
-
+        <br/>
         <p:dataTable value="#{turmaBean.listaTurmas}" var="t" id="tabTurmas">
             <p:column headerText="Id">
                 <h:outputText value="#{t.id}"/>
+            </p:column>
+            <p:column headerText="Descrição">
+                <h:outputText value="#{t.descricao}"/>
             </p:column>
             <p:column headerText="Data Início">
                 <h:outputText value="#{t.dataInicio}"/>
@@ -70,8 +77,8 @@
 
 
             <p:column>
-                <h:form><p:commandButton value="Excluir" update="tabTurmas mensagens" action="#{turmaBean.excluir(c)}" styleClass="ui-button-flat">
-                        <p:confirm header="Confirmar exclusão" message="Tem certeza que deseja remover este curso?" icon="pi pi-exclamation-triangle"/>
+                <h:form><p:commandButton value="Excluir" update="tabTurmas mensagens" action="#{turmaBean.excluir(t)}" styleClass="ui-button-flat">
+                        <p:confirm header="Confirmar exclusão" message="Tem certeza que deseja remover esta turma?" icon="pi pi-exclamation-triangle"/>
                     </p:commandButton>
                 </h:form>
             </p:column>

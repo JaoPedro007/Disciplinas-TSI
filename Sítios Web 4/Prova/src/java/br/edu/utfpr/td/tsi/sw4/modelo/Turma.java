@@ -35,6 +35,9 @@ public class Turma implements Serializable {
     Curso curso;
 
     @NotNull
+    private String descricao;
+
+    @NotNull
     private LocalDate dataInicio;
 
     @NotNull
@@ -42,7 +45,6 @@ public class Turma implements Serializable {
 
     private double valor;
 
-    @NotNull
     private int vagas;
 
     public double getValor() {
@@ -99,6 +101,14 @@ public class Turma implements Serializable {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     @Override

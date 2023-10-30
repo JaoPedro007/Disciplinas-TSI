@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./modelo.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h1>Matriculas</h1>
+
+        <h:form>
+            <p:panelGrid columns="2">
+
+
+                <p:outputLabel value="Aluno "/>
+                <p:selectOneMenu value="#{matriculaBean.alunoAtual}"
+                                 converter="#{alunoConverter}">
+                    <f:ajax event="change" render=":listaMatriculas" 
+                            disabled="#{matriculaBean.editando}"/>
+                    <f:selectItems value="#{alunoBean.alunos}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Turma "/>
+                <p:selectOneMenu value="#{matriculaBean.turmaAtual}"
+                                 converter="#{turmaConverter}">
+                    <f:ajax event="change" render=":listaMatriculas" 
+                            disabled="#{turmaBean.editando}"/>
+                    <f:selectItems value="#{turmaBean.turmas}"/>
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+            <br/>
+            <p:commandButton value="Confirmar" action="#{matriculaBean.confirmar}" ajax="false"/>
+        </h:form>
+
+
+        <br/>
+        <p:dataTable value="#{matriculaBean.listaMatriculas}" var="m" id="tabMatriculas">
+            <p:column headerText="Id">
+                <h:outputText value="#{m.id}"/>
+            </p:column>
+            <p:column headerText="Data Matricula">
+                <h:outputText value="#{m.data}"/>
+            </p:column>
+            <p:column headerText="Data Pagamento">
+                <h:outputText value="#{m.dataPagamento}"/>
+            </p:column>
+            <p:column headerText="Valor">
+                <h:outputText value="#{m.turma.valor}">
+                    <f:convertNumber currencySymbol="R$" minFractionDigits="2" maxFractionDigits="2"/>
+                </h:outputText>            
+            </p:column>
+            <p:column headerText="Turma">
+                <h:outputText value="#{m.turma.descricao}"/>
+            </p:column>
+            <p:column headerText="Aluno">
+                <h:outputText value="#{m.aluno.nome}"/>
+            </p:column>
+
+
+            <p:column>
+                <h:form><p:commandButton value="Cancelar" update="tabMatriculas mensagens" action="#{matriculaBean.cancelar(m)}" styleClass="ui-button-flat">
+                        <p:confirm header="Confirmar exclusão" message="Tem certeza que deseja remover esta matricula?" icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+                </h:form>
+            </p:column>
+            <p:column>
+                <h:form><p:commandButton value="Editar" ajax="false"
+                                         action="#{matriculaBean.editar(m)}"/>
+                </h:form>
+            </p:column>
+        </p:dataTable>
+
+    </ui:define>
+</ui:composition>

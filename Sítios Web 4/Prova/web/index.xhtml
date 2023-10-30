@@ -10,28 +10,23 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-
-
-        <div class="cadastro-container">
-            <h2>Cadastro de Alunos</h2>
-            <div class="cadastro-panel">
-                <h:form>
-                    <h:panelGrid columns="2">
-                        <h:inputText id="nome" value="#{cadastroAlunoBean.aluno.nome}" styleClass="cadastro-input" />
-                        <h:outputLabel for="nome" value="Nome:" styleClass="cadastro-label" />
-
-
-                        <h:inputText id="cpf" value="#{cadastroAlunoBean.aluno.cpf}" styleClass="cadastro-input" />
-                        <h:outputLabel for="cpf" value="CPF:" styleClass="cadastro-label" />
-
-
-                    </h:panelGrid>
-                    <h:commandButton value="Cadastrar" action="#{cadastroAlunoBean.cadastrarAluno}" styleClass="cadastro-button" />
-                </h:form>
-
-
-            </div>
+        <style>
+            h2{
+                font-size: 18px; color: #666; font-weight: normal;
+            }
+            p{
+                font-size: 14px;color: #777; font-weight: normal;
+            }
+        </style>
+        <div align="center" style="text-align: center; margin: 20px;">
+            <h1>Bem-vindo ao Sistema de Gerenciamento de Cursos</h1>
+            <h2>Prova 2 da matéria de Sítios Web 4</h2>
+            <p>Professor: Roberto Scheffel</p>
+            <p>Aluno: João Pedro Rodrigues Leite</p>
+            <p>RA: A2487055</p>
         </div>
+
+
 
     </ui:define>
 </ui:composition>

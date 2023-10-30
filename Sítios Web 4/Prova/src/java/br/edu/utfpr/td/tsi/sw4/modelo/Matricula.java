@@ -5,11 +5,14 @@
 package br.edu.utfpr.td.tsi.sw4.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -18,28 +21,22 @@ import javax.persistence.Id;
 @Entity
 public class Matricula implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date data;
-    private Date dataPagamento;
 
-    public Date getData() {
-        return data;
-    }
+    private LocalDate data;
+    private LocalDate dataPagamento;
 
-    public void setData(Date data) {
-        this.data = data;
-    }
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "turma_id", referencedColumnName = "id")
+    Turma turma;
 
-    public Date getDataPagamento() {
-        return dataPagamento;
-    }
-
-    public void setDataPagamento(Date dataPagamento) {
-        this.dataPagamento = dataPagamento;
-    }
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "aluno_id", referencedColumnName = "id")
+    Aluno aluno;
 
     public Long getId() {
         return id;
@@ -47,6 +44,38 @@ public class Matricula implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
+    public LocalDate getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(LocalDate dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
     }
 
     @Override
@@ -72,5 +101,5 @@ public class Matricula implements Serializable {
     public String toString() {
         return "br.edu.utfpr.td.tsi.sw4.modelo.Matricula[ id=" + id + " ]";
     }
-    
+
 }

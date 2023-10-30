@@ -8,12 +8,14 @@ import br.edu.utfpr.td.tsi.sw4.modelo.Aluno;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -48,7 +50,6 @@ public class AlunoBean implements Serializable {
         try {
             listaAlunos = em.createQuery("select a from Aluno a")
                     .getResultList();
-            System.err.print(listaAlunos);
         } catch (Throwable t) {
         }
     }
@@ -137,10 +138,26 @@ public class AlunoBean implements Serializable {
             int idade = periodo.getYears();
             menorDe16Anos = idade < 16;
         }
-   }
+    }
+
+    public List<SelectItem> getAlunos() {
+        LinkedList<SelectItem> alunos = new LinkedList<>();
+        try {
+            List<Aluno> aluno = em.createQuery(
+                    "select a from Aluno a order by a.nome")
+                    .getResultList();
+            for (Aluno a : aluno) {
+                alunos.add(new SelectItem(a, a.getNome()));
+            }
+        } catch (Exception ex) {
+
+        }
+        return alunos;
+    }
 
     public String iniciarEdicao(Aluno a) {
         aluno = a;
+        verificaMenor();
         return null;
     }
 
