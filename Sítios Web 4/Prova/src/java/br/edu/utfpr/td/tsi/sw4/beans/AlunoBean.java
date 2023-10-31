@@ -37,9 +37,11 @@ public class AlunoBean implements Serializable {
 
     Aluno aluno;
 
+    private int idade;
+
     List<Aluno> listaAlunos;
 
-    private boolean menorDe16Anos;
+    private boolean menor;
 
     public AlunoBean() {
         aluno = new Aluno();
@@ -71,17 +73,20 @@ public class AlunoBean implements Serializable {
                 }
                 if (!validarAluno(aluno)) {
                     return null;
+                } else {
+                    em.persist(aluno);
+                    utx.commit();
+                    adicionar = true;
                 }
-                em.persist(aluno);
-                adicionar = true;
             } else {
                 if (!validarAluno(aluno)) {
                     return null;
 
+                } else {
+                    aluno = em.merge(aluno);
+                    utx.commit();
                 }
-                aluno = em.merge(aluno);
             }
-            utx.commit();
             if (adicionar) {
                 listaAlunos.add(aluno);
             }
@@ -115,12 +120,10 @@ public class AlunoBean implements Serializable {
     private boolean validarAluno(Aluno aluno) {
         verificaMenor();
 
-        if (menorDe16Anos && (aluno.getNomeResponsavel() == null || aluno.getNomeResponsavel().isEmpty())) {
+        if (menor && (aluno.getNomeResponsavel() == null || aluno.getNomeResponsavel().isEmpty())) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Nome do responsável é obrigatório para alunos menores de 16 anos", null));
             return false;
         }
-        LocalDate dataAtual = LocalDate.now();
-        int idade = Period.between(aluno.getDataNascimento(), dataAtual).getYears();
 
         if (idade >= 16 && (aluno.getNomeResponsavel() != null && !aluno.getNomeResponsavel().isEmpty())) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Alunos com 16 anos ou mais não podem ter um responsável associado", null));
@@ -135,8 +138,8 @@ public class AlunoBean implements Serializable {
             LocalDate dataNascimento = aluno.getDataNascimento();
             LocalDate dataAtual = LocalDate.now();
             Period periodo = Period.between(dataNascimento, dataAtual);
-            int idade = periodo.getYears();
-            menorDe16Anos = idade < 16;
+            idade = periodo.getYears();
+            menor = idade < 16;
         }
     }
 
@@ -177,11 +180,11 @@ public class AlunoBean implements Serializable {
         this.listaAlunos = listaAlunos;
     }
 
-    public boolean isMenorDe16Anos() {
-        return menorDe16Anos;
+    public boolean isMenor() {
+        return menor;
     }
 
-    public void setMenorDe16Anos(boolean menorDe16Anos) {
-        this.menorDe16Anos = menorDe16Anos;
+    public void setMenor(boolean menor) {
+        this.menor = menor;
     }
 }
