@@ -15,19 +15,28 @@ import java.util.logging.Logger;
 public class SalaEspera {
 
     ConcurrentLinkedQueue<Cliente> filaEspera = new ConcurrentLinkedQueue<Cliente>();
-    
+
     public void adicionarCliente(Cliente cliente) {
         try {
             if (filaEspera.size() >= 5) {
                 System.err.println("Cliente foi embora porque não tem mais espaço");
             } else {
-                filaEspera.add(cliente);
-                System.out.printf("Adicionei o cliente. Tamanho da fila é: %s \n", filaEspera.size());
+                try {
+                    filaEspera.add(cliente);
+                    System.out.printf("Adicionei o cliente. Tamanho da fila é: %s \n", filaEspera.size());
+                } catch (Exception e) {
+                    Logger.getLogger(SalaEspera.class.getName()).log(Level.SEVERE, null, e);
+                }
+
             }
         } catch (Exception e) {
             Logger.getLogger(SalaEspera.class.getName()).log(Level.SEVERE, null, e);
 
         }
+    }
+    public void chamarCliente(){
+        filaEspera.remove();
+        System.err.printf("Chamando cliente para cortar o cabelo. Tamanho da fila %d\n", filaEspera.size());
     }
 
 }

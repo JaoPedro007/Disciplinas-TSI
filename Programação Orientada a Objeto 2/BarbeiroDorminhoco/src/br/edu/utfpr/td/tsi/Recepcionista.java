@@ -5,8 +5,6 @@
 package br.edu.utfpr.td.tsi;
 
 import java.util.Random;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,10 +14,10 @@ import java.util.logging.Logger;
  */
 public class Recepcionista implements Runnable {
 
-    SalaEspera salaEspera = new SalaEspera();
     Barbearia barbearia;
+    SalaEspera salaEspera = new SalaEspera();
+
     Random rand = new Random();
-    Lock lock = new ReentrantLock();
 
     public Recepcionista(SalaEspera salaEspera, Barbearia barbearia) {
         this.salaEspera = salaEspera;
@@ -29,18 +27,24 @@ public class Recepcionista implements Runnable {
     @Override
     public void run() {
         while (barbearia.isAberta()) {
-            lock.lock();
             try {
                 int time = rand.nextInt(11000);
-                Thread.sleep(time);
-                Cliente cliente = new Cliente();
-                salaEspera.adicionarCliente(cliente);
-                System.out.printf("A %s está tentando adicionar o cliente no tempo %d\n", Thread.currentThread().getName(), time);
+                barbearia.lock.lock();
+                try {
+                    if (salaEspera.filaEspera.size() == 1) {
+                        barbearia.cortar.signalAll();
+                    }
+                    Thread.sleep(time);
+                    Cliente cliente = new Cliente();
+                    salaEspera.adicionarCliente(cliente);
+                    System.out.printf("A %s está tentando adicionar o cliente no tempo %d\n", Thread.currentThread().getName(), time);
+
+                } finally {
+                    barbearia.lock.unlock();
+                }
 
             } catch (InterruptedException ex) {
                 Logger.getLogger(Recepcionista.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                lock.unlock();
             }
         }
     }

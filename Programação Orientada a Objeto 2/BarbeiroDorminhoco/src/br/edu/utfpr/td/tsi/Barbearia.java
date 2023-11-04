@@ -4,7 +4,9 @@
  */
 package br.edu.utfpr.td.tsi;
 
-
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
@@ -12,9 +14,12 @@ package br.edu.utfpr.td.tsi;
  */
 public class Barbearia {
 
-    static SalaEspera salaEspera = new SalaEspera();
-    static Barbearia barbearia = new Barbearia();
+    static Lock lock = new ReentrantLock();
+    static Condition cortar = lock.newCondition();
 
+    static Barbearia barbearia = new Barbearia();
+    
+    static SalaEspera salaEspera = new SalaEspera();
     static Recepcionista recepcionista = new Recepcionista(salaEspera, barbearia);
     static Barbeiro barbeiro = new Barbeiro(salaEspera, barbearia);
 

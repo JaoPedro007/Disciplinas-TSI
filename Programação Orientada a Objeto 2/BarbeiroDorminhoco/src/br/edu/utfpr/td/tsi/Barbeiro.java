@@ -5,8 +5,8 @@
 package br.edu.utfpr.td.tsi;
 
 import java.util.Random;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,21 +25,27 @@ public class Barbeiro implements Runnable {
 
     @Override
     public void run() {
-        int time = rand.nextInt(11000);
-        while (barbearia.aberta && salaEspera.filaEspera.size() != 0) {
-            System.err.println("ABERTA? " + barbearia.aberta + "FILA? " + salaEspera.filaEspera.size());
 
-            salaEspera.filaEspera.remove();
-            System.err.printf("Barbeiro está cortando o cabelo no tempo %d\n", time);
-            System.err.println("O tamanho da fila de espera é" + salaEspera.filaEspera.size());
-        }
-        while (barbearia.aberta && salaEspera.filaEspera.size() == 0) {
-            System.err.println("ABERTA? " + barbearia.aberta + "FILA? " + salaEspera.filaEspera.size());
-
-            System.out.println("Barbeiro está dormindo");
-
+        while (barbearia.aberta) {
+            barbearia.lock.lock();
+            try {
+                if (salaEspera.filaEspera.size() == 0) {
+                    System.out.println("Barbeiro está dormindo");
+                    barbearia.cortar.await();
+                }
+                salaEspera.chamarCliente();
+                cortarCabelo();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Barbeiro.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                barbearia.lock.unlock();
+            }
         }
 
     }
 
+    private void cortarCabelo() {
+        int time = rand.nextInt(11000);
+        System.err.printf("Cabeleiro está cortando o cabelo do cliente por %d segundos\n", time);
+    }
 }
