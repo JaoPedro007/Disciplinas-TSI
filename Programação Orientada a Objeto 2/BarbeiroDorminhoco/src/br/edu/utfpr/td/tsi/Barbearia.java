@@ -12,18 +12,18 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author João Pedro
  */
-public class Barbearia {
+class Barbearia {
 
-    static Lock lock = new ReentrantLock();
-    static Condition cortar = lock.newCondition();
+    Lock lock = new ReentrantLock();
+    Condition pronto = lock.newCondition();
 
     static Barbearia barbearia = new Barbearia();
-    
+
     static SalaEspera salaEspera = new SalaEspera();
-    static Recepcionista recepcionista = new Recepcionista(salaEspera, barbearia);
+    static Recepcionista recepcionista = new Recepcionista(barbearia, salaEspera);
     static Barbeiro barbeiro = new Barbeiro(salaEspera, barbearia);
 
-    static Cliente cliente = new Cliente();
+    static Cliente cliente = new Cliente(barbearia, barbeiro, salaEspera);
 
     static boolean aberta = true;
 

@@ -17,6 +17,7 @@ public class Barbeiro implements Runnable {
     SalaEspera salaEspera;
     Barbearia barbearia;
     Random rand = new Random();
+    public boolean dormindo;
 
     public Barbeiro(SalaEspera salaEspera, Barbearia barbearia) {
         this.salaEspera = salaEspera;
@@ -30,11 +31,15 @@ public class Barbeiro implements Runnable {
             barbearia.lock.lock();
             try {
                 if (salaEspera.filaEspera.size() == 0) {
+                    dormindo = true;
                     System.out.println("Barbeiro está dormindo");
-                    barbearia.cortar.await();
+                    barbearia.pronto.await();
                 }
-                salaEspera.chamarCliente();
-                cortarCabelo();
+                int time = rand.nextInt(11000);
+                salaEspera.filaEspera.remove();
+                System.err.printf("Cabeleiro está cortando o cabelo do cliente por %d segundos. Tamanho da fila atual: %d\n", time, salaEspera.filaEspera.size());
+                Thread.sleep(time);
+
             } catch (InterruptedException ex) {
                 Logger.getLogger(Barbeiro.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
@@ -42,10 +47,5 @@ public class Barbeiro implements Runnable {
             }
         }
 
-    }
-
-    private void cortarCabelo() {
-        int time = rand.nextInt(11000);
-        System.err.printf("Cabeleiro está cortando o cabelo do cliente por %d segundos\n", time);
     }
 }
