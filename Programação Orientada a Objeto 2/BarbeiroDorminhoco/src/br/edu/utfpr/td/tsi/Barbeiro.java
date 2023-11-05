@@ -14,6 +14,7 @@ import java.util.logging.Logger;
  */
 public class Barbeiro implements Runnable {
 
+    Cliente cliente;
     SalaEspera salaEspera;
     Barbearia barbearia;
     Random rand = new Random();
@@ -28,21 +29,19 @@ public class Barbeiro implements Runnable {
     @Override
     public void run() {
 
-        while (barbearia.aberta) {
+        while (barbearia.aberta || salaEspera.filaEspera.size()>0) {
             barbearia.lock.lock();
             try {
-
                 if (salaEspera.filaEspera.size() == 0) {
                     dormindo = true;
                     System.out.println("Barbeiro está dormindo");
                     barbearia.pronto.await();
-
                 }
-                int time = rand.nextInt(11000);
-                salaEspera.filaEspera.remove();
+                int time = rand.nextInt(11);                
+                this.cliente = salaEspera.filaEspera.remove();
                 System.err.printf("Cabeleiro está cortando o cabelo do cliente por %d segundos. Tamanho da fila atual: %d\n", time, salaEspera.filaEspera.size());
                 Thread.sleep(time);
-
+                barbearia.pronto.signal();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Barbeiro.class.getName()).log(Level.SEVERE, null, ex);
             } finally {

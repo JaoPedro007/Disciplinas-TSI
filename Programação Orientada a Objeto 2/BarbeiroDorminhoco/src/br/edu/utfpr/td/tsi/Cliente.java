@@ -29,20 +29,33 @@ public class Cliente implements Runnable {
 
     @Override
     public void run() {
-        if (barbearia.aberta && salaEspera.filaEspera.size() > 0) {
-            barbearia.lock.lock();
-            try {
-                System.out.println("Cliente sentou na cadeira");
-                barbearia.pronto.signal();
-                System.out.println("Cliente acordou o Barbeiro");
-                
-                barbearia.pronto.await();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                barbearia.lock.unlock();
+        if (salaEspera.filaEspera.size() > 5) {
+            System.out.println("Cliente foi embora pois a fila está cheia");
+        } else {
+            while (barbearia.aberta) {
+                barbearia.lock.lock();
+                try {
+                    if (barbeiro.dormindo) {
+                        System.out.println("Cliente sentou na cadeira e acordou o Barbeiro");
+                        salaEspera.filaEspera.add(this);
+                        System.out.printf("O %s foi adicionado na fila. Tamanho da fila: %d\n", Thread.currentThread().getName(), salaEspera.filaEspera.size());
+                        barbeiro.dormindo = false;
+                        barbearia.pronto.signal();
+                    } else {
+                        salaEspera.filaEspera.add(this);
+                        System.out.printf("O %s foi adicionado na fila. Tamanho da fila: %d\n", Thread.currentThread().getName(), salaEspera.filaEspera.size());
+                        System.out.println("Cliente sentou na cadeira ");
+                        barbearia.pronto.await();
+                    }
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    barbearia.lock.unlock();
+
+                }
             }
         }
 
     }
+
 }
