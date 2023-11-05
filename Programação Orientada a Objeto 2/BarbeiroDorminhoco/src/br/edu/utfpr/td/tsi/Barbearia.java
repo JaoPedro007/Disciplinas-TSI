@@ -41,9 +41,9 @@ class Barbearia {
 
     private static void abrir() throws InterruptedException {
         aberta = true;
-        thBarbeiro.start();
-        thCliente.start();
         thRecepcionista.start();
+        thCliente.start();
+        thBarbeiro.start();
         Thread.sleep(60000);
         fechar();
     }

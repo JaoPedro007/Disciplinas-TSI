@@ -29,13 +29,13 @@ public class Cliente implements Runnable {
 
     @Override
     public void run() {
-        if (barbearia.aberta && barbeiro.dormindo) {
+        if (barbearia.aberta && salaEspera.filaEspera.size() > 0) {
             barbearia.lock.lock();
             try {
                 System.out.println("Cliente sentou na cadeira");
                 barbearia.pronto.signal();
-
                 System.out.println("Cliente acordou o Barbeiro");
+                
                 barbearia.pronto.await();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);

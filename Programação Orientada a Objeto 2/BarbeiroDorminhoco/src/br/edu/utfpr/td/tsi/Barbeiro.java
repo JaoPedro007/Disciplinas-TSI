@@ -22,6 +22,7 @@ public class Barbeiro implements Runnable {
     public Barbeiro(SalaEspera salaEspera, Barbearia barbearia) {
         this.salaEspera = salaEspera;
         this.barbearia = barbearia;
+        this.dormindo=false;
     }
 
     @Override
@@ -30,10 +31,12 @@ public class Barbeiro implements Runnable {
         while (barbearia.aberta) {
             barbearia.lock.lock();
             try {
+
                 if (salaEspera.filaEspera.size() == 0) {
                     dormindo = true;
                     System.out.println("Barbeiro está dormindo");
                     barbearia.pronto.await();
+
                 }
                 int time = rand.nextInt(11000);
                 salaEspera.filaEspera.remove();
