@@ -28,29 +28,22 @@ public class Barbeiro implements Runnable {
 
     @Override
     public void run() {
-
-        while (barbearia.aberta || salaEspera.filaEspera.size() != 0) {
-            if (salaEspera.filaEspera.size() == 0) {
+            while (barbearia.aberta || salaEspera.filaEspera.size() != 0) {
                 barbearia.lock.lock();
                 try {
-                    dormindo = true;
-                    System.out.println("Barbeiro está dormindo");
-                    barbearia.pronto.await();
+                    if (salaEspera.filaEspera.size() == 0) {
+                        dormindo = true;
+                        System.out.println("Barbeiro está dormindo");
+                        barbearia.pronto.await();
+                    } else {
+                        int time = rand.nextInt(11);
+                        this.cliente = salaEspera.filaEspera.remove();
+                        System.err.printf("Cabeleiro está cortando o cabelo do cliente por %d segundos. Tamanho da fila atual: %d\n", time, salaEspera.filaEspera.size());
+                        Thread.sleep(time);
+                        barbearia.pronto.signal();
+                    }
+
                 } catch (Exception e) {
-                } finally {
-                    barbearia.lock.unlock();
-                }
-
-            } else {
-                barbearia.lock.lock();
-                try {
-                    int time = rand.nextInt(11);
-                    this.cliente = salaEspera.filaEspera.remove();
-                    System.err.printf("Cabeleiro está cortando o cabelo do cliente por %d segundos. Tamanho da fila atual: %d\n", time, salaEspera.filaEspera.size());
-                    Thread.sleep(time);
-                    barbearia.pronto.signal();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Barbeiro.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     barbearia.lock.unlock();
                 }
@@ -58,6 +51,5 @@ public class Barbeiro implements Runnable {
             }
 
         }
-
     }
-}
+

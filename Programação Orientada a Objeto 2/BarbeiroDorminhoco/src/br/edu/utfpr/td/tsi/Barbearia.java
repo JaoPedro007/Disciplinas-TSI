@@ -44,12 +44,14 @@ class Barbearia {
         thRecepcionista.start();
         thCliente.start();
         thBarbeiro.start();
-        Thread.sleep(60000);
+        Thread.sleep(10000);
         fechar();
     }
 
     private static void fechar() throws InterruptedException {
         aberta = false;
+        thCliente.join();
+        thRecepcionista.join();
         thBarbeiro.join();
     }
 

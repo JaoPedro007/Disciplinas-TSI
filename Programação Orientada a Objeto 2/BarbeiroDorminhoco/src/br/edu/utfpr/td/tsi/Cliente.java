@@ -36,16 +36,17 @@ public class Cliente implements Runnable {
                 barbearia.lock.lock();
                 try {
                     if (barbeiro.dormindo) {
+
+                        salaEspera.filaEspera.add(this);
+                        System.out.printf("O %s foi adicionado na fila. Tamanho da fila: %d\n", Thread.currentThread().getName(), salaEspera.filaEspera.size());
+                        
                         barbeiro.dormindo = false;
                         barbearia.pronto.signal();
                         System.out.println("Cliente sentou na cadeira e acordou o Barbeiro");
-                        
-                        salaEspera.filaEspera.add(this);
-                        System.out.printf("O %s foi adicionado na fila. Tamanho da fila: %d\n", Thread.currentThread().getName(), salaEspera.filaEspera.size());
 
                     } else {
                         salaEspera.filaEspera.add(this);
-                        System.out.printf("O %s foi adicionado na fila. Tamanho da fila: %d\n", Thread.currentThread().getName(), salaEspera.filaEspera.size());
+                        System.out.printf("O %s foi adicionado na fila e está esperando. Tamanho da fila: %d\n", Thread.currentThread().getName(), salaEspera.filaEspera.size());
                     }
 
                 } finally {
