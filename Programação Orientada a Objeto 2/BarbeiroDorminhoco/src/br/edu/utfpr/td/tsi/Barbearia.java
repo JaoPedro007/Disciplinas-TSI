@@ -27,8 +27,7 @@ public class Barbearia {
     static Recepcionista recepcionista = new Recepcionista(barbearia);
     static Barbeiro barbeiro = new Barbeiro(salaEspera, barbearia);
 
-    static boolean aberta = false;
-    static boolean fechando = false;
+    static volatile boolean aberta = false;
 
     static Thread thRecepcionista = new Thread(recepcionista);
     static Thread thBarbeiro = new Thread(barbeiro);
@@ -50,10 +49,8 @@ public class Barbearia {
 
     private static void fechar() throws InterruptedException {
         aberta = false;
-        fechando=true;
         thRecepcionista.join();
         thBarbeiro.join();
-        fechando=false;
         logger.log(Level.INFO, "A barbearia está fechada");
 
     }

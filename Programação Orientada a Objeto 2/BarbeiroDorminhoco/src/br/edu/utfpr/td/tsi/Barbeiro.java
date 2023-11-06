@@ -32,10 +32,6 @@ public class Barbeiro implements Runnable {
             barbearia.lock.lock();
             try {
                 if (salaEspera.filaEspera.isEmpty()) {
-                    if (!barbearia.aberta && !barbearia.fechando) {
-                        logger.log(Level.INFO, "Barbearia foi fechada.");
-                        Thread.currentThread().interrupt();
-                    }
                     dormindo = true;
                     logger.log(Level.INFO, "Barbeiro está dormindo");
                     barbearia.pronto.await();

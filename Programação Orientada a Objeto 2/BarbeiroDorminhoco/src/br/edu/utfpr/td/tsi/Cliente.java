@@ -4,6 +4,7 @@
  */
 package br.edu.utfpr.td.tsi;
 
+import java.lang.reflect.Modifier;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +31,7 @@ public class Cliente implements Runnable {
 
     @Override
     public void run() {
-        while (barbearia.aberta) {
+        while (barbearia.aberta && !Thread.currentThread().isInterrupted()) {
             if (salaEspera.filaEspera.size() == 5) {
                 logger.log(Level.INFO, String.format("Um cliente foi embora. Não há mais espaço. Tamanho da fila: %s\n", salaEspera.filaEspera.size()));
                 Thread.currentThread().interrupt();

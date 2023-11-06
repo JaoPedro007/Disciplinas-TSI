@@ -21,23 +21,23 @@ public class Recepcionista implements Runnable {
 
     @Override
     public void run() {
-
-        while (barbearia.aberta) {
-            try {
-                int time = rand.nextInt(10) + 1;
+        while (barbearia.aberta && !Thread.currentThread().isInterrupted()) {
+            int time = rand.nextInt(10) + 1;
+            {
                 if (!barbearia.aberta) {
                     Thread.currentThread().interrupt();
                 } else {
-
                     Cliente cliente = new Cliente(barbearia, barbeiro, salaEspera);
                     Thread thCliente = new Thread(cliente);
                     thCliente.setName("Cliente");
                     thCliente.start();
-                    Thread.sleep(time);
-                }
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Recepcionista.class.getName()).log(Level.SEVERE, null, ex);
 
+                    try {
+                        Thread.sleep(time);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Recepcionista.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
         }
     }
