@@ -11,13 +11,10 @@ import java.util.logging.Logger;
 public class Recepcionista implements Runnable {
 
     Barbearia barbearia;
-    SalaEspera salaEspera = new SalaEspera();
-
     Random rand = new Random();
 
-    public Recepcionista(Barbearia barbearia, SalaEspera salaEspera) {
+    public Recepcionista(Barbearia barbearia) {
         this.barbearia = barbearia;
-        this.salaEspera = salaEspera;
     }
 
     @Override

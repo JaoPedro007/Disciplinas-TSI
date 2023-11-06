@@ -20,7 +20,7 @@ class Barbearia {
     static Barbearia barbearia = new Barbearia();
 
     static SalaEspera salaEspera = new SalaEspera();
-    static Recepcionista recepcionista = new Recepcionista(barbearia, salaEspera);
+    static Recepcionista recepcionista = new Recepcionista(barbearia);
     static Barbeiro barbeiro = new Barbeiro(salaEspera, barbearia);
 
     static Cliente cliente = new Cliente(barbearia, barbeiro, salaEspera);
@@ -51,9 +51,6 @@ class Barbearia {
     private static void fechar() throws InterruptedException {
         aberta = false;
         thBarbeiro.join();
-        thCliente.join();
-        thRecepcionista.join();
-
     }
 
     public static boolean isAberta() {
