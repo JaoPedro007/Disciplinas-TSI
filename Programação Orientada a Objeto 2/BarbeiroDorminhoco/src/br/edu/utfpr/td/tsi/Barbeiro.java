@@ -32,16 +32,17 @@ public class Barbeiro implements Runnable {
             barbearia.lock.lock();
             try {
                 if (salaEspera.filaEspera.isEmpty()) {
-                    if (!barbearia.aberta) {
+                    if (!barbearia.aberta && !barbearia.fechando) {
+                        logger.log(Level.INFO, "Barbearia foi fechada.");
                         Thread.currentThread().interrupt();
                     }
                     dormindo = true;
-                    logger.log(Level.FINE, "Barbeiro está dormindo");
+                    logger.log(Level.INFO, "Barbeiro está dormindo");
                     barbearia.pronto.await();
                 } else {
                     int time = rand.nextInt(10) + 1;
                     Cliente cliente = salaEspera.filaEspera.poll();
-                    logger.log(Level.FINE, String.format("Barbeiro está cortando o cabelo do cliente %d. Tamanho da fila atual: %d", cliente.getId(), salaEspera.filaEspera.size()));
+                    logger.log(Level.INFO, String.format("Barbeiro está cortando o cabelo do cliente %d. Tamanho da fila atual: %d", cliente.getId(), salaEspera.filaEspera.size()));
                     Thread.sleep(time);
                     barbearia.pronto.signal();
                 }

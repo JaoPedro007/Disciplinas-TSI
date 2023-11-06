@@ -25,11 +25,16 @@ public class Recepcionista implements Runnable {
         while (barbearia.aberta) {
             try {
                 int time = rand.nextInt(10) + 1;
-                Cliente cliente = new Cliente(barbearia, barbeiro, salaEspera);
-                Thread thCliente = new Thread(cliente);
-                thCliente.setName("Cliente");
-                thCliente.start();
-                Thread.sleep(time);
+                if (!barbearia.aberta) {
+                    Thread.currentThread().interrupt();
+                } else {
+
+                    Cliente cliente = new Cliente(barbearia, barbeiro, salaEspera);
+                    Thread thCliente = new Thread(cliente);
+                    thCliente.setName("Cliente");
+                    thCliente.start();
+                    Thread.sleep(time);
+                }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Recepcionista.class.getName()).log(Level.SEVERE, null, ex);
 

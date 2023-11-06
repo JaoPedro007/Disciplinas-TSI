@@ -7,12 +7,16 @@ package br.edu.utfpr.td.tsi;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author João Pedro
  */
 public class Barbearia {
+
+    private static final Logger logger = Logger.getLogger(Barbearia.class.getName());
 
     Lock lock = new ReentrantLock();
     Condition pronto = lock.newCondition();
@@ -24,6 +28,7 @@ public class Barbearia {
     static Barbeiro barbeiro = new Barbeiro(salaEspera, barbearia);
 
     static boolean aberta = false;
+    static boolean fechando = false;
 
     static Thread thRecepcionista = new Thread(recepcionista);
     static Thread thBarbeiro = new Thread(barbeiro);
@@ -45,8 +50,11 @@ public class Barbearia {
 
     private static void fechar() throws InterruptedException {
         aberta = false;
+        fechando=true;
         thRecepcionista.join();
         thBarbeiro.join();
-        
+        fechando=false;
+        logger.log(Level.INFO, "A barbearia está fechada");
+
     }
 }

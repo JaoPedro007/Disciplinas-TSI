@@ -32,7 +32,7 @@ public class Cliente implements Runnable {
     public void run() {
         while (barbearia.aberta) {
             if (salaEspera.filaEspera.size() == 5) {
-                logger.log(Level.FINE, String.format("Um cliente foi embora. Não há mais espaço. Tamanho da fila: %s\n", salaEspera.filaEspera.size()));
+                logger.log(Level.INFO, String.format("Um cliente foi embora. Não há mais espaço. Tamanho da fila: %s\n", salaEspera.filaEspera.size()));
                 Thread.currentThread().interrupt();
             } else {
                 barbearia.lock.lock();
@@ -41,18 +41,18 @@ public class Cliente implements Runnable {
                         if (salaEspera.filaEspera.size() < 5) {
                             if (!salaEspera.filaEspera.contains(this)) {
                                 salaEspera.filaEspera.add(this);
-                                logger.log(Level.FINE, String.format("O Cliente %d foi adicionado na fila. Tamanho da fila: %d\n", getId(), salaEspera.filaEspera.size()));
+                                logger.log(Level.INFO, String.format("O Cliente %d foi adicionado na fila. Tamanho da fila: %d\n", getId(), salaEspera.filaEspera.size()));
                             }
                         }
                         barbeiro.dormindo = false;
                         barbearia.pronto.signal();
-                        logger.log(Level.FINE, String.format("O Cliente %d sentou na cadeira e acordou o Barbeiro\n", getId()));
+                        logger.log(Level.INFO, String.format("O Cliente %d sentou na cadeira e acordou o Barbeiro\n", getId()));
 
                     } else {
                         if (salaEspera.filaEspera.size() < 5) {
                             if (!salaEspera.filaEspera.contains(this)) {
                                 salaEspera.filaEspera.add(this);
-                                logger.log(Level.FINE, String.format("O Cliente %d foi adicionado na fila e está esperando. Tamanho da fila: %d\n", getId(), salaEspera.filaEspera.size()));
+                                logger.log(Level.INFO, String.format("O Cliente %d foi adicionado na fila e está esperando. Tamanho da fila: %d\n", getId(), salaEspera.filaEspera.size()));
                             }
                         }
                     }
