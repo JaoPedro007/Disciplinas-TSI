@@ -36,12 +36,12 @@ public class Barbeiro implements Runnable {
                         Thread.currentThread().interrupt();
                     }
                     dormindo = true;
-                    logger.fine("Barbeiro está dormindo");
+                    logger.log(Level.FINE, "Barbeiro está dormindo");
                     barbearia.pronto.await();
                 } else {
                     int time = rand.nextInt(10) + 1;
                     Cliente cliente = salaEspera.filaEspera.poll();
-                    logger.fine(String.format("Barbeiro está cortando o cabelo do cliente %d. Tamanho da fila atual: %d", cliente.getId(), salaEspera.filaEspera.size()));
+                    logger.log(Level.FINE, String.format("Barbeiro está cortando o cabelo do cliente %d. Tamanho da fila atual: %d", cliente.getId(), salaEspera.filaEspera.size()));
                     Thread.sleep(time);
                     barbearia.pronto.signal();
                 }
