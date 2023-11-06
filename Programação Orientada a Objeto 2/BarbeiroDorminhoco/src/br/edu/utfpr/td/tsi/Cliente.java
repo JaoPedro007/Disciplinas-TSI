@@ -4,6 +4,7 @@
  */
 package br.edu.utfpr.td.tsi;
 
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,47 +14,57 @@ import java.util.logging.Logger;
  */
 public class Cliente implements Runnable {
 
+    private static AtomicLong proximoId = new AtomicLong(1);
+    private long id;
     Barbeiro barbeiro;
     Barbearia barbearia;
     SalaEspera salaEspera;
+    private static final Logger logger = Logger.getLogger(Cliente.class.getName());
 
     public Cliente(Barbearia barbearia, Barbeiro barbeiro, SalaEspera salaEspera) {
         this.barbearia = barbearia;
         this.barbeiro = barbeiro;
         this.salaEspera = salaEspera;
-    }
-
-    public Cliente() {
-
+        this.id = proximoId.getAndIncrement();
     }
 
     @Override
     public void run() {
         while (barbearia.aberta) {
-            if (salaEspera.filaEspera.size() >= 5) {
-                System.out.printf("O %s foi embora, pois não há mais espaço. Tamanho da fila: %s\n", Thread.currentThread().getName(), salaEspera.filaEspera.size());
+            if (salaEspera.filaEspera.size() == 5) {
+                logger.fine(String.format("Um cliente foi embora. Não há mais espaço. Tamanho da fila: %s\n", salaEspera.filaEspera.size()));
+                Thread.currentThread().interrupt();
             } else {
                 barbearia.lock.lock();
                 try {
                     if (barbeiro.dormindo) {
-
-                        salaEspera.filaEspera.add(this);
-                        System.out.printf("O %s foi adicionado na fila. Tamanho da fila: %d\n", Thread.currentThread().getName(), salaEspera.filaEspera.size());
-                        
+                        if (salaEspera.filaEspera.size() < 5) {
+                            if (!salaEspera.filaEspera.contains(this)) {
+                                salaEspera.filaEspera.add(this);
+                                logger.fine(String.format("O Cliente %d foi adicionado na fila. Tamanho da fila: %d\n", getId(), salaEspera.filaEspera.size()));
+                            }
+                        }
                         barbeiro.dormindo = false;
                         barbearia.pronto.signal();
-                        System.out.println("Cliente sentou na cadeira e acordou o Barbeiro");
+                        logger.fine(String.format("O Cliente %d sentou na cadeira e acordou o Barbeiro\n", getId()));
 
                     } else {
-                        salaEspera.filaEspera.add(this);
-                        System.out.printf("O %s foi adicionado na fila e está esperando. Tamanho da fila: %d\n", Thread.currentThread().getName(), salaEspera.filaEspera.size());
+                        if (salaEspera.filaEspera.size() < 5) {
+                            if (!salaEspera.filaEspera.contains(this)) {
+                                salaEspera.filaEspera.add(this);
+                                logger.fine(String.format("O Cliente %d foi adicionado na fila e está esperando. Tamanho da fila: %d\n", getId(), salaEspera.filaEspera.size()));
+                            }
+                        }
                     }
-
                 } finally {
                     barbearia.lock.unlock();
                 }
+
             }
         }
     }
 
+    public long getId() {
+        return id;
+    }
 }

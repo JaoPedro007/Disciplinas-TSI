@@ -11,7 +11,5 @@ import java.util.concurrent.ArrayBlockingQueue;
  * @author João Pedro
  */
 public class SalaEspera {
-
-    ArrayBlockingQueue<Cliente> filaEspera = new ArrayBlockingQueue<>(5);
-
+    ArrayBlockingQueue<Cliente> filaEspera = new ArrayBlockingQueue<Cliente>(5);
 }

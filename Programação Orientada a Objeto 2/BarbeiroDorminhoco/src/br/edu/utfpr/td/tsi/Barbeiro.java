@@ -14,9 +14,9 @@ import java.util.logging.Logger;
  */
 public class Barbeiro implements Runnable {
 
-    Cliente cliente;
     SalaEspera salaEspera;
     Barbearia barbearia;
+    private static final Logger logger = Logger.getLogger(Barbeiro.class.getName());
     Random rand = new Random();
     public boolean dormindo;
 
@@ -28,28 +28,31 @@ public class Barbeiro implements Runnable {
 
     @Override
     public void run() {
-            while (barbearia.aberta || salaEspera.filaEspera.size() != 0) {
-                barbearia.lock.lock();
-                try {
-                    if (salaEspera.filaEspera.size() == 0) {
-                        dormindo = true;
-                        System.out.println("Barbeiro está dormindo");
-                        barbearia.pronto.await();
-                    } else {
-                        int time = rand.nextInt(11);
-                        this.cliente = salaEspera.filaEspera.remove();
-                        System.err.printf("Cabeleiro está cortando o cabelo do cliente por %d segundos. Tamanho da fila atual: %d\n", time, salaEspera.filaEspera.size());
-                        Thread.sleep(time);
-                        barbearia.pronto.signal();
+        while (barbearia.aberta || !salaEspera.filaEspera.isEmpty()) {
+            barbearia.lock.lock();
+            try {
+                if (salaEspera.filaEspera.isEmpty()) {
+                    if (!barbearia.aberta) {
+                        Thread.currentThread().interrupt();
                     }
-
-                } catch (Exception e) {
-                } finally {
-                    barbearia.lock.unlock();
+                    dormindo = true;
+                    logger.fine("Barbeiro está dormindo");
+                    barbearia.pronto.await();
+                } else {
+                    int time = rand.nextInt(10) + 1;
+                    Cliente cliente = salaEspera.filaEspera.poll();
+                    logger.fine(String.format("Barbeiro está cortando o cabelo do cliente %d. Tamanho da fila atual: %d", cliente.getId(), salaEspera.filaEspera.size()));
+                    Thread.sleep(time);
+                    barbearia.pronto.signal();
                 }
 
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Barbeiro.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                barbearia.lock.unlock();
             }
 
         }
-    }
 
+    }
+}

@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author João Pedro
  */
-class Barbearia {
+public class Barbearia {
 
     Lock lock = new ReentrantLock();
     Condition pronto = lock.newCondition();
@@ -23,18 +23,14 @@ class Barbearia {
     static Recepcionista recepcionista = new Recepcionista(barbearia);
     static Barbeiro barbeiro = new Barbeiro(salaEspera, barbearia);
 
-    static Cliente cliente = new Cliente(barbearia, barbeiro, salaEspera);
-
-    static boolean aberta = true;
+    static boolean aberta = false;
 
     static Thread thRecepcionista = new Thread(recepcionista);
     static Thread thBarbeiro = new Thread(barbeiro);
-    static Thread thCliente = new Thread(cliente);
 
     public static void main(String[] args) throws InterruptedException {
         thRecepcionista.setName("Recepcionista");
         thBarbeiro.setName("Barbeiro");
-        thCliente.setName("Cliente");
         abrir();
 
     }
@@ -42,24 +38,15 @@ class Barbearia {
     private static void abrir() throws InterruptedException {
         aberta = true;
         thRecepcionista.start();
-        thCliente.start();
         thBarbeiro.start();
-        Thread.sleep(10000);
+        Thread.sleep(5000);
         fechar();
     }
 
     private static void fechar() throws InterruptedException {
         aberta = false;
-        thCliente.join();
         thRecepcionista.join();
         thBarbeiro.join();
-    }
-
-    public static boolean isAberta() {
-        return aberta;
-    }
-
-    public static void setAberta(boolean aberta) {
-        Barbearia.aberta = aberta;
+        
     }
 }
