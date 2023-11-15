@@ -1,0 +1,21 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(cli, "Cliente", "O cliente solicita os serviços pelo aplicativo")
+Person(pre, "Prestador de serviço", "O prestador atende os serviços solicitados")
+Person(adm, "Administrador", "Gerencia todo o sistema")
+
+System(sis, "TranSender", "Permite os clientes solicitarem serviços, prestadores atenderem, e os administradores gerenciarem")
+System_Ext(map, "Google Maps", "Gerencia toda a parte de localização")
+System_Ext(banc, "Banco", "Reponsável pelas transações bancárias")
+
+Rel(pre, sis, "Acessa")
+Rel(cli, sis, "Acessa")
+Rel(adm, sis, "Acessa")
+
+Rel(sis, map, "Utiliza")
+Rel(sis, banc, "Utiliza")
+
+@enduml
