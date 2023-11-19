@@ -11,14 +11,12 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import br.edu.utfpr.td.tsi.posto.saude.dao.EspecialidadeDAO;
 import br.edu.utfpr.td.tsi.posto.saude.dao.MedicoDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Especialidade;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Medico;
 
-@Component
 public class MysqlMedico implements MedicoDAO {
 
 	@Autowired
@@ -28,7 +26,7 @@ public class MysqlMedico implements MedicoDAO {
 	private EspecialidadeDAO especialidadeDao;
 
 	@Override
-	public Long inserir(Medico m) {
+	public void inserir(Medico m) {
 		long id = 0;
 		String sql = "insert into medico (nome, sobrenome, crm, telefone, cpf, especialidade_id) values (?, ?, ?, ?, ?, ?)";
 		try {
@@ -50,7 +48,6 @@ public class MysqlMedico implements MedicoDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Long.valueOf(id);
 	}
 
 	@Override

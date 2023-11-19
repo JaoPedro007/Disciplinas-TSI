@@ -20,7 +20,6 @@ import br.edu.utfpr.td.tsi.posto.saude.modelo.Bairro;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Endereco;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
 
-@Component
 public class MysqlEnderecoDAO implements EnderecoDAO {
 
 	@Autowired

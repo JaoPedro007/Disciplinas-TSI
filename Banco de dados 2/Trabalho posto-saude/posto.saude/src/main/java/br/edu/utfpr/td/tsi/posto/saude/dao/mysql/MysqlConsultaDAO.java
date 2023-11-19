@@ -20,14 +20,13 @@ import br.edu.utfpr.td.tsi.posto.saude.modelo.Medico;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Status;
 
-@Component
 public class MysqlConsultaDAO implements ConsultaDAO {
 
 	@Autowired
 	private DataSource dataSource;
 
 	@Override
-	public Long inserir(Consulta c) {
+	public void inserir(Consulta c) {
 		long id = 0;
 		String sql = "insert into consulta (data_consulta, paciente_id, medico_id, descricao, status) values (?, ?, ?, ?, ?)";
 		try {
@@ -48,7 +47,6 @@ public class MysqlConsultaDAO implements ConsultaDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Long.valueOf(id);
 	}
 
 	@Override

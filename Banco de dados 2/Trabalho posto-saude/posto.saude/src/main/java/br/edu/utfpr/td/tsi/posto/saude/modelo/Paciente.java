@@ -3,22 +3,36 @@ package br.edu.utfpr.td.tsi.posto.saude.modelo;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
-
+@Entity
+@Table(name = "paciente", schema = "posto-saude")
 public class Paciente {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
+	
+	@Column(nullable = false)
 	private String nome;
+	
+	@Column(nullable = false)
 	private String sobrenome;
+	
+	@Column(nullable = false)
 	private String telefone;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate data_nascimento;
-	
+	private LocalDate data_nascimento;	
   
-
-	private Endereco endereco;
-
 	public Paciente(Long id, String nome, String sobrenome, String telefone, LocalDate data_nascimento) {
 		super();
 		this.id = id;
@@ -55,13 +69,6 @@ public class Paciente {
 		this.sobrenome = sobrenome;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
 	public String getTelefone() {
 		return telefone;
 	}

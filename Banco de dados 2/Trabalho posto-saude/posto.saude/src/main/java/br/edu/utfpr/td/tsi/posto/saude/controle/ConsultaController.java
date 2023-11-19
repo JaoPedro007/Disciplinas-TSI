@@ -11,40 +11,40 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import br.edu.utfpr.td.tsi.posto.saude.dao.ConsultaDAO;
-import br.edu.utfpr.td.tsi.posto.saude.dao.MedicoDAO;
-import br.edu.utfpr.td.tsi.posto.saude.dao.PacienteDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Consulta;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Medico;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Status;
+import br.edu.utfpr.td.tsi.posto.saude.service.ConsultaServiceImpl;
+import br.edu.utfpr.td.tsi.posto.saude.service.MedicoServiceImpl;
+import br.edu.utfpr.td.tsi.posto.saude.service.PacienteServiceImpl;
 
 @Controller
 public class ConsultaController {
 	
 	@Autowired
-	private ConsultaDAO consultaDao;
+	private ConsultaServiceImpl consultaService;
 	
 	@Autowired
-	private PacienteDAO pacienteDao;
+	private MedicoServiceImpl medicoService;
 	
 	@Autowired
-	private MedicoDAO medicoDao;
+	private PacienteServiceImpl pacienteService;
 	
 	
 	@GetMapping(value = "/listarConsultas")
 	public String listar(Model model) {
-		List<Consulta> consultas = consultaDao.listarTodas();
+		List<Consulta> consultas = consultaService.listarTodas();
 		model.addAttribute("consultas", consultas);	
 		return "listarConsultas";
 	}
 
 	@GetMapping(value = "/cadastrarConsulta")
 	public String exibirPaginaConsulta(Model model) {
-		List<Paciente> pacientes = pacienteDao.listarTodos();
+		List<Paciente> pacientes = pacienteService.listarTodos();
 		model.addAttribute("pacientes", pacientes);
 		
-		List<Medico> medicos = medicoDao.listarTodos();
+		List<Medico> medicos = medicoService.listarTodos();
 		model.addAttribute( "medicos", medicos);
 		return "cadastrarConsulta";
 	}
@@ -60,12 +60,12 @@ public class ConsultaController {
 	    consulta.setPaciente(paciente);
 	    consulta.setMedico(medico);
 	    
-	    if (pacienteDao.temConsultaAgendada(paciente.getId())) {
+	    if (pacienteService.temConsultaAgendada(paciente.getId())) {
 	        model.addAttribute("error", "O paciente já possui uma consulta agendada.");
 	        return "cadastrarConsulta";
 	    } else {
 	        consulta.setStatus(Status.AGENDADA);
-	        consultaDao.inserir(consulta);
+	        consultaService.inserir(consulta);
 
 	        return "redirect:/listarConsultas";
 	    }
@@ -74,12 +74,12 @@ public class ConsultaController {
 	
 	@PostMapping("/finalizarConsulta/{consultaId}")
 	public String finalizarConsulta(@PathVariable Long consultaId, Model model) {
-	    Consulta consulta = consultaDao.procurar(consultaId);
+	    Consulta consulta = consultaService.procurar(consultaId);
 
 	    if(consulta.getStatus() == Status.AGENDADA) {
 		    consulta.setStatus(Status.REALIZADA);	  
 		    
-		    consultaDao.atualizar(consulta.getId(), consulta);
+		    consultaService.atualizar(consulta.getId(), consulta);
 		    
 		    return "redirect:/listarConsultas";
 	    }else{
@@ -91,11 +91,11 @@ public class ConsultaController {
 	
 	@PostMapping("/cancelarConsulta/{consultaId}")
 	public String cancelarConsulta(@PathVariable Long consultaId) {
-	    Consulta consulta = consultaDao.procurar(consultaId);
+	    Consulta consulta = consultaService.procurar(consultaId);
 	    
 	    if (consulta.getStatus() != Status.REALIZADA) {
 	        consulta.setStatus(Status.CANCELADA);
-	        consultaDao.atualizar(consultaId, consulta);
+	        consultaService.atualizar(consultaId, consulta);
 	    }
 
 	    
@@ -104,13 +104,13 @@ public class ConsultaController {
 	
 	@GetMapping("/editarConsulta/{id}")
 	public String exibirPaginaEdicaoConsulta(@PathVariable Long id, Model model) {
-	    Consulta consulta = consultaDao.procurar(id);
+	    Consulta consulta = consultaService.procurar(id);
 	    
 	    if(consulta.getStatus() == Status.AGENDADA) {
 		    model.addAttribute("consulta", consulta);
 		    
-		    List<Paciente> pacientes = pacienteDao.listarTodos();
-		    List<Medico> medicos = medicoDao.listarTodos();
+		    List<Paciente> pacientes = pacienteService.listarTodos();
+		    List<Medico> medicos = medicoService.listarTodos();
 		    model.addAttribute("pacientes", pacientes);
 		    model.addAttribute("medicos", medicos);
 		    return "editarConsulta"; 
@@ -124,7 +124,7 @@ public class ConsultaController {
 
 	@PostMapping("/salvarConsulta")
 	public String editarConsulta(@ModelAttribute("consulta") Consulta consulta) {
-	    consultaDao.editarConsulta(consulta.getId(), consulta);
+		consultaService.editarConsulta(consulta.getId(), consulta);
 	    return "redirect:/listarConsultas";
 	}
 

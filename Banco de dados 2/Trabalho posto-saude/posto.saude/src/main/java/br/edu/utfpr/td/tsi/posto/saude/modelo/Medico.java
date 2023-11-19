@@ -1,13 +1,40 @@
 package br.edu.utfpr.td.tsi.posto.saude.modelo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "medico", schema = "posto-saude")
 public class Medico {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
+	
+	@Column(nullable = false)
 	private String nome;
+	
+	@Column(nullable = false)
 	private String sobrenome;
+	
+	@Column(nullable = false)
 	private String crm;
+	
+	@Column(nullable = false)
 	private String telefone;
+	
+	@Column(nullable = false)
 	private String cpf;
+	
+	@OneToOne
+    @JoinColumn(name = "especialidade_id", referencedColumnName = "id")	
 	private Especialidade especialidade;
 
 	public Medico(Long id, String nome, String sobrenome, String crm, String telefone, String cpf, Especialidade especialidade) {

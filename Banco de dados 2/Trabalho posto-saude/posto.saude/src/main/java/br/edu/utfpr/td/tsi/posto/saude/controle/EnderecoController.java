@@ -10,36 +10,36 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import br.edu.utfpr.td.tsi.posto.saude.dao.BairroDAO;
-import br.edu.utfpr.td.tsi.posto.saude.dao.EnderecoDAO;
-import br.edu.utfpr.td.tsi.posto.saude.dao.PacienteDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Bairro;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Endereco;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
+import br.edu.utfpr.td.tsi.posto.saude.service.BairroServiceImpl;
+import br.edu.utfpr.td.tsi.posto.saude.service.EnderecoServiceImpl;
+import br.edu.utfpr.td.tsi.posto.saude.service.PacienteServiceImpl;
 
 @Controller
 public class EnderecoController {
 
 	@Autowired
-	EnderecoDAO enderecoDao;
+	EnderecoServiceImpl enderecoService;
 	
 	@Autowired
-	PacienteDAO pacienteDao;
-	
-	@Autowired
-	BairroDAO bairroDao;
+	BairroServiceImpl bairroService;
 
+	@Autowired
+	PacienteServiceImpl pacienteService;
+	
 	@GetMapping(value = "/listarEnderecos")
 	public String listar(Model model) {
-		List<Endereco> enderecos = enderecoDao.listarTodos();
+		List<Endereco> enderecos = enderecoService.listarTodos();
 		model.addAttribute("enderecos", enderecos);	
 		return "listarEnderecos";
 	}
 
 	@GetMapping(value = "/cadastrarEndereco")
 	public String exibirPaginaCadastro(Model model) {
-		List<Paciente> pacientes = pacienteDao.listarTodos();
-		List<Bairro> bairros = bairroDao.listarTodos();
+		List<Paciente> pacientes = pacienteService.listarTodos();
+		List<Bairro> bairros = bairroService.listarTodos();
 		model.addAttribute("pacientes", pacientes);
 		model.addAttribute( "bairros", bairros);
 		return "cadastrarEndereco";
@@ -47,15 +47,15 @@ public class EnderecoController {
 
 	@PostMapping("/cadastrarEndereco")
 	public String cadastrar(@ModelAttribute("e")Endereco endereco) {
-		enderecoDao.inserir(endereco);
+		enderecoService.inserir(endereco);
 		return "redirect:/listarEnderecos";
 	}
 	
 	@GetMapping("/editarEndereco/{id}")
 	public String exibirPaginaEdicaoEndereco(@PathVariable Long id, Model model) {
-	    List<Paciente> pacientes = pacienteDao.listarTodos();
-	    List<Bairro> bairros = bairroDao.listarTodos();
-	    Endereco endereco = enderecoDao.procurar(id);
+	    List<Paciente> pacientes = pacienteService.listarTodos();
+	    List<Bairro> bairros = bairroService.listarTodos();
+	    Endereco endereco = enderecoService.procurar(id);
 	    model.addAttribute("endereco", endereco);
 	    model.addAttribute("pacientes", pacientes);
 	    model.addAttribute("bairros", bairros);
@@ -64,13 +64,13 @@ public class EnderecoController {
 
 	@PostMapping("/salvarEndereco")
 	public String editarConsulta(@ModelAttribute("endereco") Endereco endereco) {
-		enderecoDao.atualizar(endereco.getId(), endereco);
+		enderecoService.atualizar(endereco.getId(), endereco);
 	    return "redirect:/listarEnderecos";
 	}
 	
 	@PostMapping("/removerEndereco/{id}")
 	public String remover(Endereco endereco) {
-	    enderecoDao.remover(endereco.getId());
+		enderecoService.remover(endereco.getId());
 		return "redirect:/listarEnderecos";
 	}
 

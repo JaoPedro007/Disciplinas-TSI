@@ -7,7 +7,7 @@ import br.edu.utfpr.td.tsi.posto.saude.modelo.Consulta;
 public interface ConsultaDAO {
 
 	
-	public Long inserir(Consulta c);
+	public void inserir(Consulta c);
 
 	public void atualizar(Long id, Consulta c);
 	

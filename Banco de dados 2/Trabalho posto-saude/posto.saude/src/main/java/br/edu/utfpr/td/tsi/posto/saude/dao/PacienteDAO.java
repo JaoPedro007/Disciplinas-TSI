@@ -1,12 +1,13 @@
 package br.edu.utfpr.td.tsi.posto.saude.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
 
 public interface PacienteDAO {
 
-	public Long inserir(Paciente p);
+	public void inserir(Paciente p);
 
 	public void atualizar(Long id, Paciente p);
 

@@ -2,19 +2,42 @@ package br.edu.utfpr.td.tsi.posto.saude.modelo;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 
-
+@Entity
+@Table(name = "consulta", schema = "posto-saude")
 public class Consulta {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
+
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date data_consulta;
+	
+	@OneToOne
+    @JoinColumn(name = "paciente_id", referencedColumnName = "id")
 	private Paciente paciente;
+	
+	@OneToOne
+    @JoinColumn(name = "medico_id", referencedColumnName = "id")	
 	private Medico medico;
+	
+	@Column(nullable = false)
 	private String descricao;
+	
 	private Status status;
 		
 	

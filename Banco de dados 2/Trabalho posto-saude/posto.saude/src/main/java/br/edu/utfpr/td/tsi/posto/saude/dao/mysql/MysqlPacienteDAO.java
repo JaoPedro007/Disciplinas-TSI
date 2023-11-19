@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,14 +19,14 @@ import br.edu.utfpr.td.tsi.posto.saude.dao.PacienteDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Status;
 
-@Component
+
 public class MysqlPacienteDAO implements PacienteDAO {
 
 	@Autowired
 	private DataSource dataSource;
 
 	@Override
-	public Long inserir(Paciente p) {
+	public void inserir(Paciente p) {
 		long id = 0;
 		String sql = "insert into paciente (nome, sobrenome, telefone, data_nascimento) values (?, ?, ?, ?)";
 		try {
@@ -46,7 +48,6 @@ public class MysqlPacienteDAO implements PacienteDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Long.valueOf(id);
 	}
 
 	@Override
@@ -132,7 +133,7 @@ public class MysqlPacienteDAO implements PacienteDAO {
 	            
 	            LocalDate dataNascimento = data_nascimento.toLocalDate();
 	            
-	            return new Paciente(pacienteId, nome, sobrenome, telefone, dataNascimento);
+	            return (new Paciente(pacienteId, nome, sobrenome, telefone, dataNascimento));
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();

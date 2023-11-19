@@ -6,7 +6,7 @@ import br.edu.utfpr.td.tsi.posto.saude.modelo.Medico;
 
 public interface MedicoDAO {
 
-	public Long inserir(Medico m);
+	public void inserir(Medico m);
 
 	public void atualizar(Long id, Medico m);
 

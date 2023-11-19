@@ -1,6 +1,5 @@
 package br.edu.utfpr.td.tsi.posto.saude.controle;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import br.edu.utfpr.td.tsi.posto.saude.dao.EspecialidadeDAO;
+import br.edu.utfpr.td.tsi.posto.saude.dao.repository.EspecialidadeRepository;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Especialidade;
 
 @Controller
@@ -19,9 +19,13 @@ public class EspecialidadeController {
 	@Autowired
 	EspecialidadeDAO especialidadeDAO;
 
+	@Autowired
+	EspecialidadeRepository especialidadeRepository;
+	
+	
 	@GetMapping(value = "/listarEspecialidade")
 	public String listar(Model model) {
-		List<Especialidade> especialidades= especialidadeDAO.listarTodas();
+		Iterable<Especialidade> especialidades = especialidadeRepository.findAll();
 		model.addAttribute("especialidades", especialidades);	
 		return "listarEspecialidades";
 	}

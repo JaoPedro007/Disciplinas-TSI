@@ -16,8 +16,6 @@ import org.springframework.stereotype.Component;
 import br.edu.utfpr.td.tsi.posto.saude.dao.EspecialidadeDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Especialidade;
 
-
-@Component
 public class MysqlEspecialidade implements EspecialidadeDAO{
 	@Autowired
 	private DataSource dataSource;

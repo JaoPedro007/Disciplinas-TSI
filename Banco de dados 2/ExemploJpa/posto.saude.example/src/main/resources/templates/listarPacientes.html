@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Posto de Saúde Web</title>
+</head>
+<body>
+	<h1>Pacientes cadastrados</h1>
+
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Nome</th>			
+		</tr>
+		<tr th:each="paciente : ${pacientes}">
+        <td th:text="${paciente.idPaciente}"></td>
+        <td th:text="${paciente.nome}"></td>
+        <td th:text="${paciente.endereco.logradouro}"></td>
+      </tr>
+	</table>
+</body>
+</html>
+
