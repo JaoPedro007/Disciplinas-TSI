@@ -1,0 +1,22 @@
+@startuml Transender
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(cliente, "Cliente", "O cliente solicita corridas no aplicativo")
+Person(prestador, "Prestador de serviço", "O prestador atende os serviços solicitados")
+Person(administrador, "Administrador", "Os administradores gerenciam o sistema")
+
+System(sistema, "TranSender", "Permite os clientes solicitarem serviços, os prestadores atenderem e os administradores gerenciarem")
+System_Ext(banco, "Banco", "Permite que o pagamento das corridas seja feito")
+System_Ext(maps, "Google Maps", "Fornece a localização necessária para os serviços prestados")
+
+Rel(cliente, sistema, "Usa")
+Rel(prestador, sistema, "Usa")
+Rel(administrador, sistema, "Usa")
+
+
+Rel(sistema, maps, "Utiliza a API de mapas", "HTTPS")
+Rel(sistema, banco, "Utiliza a API de pagamentos", "HTTPS")
+
+@enduml

@@ -1,0 +1,26 @@
+@startuml APIApplication
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+Container(spa, "Single Page Application", "Javascript com React", "Fornece todas as funcionalidades para os administradores através do navegador Web.")
+Container(ma, "Mobile App", "Javascript com React-Native", "Fornece funcionalidades do TranSender aos clientes e prestadores através de um dispositivo móvel.")
+Container(db, "Database", "Banco de dados Relacional", "Armazena informações de usuários, corridas, credenciais, etc.")
+System_Ext(banco, "Banco", "Permite que o pagamento das corridas seja feito")
+System_Ext(maps, "Google Maps", "Fornece a localização necessária para os serviços prestados")
+
+
+Container_Boundary(api, "API Application") {
+    Component(login, "Login Controller", "MVC Rest Controller", "Permite que os usuários façam Login no sistema")
+    Component(security, "Componente de Segurança", "Spring Bean", "Fornece funcionalidades para a troca de informações de login como as credenciais.")
+    Component(controle_pagamentos, "Controle de pagamentos", "Spring Bean", "Comunica com a API do banco para realizar as transações")
+
+    Rel(login, security, "Usa")
+    Rel(security, db, "Leitura e escrita", "JDBC")
+    Rel(controle_pagamentos, banco, "Usa", "XML/HTTPS")
+}
+
+Rel(spa, login, "Usa", "JSON/HTTPS")
+Rel(ma, login, "Usa", "JSON/HTTPS")
+
+@enduml
