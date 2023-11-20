@@ -1,0 +1,53 @@
+@startuml APIApplication
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+
+Container(api, "API Application", "Fornece funcionalidades do TranSender aos clientes, prestadores e administradores através de requisições.")
+Container(db, "Database", "Banco de dados Relacional", "Armazena informações de usuários, corridas, credenciais, etc.")
+System_Ext(banco, "Banco", "Permite que o pagamento das corridas seja feito")
+System_Ext(maps, "Google Maps", "Fornece a localização necessária para os serviços prestados")
+
+
+
+Container_Boundary(mb, "Mobile App") {
+    Component(login, "Login", "Permite que os prestadores/clientes façam login no sistema")
+
+    Component(solicitarTransporte, "Solicitar Transporte", "MVC Rest Controller", "Permite que o cliente solicite um transporte")
+    Component(cancelarTransporte, "Cancelar Transporte", "MVC Rest Controller", "Permite que o cliente cancele um transporte")
+    Component(fazerPagamento, "Fazer Pagamento", "MVC Rest Controller", "Permite que o cliente faça o pagamento de uma corrida")
+    Component(solicitarSuporte, "Solicitar Suporte", "MVC Rest Controller", "Permite que o cliente solicite suporte")
+    Component(avaliarPrestador, "Avaliar Prestador", "MVC Rest Controller", "Permite que o cliente avalie um prestador de serviço")
+
+    Component(iniciarTransporte, "Iniciar Transporte", "MVC Rest Controller", "Permite que o prestador inicie um transporte")
+    Component(cancelarTransportePrestador, "Cancelar Transporte (Prestador)", "MVC Rest Controller", "Permite que o prestador cancele um transporte")
+    Component(finalizarTransporte, "Finalizar Transporte", "MVC Rest Controller", "Permite que o prestador finalize um transporte")
+    Component(avaliarCliente, "Avaliar Cliente", "MVC Rest Controller", "Permite que o prestador avalie um cliente")
+
+
+    Rel(login, api, "Usa")
+    
+    Rel(solicitarTransporte, api, "Usa")
+    Rel(cancelarTransporte, api, "Usa")
+    Rel(fazerPagamento, api, "Usa")
+    Rel(solicitarSuporte, api, "Usa")
+    Rel(avaliarPrestador, api, "Usa")
+
+    Rel(iniciarTransporte, api, "Usa")
+    Rel(cancelarTransportePrestador, api, "Usa")
+    Rel(finalizarTransporte, api, "Usa")
+    Rel(avaliarCliente, api, "Usa")
+
+
+}
+    Rel(api, banco, "Usa")
+    Rel(api, maps, "Usa")
+    Rel(api, db, "Usa")
+
+
+
+
+
+
+@enduml

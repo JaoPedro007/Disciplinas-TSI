@@ -1,0 +1,37 @@
+@startuml APIApplication
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+
+Container(api, "API Application", "Fornece funcionalidades do TranSender aos clientes, prestadores e administradores através de requisições.")
+Container(db, "Database", "Banco de dados Relacional", "Armazena informações de usuários, corridas, credenciais, etc.")
+System_Ext(banco, "Banco", "Permite que o pagamento das corridas seja feito")
+System_Ext(maps, "Google Maps", "Fornece a localização necessária para os serviços prestados")
+
+
+
+Container_Boundary(spa, "Single Page Application") {
+    Component(login, "Login", "Permite que os administradores façam login no sistema")
+    Component(gerenciarFeedbacks, "Gerenciar Feedbacks", "MVC Rest Controller", "Permite que o administrador gerencie feedbacks dos clientes e prestadores")
+    Component(aprovarCadastros, "Aprovar Cadastros de Veículos", "MVC Rest Controller", "Permite que o administrador aprove os cadastros de veículos dos prestadores")
+    Component(rastrearPrestadores, "Rastrear Prestadores", "MVC Rest Controller", "Permite que o administrador rastreie a localização dos prestadores")
+    Component(gerarCupons, "Gerar Cupons", "MVC Rest Controller", "Permite que o administrador gere cupons para os clientes")
+
+    Rel(login, api, "Usa")
+    Rel(gerenciarFeedbacks, api, "Usa")
+    Rel(aprovarCadastros, api, "Usa")
+    Rel(rastrearPrestadores, api, "Usa")
+    Rel(gerarCupons, api, "Usa")
+
+}
+    Rel(api, banco, "Usa")
+    Rel(api, maps, "Usa")
+    Rel(api, db, "Usa")
+
+
+
+
+
+
+@enduml

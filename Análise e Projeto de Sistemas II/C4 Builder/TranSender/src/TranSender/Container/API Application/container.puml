@@ -3,6 +3,7 @@
 
 LAYOUT_WITH_LEGEND()
 
+
 Container(spa, "Single Page Application", "Javascript com React", "Fornece todas as funcionalidades para os administradores através do navegador Web.")
 Container(ma, "Mobile App", "Javascript com React-Native", "Fornece funcionalidades do TranSender aos clientes e prestadores através de um dispositivo móvel.")
 Container(db, "Database", "Banco de dados Relacional", "Armazena informações de usuários, corridas, credenciais, etc.")
@@ -10,17 +11,31 @@ System_Ext(banco, "Banco", "Permite que o pagamento das corridas seja feito")
 System_Ext(maps, "Google Maps", "Fornece a localização necessária para os serviços prestados")
 
 
-Container_Boundary(api, "API Application") {
-    Component(login, "Login Controller", "MVC Rest Controller", "Permite que os usuários façam Login no sistema")
-    Component(security, "Componente de Segurança", "Spring Bean", "Fornece funcionalidades para a troca de informações de login como as credenciais.")
-    Component(controle_pagamentos, "Controle de pagamentos", "Spring Bean", "Comunica com a API do banco para realizar as transações")
 
-    Rel(login, security, "Usa")
-    Rel(security, db, "Leitura e escrita", "JDBC")
-    Rel(controle_pagamentos, banco, "Usa", "XML/HTTPS")
+Container_Boundary(api, "API Application") {
+    Component(login, "Login Controller", "Permite que os usuários façam login no sistema e a partir do usuário será definida as funcionalidades")  
+    Component(clienteController, "Cliente Controller", "Fornece funcionalidades para clientes como Cliente solicitar transporte, Cancelar transporte, Fazer pagamento, Solicitar suporte, Cliente avaliar prestador", "JSON/HTTPS")
+    Component(prestadorController, "Prestador Controller", "Fornece funcionalidades para prestadores como Iniciar transporte, Cancelar transporte, Finalizar transporte, Avaliar cliente", "JSON/HTTPS")
+    Component(adminController, "Administrador Controller", "Fornece funcionalidades para administradores como Gerenciar feedbacks, Aprovar cadastros de veículos, Rastrear prestadores, Gerar cupons ", "JSON/HTTPS")
+
+          
+    Rel(login, db, "Usa")
+    Rel(login, adminController, "Usa")
+    Rel(login, clienteController, "Usa")
+    Rel(login, prestadorController, "Usa")
+
+    Rel(clienteController, db, "Usa", "JDBC")
+    Rel(prestadorController, db, "Usa", "JDBC")
+    Rel(adminController, db, "Usa", "JDBC")
 }
+
+Rel(clienteController, maps, "Usa")
+Rel(clienteController, banco, "Usa")
+Rel(prestadorController, maps, "Usa")
+Rel(prestadorController, banco, "Usa")
+Rel(adminController, maps, "Usa")
+Rel(adminController, banco, "Usa")
 
 Rel(spa, login, "Usa", "JSON/HTTPS")
 Rel(ma, login, "Usa", "JSON/HTTPS")
-
 @enduml

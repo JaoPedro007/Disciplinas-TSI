@@ -11,7 +11,6 @@ System_Ext(banco, "Banco", "Permite que o pagamento das corridas seja feito")
 System_Ext(maps, "Google Maps", "Fornece a localização necessária para os serviços prestados")
 
 System_Boundary(sistema, "TranSender") {
-    Container(wa, "Web Application", "Java e Spring MVC", "Entrega o conteúdo estático e o aplicativo de página única do Transender.")    
     Container(spa, "Single Page Application", "Javascript com React", "Fornece todas as funcionalidades do TranSender aos administradores por meio de seu navegador.")
     Container(ma, "Mobile App", "Javascript com React-Native", "Fornece funcionalidades do TranSender aos clientes e prestadores através de um dispositivo móvel.")
     Container(db, "Database", "Banco de dados relacional", "Armazena informações de usuários, corridas, credenciais, etc.")
@@ -21,13 +20,12 @@ System_Boundary(sistema, "TranSender") {
     Rel(api, banco, "Tem comunicação", "JSON/HTTPS")
     Rel(api, db, "Leitura e escrita", "JDBC")
 
-    Rel(wa, spa, "Envia")
     Rel(spa, api, "Usa", "JSON/HTTPS")
     Rel(ma, api, "Usa", "JSON/HTTPS")
 }
 
 Rel(cliente, ma, "Usa")
 Rel(prestador, ma, "Usa")
-Rel(administrador, wa, "Usa", "HTTPS")
+Rel(administrador, spa, "Usa", "HTTPS")
 
 @enduml

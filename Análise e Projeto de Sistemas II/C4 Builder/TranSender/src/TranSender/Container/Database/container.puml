@@ -1,0 +1,29 @@
+@startuml APIApplication
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+
+Container(api, "API Application", "Fornece funcionalidades do TranSender aos clientes, prestadores e administradores através de requisições.")
+System_Ext(banco, "Banco", "Permite que o pagamento das corridas seja feito")
+System_Ext(maps, "Google Maps", "Fornece a localização necessária para os serviços prestados")
+
+
+
+Container_Boundary(db, "Database") {
+
+    Component(Armazenar, "Armazenar informações", "JDBC", "Armazena várias informações do sistema, corridas, veículos, prestadores, clientes, pagamentos etc.")
+
+    Rel(Armazenar, api, "Usa")
+
+}
+    Rel(api, banco, "Usa")
+    Rel(api, maps, "Usa")
+    Rel(api, db, "Usa")
+
+
+
+
+
+
+@enduml
