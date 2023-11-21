@@ -10,8 +10,7 @@ import br.edu.utfpr.td.tsi.posto.saude.dao.repository.ConsultaRepository;
 import br.edu.utfpr.td.tsi.posto.saude.dao.repository.MedicoRepository;
 import br.edu.utfpr.td.tsi.posto.saude.dao.repository.PacienteRepository;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Consulta;
-import br.edu.utfpr.td.tsi.posto.saude.modelo.Medico;
-import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
+import br.edu.utfpr.td.tsi.posto.saude.modelo.Status;
 
 public class JPAConsultaDao implements ConsultaDAO {
 	
@@ -26,14 +25,7 @@ public class JPAConsultaDao implements ConsultaDAO {
 
 	@Override
 	public void inserir(Consulta c) {
-		
-	    Paciente pacientePersistente = pacienteRepository.findById(c.getPaciente().getId()).orElse(null);
-	    Medico medicoPersistente = medicoRepository.findById(c.getMedico().getId()).orElse(null);
-	    
-	    if (pacientePersistente!=null && medicoPersistente!=null) {
-	        c.setPaciente(pacientePersistente);
-	        c.setMedico(medicoPersistente);
-	    }
+		c.setStatus(Status.AGENDADA);
 		consultaRepository.save(c);
 	}
 
@@ -81,5 +73,12 @@ public class JPAConsultaDao implements ConsultaDAO {
         }
 
 	}
+
+	@Override
+	public boolean temConsultaAgendada(Long pacienteId) {
+        int count = consultaRepository.countConsultasAgendadas(pacienteId, Status.AGENDADA);
+        return count > 0;
+	}
+
 
 }

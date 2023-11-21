@@ -20,6 +20,7 @@ import br.edu.utfpr.td.tsi.posto.saude.modelo.Medico;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Status;
 
+
 public class MysqlConsultaDAO implements ConsultaDAO {
 
 	@Autowired
@@ -174,6 +175,12 @@ public class MysqlConsultaDAO implements ConsultaDAO {
 	        e.printStackTrace();
 	    }
 	    return consulta;
+	}
+
+	@Override
+	public boolean temConsultaAgendada(Long pacienteId) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

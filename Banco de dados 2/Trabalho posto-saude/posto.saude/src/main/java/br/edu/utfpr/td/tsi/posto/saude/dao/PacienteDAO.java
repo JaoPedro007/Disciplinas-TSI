@@ -1,7 +1,6 @@
 package br.edu.utfpr.td.tsi.posto.saude.dao;
 
 import java.util.List;
-import java.util.Optional;
 
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
 

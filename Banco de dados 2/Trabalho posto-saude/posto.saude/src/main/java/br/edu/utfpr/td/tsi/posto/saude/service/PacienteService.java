@@ -17,6 +17,6 @@ public interface PacienteService {
 	
 	public Paciente procurar(Long id);
 	
-	public boolean temConsultaAgendada(Long pacienteId);
-
+	public boolean dataCorreta(Paciente p);
+	
 }

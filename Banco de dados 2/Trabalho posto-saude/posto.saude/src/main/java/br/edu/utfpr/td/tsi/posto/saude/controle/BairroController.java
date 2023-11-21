@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import br.edu.utfpr.td.tsi.posto.saude.dao.BairroDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Bairro;
+import br.edu.utfpr.td.tsi.posto.saude.service.BairroServiceImpl;
 
 @Controller
 public class BairroController {
 
 	@Autowired
-	BairroDAO bairroDAO;
+	BairroServiceImpl bairroService;
 
 	@GetMapping(value = "/listarbairros")
 	public String listar(Model model) {
-		List<Bairro> bairros = bairroDAO.listarTodos();
+		List<Bairro> bairros = bairroService.listarTodos();
 		model.addAttribute("bairros", bairros);	
 		return "listarBairros";
 	}
@@ -32,27 +32,27 @@ public class BairroController {
 
 	@PostMapping("/cadastrarBairro")
 	public String cadastrar(Bairro bairro) {
-		bairroDAO.inserir(bairro);
+		bairroService.inserir(bairro);
 		return "redirect:/listarbairros";
 	}
 	
 	@GetMapping("/editarBairro/{id}")
 	public String editarBairro(@PathVariable Long id, Model model) {
-	    Bairro bairro = bairroDAO.procurar(id);
+	    Bairro bairro = bairroService.procurar(id);
 	    model.addAttribute("bairro", bairro);
 	    return "editarBairro";
 	}
 
 	@PostMapping("/salvarBairro")
 	public String salvar(Bairro b) {
-	    bairroDAO.atualizar(b.getId(), b);
+		bairroService.atualizar(b.getId(), b);
 		return "redirect:/listarbairros";
 	}
 	
 	
 	@PostMapping("/removerBairro/{id}")
 	public String remover(Bairro b) {
-	    bairroDAO.remover(b.getId());
+		bairroService.remover(b.getId());
 		return "redirect:/listarbairros";
 	}
 

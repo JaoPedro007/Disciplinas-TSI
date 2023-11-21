@@ -11,11 +11,13 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import br.edu.utfpr.td.tsi.posto.saude.dao.EspecialidadeDAO;
 import br.edu.utfpr.td.tsi.posto.saude.dao.MedicoDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Especialidade;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Medico;
+
 
 public class MysqlMedico implements MedicoDAO {
 

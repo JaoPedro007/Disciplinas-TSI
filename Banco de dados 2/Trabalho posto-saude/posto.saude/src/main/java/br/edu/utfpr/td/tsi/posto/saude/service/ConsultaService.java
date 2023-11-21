@@ -17,4 +17,8 @@ public interface ConsultaService {
 	public List<Consulta> listarTodas();
 	
 	public Consulta procurar(Long id);
+	
+	public boolean temConsultaAgendada(Long pacienteId);
+	
+	public boolean dataCorreta(Consulta c);
 }

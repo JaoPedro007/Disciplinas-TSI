@@ -1,5 +1,7 @@
 package br.edu.utfpr.td.tsi.posto.saude.service;
 
+import java.time.LocalDate;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,6 @@ public class PacienteServiceImpl implements PacienteService {
 	@Override
 	public void inserir(Paciente p) {
 		jpaPacienteDao.inserir(p);
-
 	}
 
 	@Override
@@ -40,10 +41,16 @@ public class PacienteServiceImpl implements PacienteService {
 	public Paciente procurar(Long id) {
 		return jpaPacienteDao.procurar(id);
 	}
-
+	
 	@Override
-	public boolean temConsultaAgendada(Long pacienteId) {
-		return jpaPacienteDao.temConsultaAgendada(pacienteId);
+	public boolean dataCorreta(Paciente p) {		
+		if(p.getData_nascimento().isAfter(LocalDate.now())) {
+			return false;
+		}else {
+			return true;
+		}			
+		
 	}
+	
 
 }

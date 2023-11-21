@@ -1,12 +1,11 @@
 package br.edu.utfpr.td.tsi.posto.saude.controle;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -32,9 +31,14 @@ public class PacienteController {
 	}
 
 	@PostMapping("/cadastrarPaciente")
-	public String cadastrar(Paciente p) {
-		pacienteService.inserir(p);
-		return "redirect:/listarPacientes";
+	public String cadastrar(@ModelAttribute("e") Paciente p, Model model) {			
+		if(!pacienteService.dataCorreta(p)) {
+			model.addAttribute("error", "Não foi possível cadastrar. A data de nascimento deve ser anterior a data atual");
+			return "cadastrarPaciente";
+		}else {
+			pacienteService.inserir(p);
+			return "redirect:/listarPacientes";
+		}
 	}
 
 	@GetMapping("/editarPaciente/{id}")
@@ -45,9 +49,15 @@ public class PacienteController {
 	}
 
 	@PostMapping("/salvarPaciente")
-	public String salvar(Paciente p) {
-	    pacienteService.atualizar(p.getId(), p);
-		return "redirect:/listarPacientes";
+	public String salvar(@ModelAttribute("e") Paciente p, Model model) {		
+		if(!pacienteService.dataCorreta(p)) {
+			model.addAttribute("error", "Não foi possível editar. A data de nascimento deve ser anterior a data atual");
+			return "cadastrarPaciente";
+		}else {
+		    pacienteService.atualizar(p.getId(), p);
+			return "redirect:/listarPacientes";
+		}
+		
 	}
 	
 	

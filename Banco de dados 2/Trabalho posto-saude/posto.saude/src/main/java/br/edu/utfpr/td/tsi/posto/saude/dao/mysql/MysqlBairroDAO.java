@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import br.edu.utfpr.td.tsi.posto.saude.dao.BairroDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Bairro;
 
+
 public class MysqlBairroDAO implements BairroDAO {
 	
 	@Autowired

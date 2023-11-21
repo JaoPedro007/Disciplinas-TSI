@@ -36,8 +36,8 @@ public class Barbearia {
         thRecepcionista.setName("Recepcionista");
         thBarbeiro.setName("Barbeiro");
         abrir();
-
     }
+
 
     private static void abrir() throws InterruptedException {
         aberta = true;
