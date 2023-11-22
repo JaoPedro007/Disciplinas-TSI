@@ -2,8 +2,10 @@ package br.edu.utfpr.td.tsi.posto.saude.modelo;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,11 +29,11 @@ public class Consulta {
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date data_consulta;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id", referencedColumnName = "id")
 	private Paciente paciente;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "medico_id", referencedColumnName = "id")	
 	private Medico medico;
 	

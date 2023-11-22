@@ -56,7 +56,7 @@ public class ConsultaController {
 			return "cadastrarConsulta";
 		}
 		if(!consultaService.dataCorreta(consulta)) {
-			model.addAttribute("error", "Não foi possível cadastrar a consulta. Data da consulta deve ser maior do que a data atual");
+			model.addAttribute("error", "Não foi possível cadastrar a consulta. Data da consulta deve ser posterior a data atual");
 			return "cadastrarConsulta";
 		}
 		else {
