@@ -1,1 +1,1 @@
-O arquivo .jar deve ser executado na mesma pasta que o arquivo ApplicationContext
+O arquivo .jar deve ser executado na mesma pasta que o arquivo ApplicationContext e application.properties
