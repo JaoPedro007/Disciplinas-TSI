@@ -7,7 +7,10 @@ package br.edu.utfpr.td.tsi;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,25 +21,33 @@ import java.util.logging.Logger;
 public class Participante implements Runnable {
 
     static final Logger logger = Logger.getLogger(Participante.class.getName());
-
+    private List<Participante> participantes;
     private Socket socket;
+    private PrintWriter out;
 
-    public Participante(Socket socket) {
+    public Participante(Socket socket, List<Participante> participantes) {
         this.socket = socket;
+        this.participantes = participantes;
+
+        try {
+            this.out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Erro ao criar PrintWriter: {0}", e.getMessage());
+        }
     }
 
     @Override
     public void run() {
-
         logger.log(Level.INFO, "Conectado: {0}", socket);
         try {
             Scanner in = new Scanner(socket.getInputStream());
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
             while (in.hasNextLine()) {
-                out.println(in.nextLine().toUpperCase());
+                String mensagem = in.nextLine();
+                ServicoMensagem servico = new ServicoMensagem(mensagem, participantes);
+                ExecutorService fofoqueiro = Executors.newFixedThreadPool(1);
+                fofoqueiro.execute(servico);
             }
-
         } catch (IOException ex) {
             logger.log(Level.SEVERE, "Erro: {0}", socket);
         } finally {
@@ -46,7 +57,15 @@ public class Participante implements Runnable {
                 logger.log(Level.SEVERE, "Não foi possível fechar a conexão do Socket {0}", ex.getMessage());
             }
             logger.log(Level.INFO, "Socket fechado: {0}", socket);
-
         }
     }
+
+    public void enviarMensagemParaTodos(String mensagem) {
+        for (Participante participante : participantes) {
+            if (participante != this) {
+                out.println(mensagem.toUpperCase());
+            }
+        }
+    }
+
 }

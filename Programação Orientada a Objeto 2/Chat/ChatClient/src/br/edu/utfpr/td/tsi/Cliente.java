@@ -39,6 +39,7 @@ public class Cliente {
                         new java.util.Date(), apelido, in.nextLine());
 
                 System.out.println(mensagem);
+                System.out.flush();
             }
         } catch (ConnectException ex) {
             logger.log(Level.SEVERE, "Nao foi possivel se conectar ao servidor. Exception é: {0} ", ex.getMessage());
