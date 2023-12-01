@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://www.netbeans.org/ns/project/1">
-    <type>org.netbeans.modules.j2ee.ejbjarproject</type>
+    <type>org.netbeans.modules.java.j2seproject</type>
     <configuration>
-<<<<<<<< HEAD:Programação Orientada a Objeto 2/Chat/Chat/nbproject/project.xml
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
-            <name>ChatServer</name>
-========
-        <data xmlns="http://www.netbeans.org/ns/j2ee-ejbjarproject/3">
-            <name>Mecanica-ejb</name>
-            <minimum-ant-version>1.6.5</minimum-ant-version>
+            <name>Chat</name>
             <explicit-platform explicit-source-supported="true"/>
->>>>>>>> 04f53e8fa63755934452e951dd89ddba78e120b0:Sítios Web 4/Prova3/Mecanica/Mecanica-ejb/nbproject/project.xml
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>

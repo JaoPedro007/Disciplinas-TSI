@@ -24,13 +24,17 @@ public class Participante implements Runnable {
     private List<Participante> participantes;
     private Socket socket;
     private PrintWriter out;
-
+    private ExecutorService fofoqueiro;
+    private String apelido;
+    
     public Participante(Socket socket, List<Participante> participantes) {
         this.socket = socket;
         this.participantes = participantes;
 
         try {
             this.out = new PrintWriter(socket.getOutputStream(), true);
+            this.fofoqueiro = Executors.newFixedThreadPool(1);
+
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Erro ao criar PrintWriter: {0}", e.getMessage());
         }
@@ -41,11 +45,11 @@ public class Participante implements Runnable {
         logger.log(Level.INFO, "Conectado: {0}", socket);
         try {
             Scanner in = new Scanner(socket.getInputStream());
+            apelido = in.nextLine();
 
             while (in.hasNextLine()) {
                 String mensagem = in.nextLine();
-                ServicoMensagem servico = new ServicoMensagem(mensagem, participantes);
-                ExecutorService fofoqueiro = Executors.newFixedThreadPool(1);
+                ServicoMensagem servico = new ServicoMensagem(mensagem, participantes, apelido);
                 fofoqueiro.execute(servico);
             }
         } catch (IOException ex) {
@@ -57,14 +61,14 @@ public class Participante implements Runnable {
                 logger.log(Level.SEVERE, "Não foi possível fechar a conexão do Socket {0}", ex.getMessage());
             }
             logger.log(Level.INFO, "Socket fechado: {0}", socket);
+            fofoqueiro.shutdown();
         }
     }
 
     public void enviarMensagemParaTodos(String mensagem) {
         for (Participante participante : participantes) {
-            if (participante != this) {
-                out.println(mensagem.toUpperCase());
-            }
+            out.println(mensagem.toUpperCase());
+
         }
     }
 
