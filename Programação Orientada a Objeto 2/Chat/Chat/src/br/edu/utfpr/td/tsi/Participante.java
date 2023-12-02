@@ -10,7 +10,6 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,23 +20,16 @@ import java.util.logging.Logger;
 public class Participante implements Runnable {
 
     static final Logger logger = Logger.getLogger(Participante.class.getName());
-    private List<Participante> participantes;
-    private Socket socket;
-    private PrintWriter out;
-    private ExecutorService fofoqueiro;
+    private final List<Participante> participantes;
+    private final Socket socket;
+    private final ExecutorService fofoqueiro;
     private String apelido;
-    
-    public Participante(Socket socket, List<Participante> participantes) {
+
+    public Participante(Socket socket, List<Participante> participantes, ExecutorService fofoqueiro) {
         this.socket = socket;
         this.participantes = participantes;
+        this.fofoqueiro = fofoqueiro;
 
-        try {
-            this.out = new PrintWriter(socket.getOutputStream(), true);
-            this.fofoqueiro = Executors.newFixedThreadPool(1);
-
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Erro ao criar PrintWriter: {0}", e.getMessage());
-        }
     }
 
     @Override
@@ -49,8 +41,12 @@ public class Participante implements Runnable {
 
             while (in.hasNextLine()) {
                 String mensagem = in.nextLine();
-                ServicoMensagem servico = new ServicoMensagem(mensagem, participantes, apelido);
-                fofoqueiro.execute(servico);
+
+                if ("##sair##".equals(mensagem)) {
+                    break;
+                }
+                fofoqueiro.execute(new ServicoMensagem(mensagem, participantes, apelido));
+
             }
         } catch (IOException ex) {
             logger.log(Level.SEVERE, "Erro: {0}", socket);
@@ -61,14 +57,16 @@ public class Participante implements Runnable {
                 logger.log(Level.SEVERE, "Não foi possível fechar a conexão do Socket {0}", ex.getMessage());
             }
             logger.log(Level.INFO, "Socket fechado: {0}", socket);
-            fofoqueiro.shutdown();
         }
     }
 
-    public void enviarMensagemParaTodos(String mensagem) {
-        for (Participante participante : participantes) {
-            out.println(mensagem.toUpperCase());
-
+    public void enviarMensagem(String mensagem) {
+        try {
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            out.println(mensagem);
+        } catch (IOException ex) {
+            logger.log(Level.SEVERE, "Erro ao enviar mensagem para {0}: {1}",
+                    new Object[]{apelido, ex.getMessage()});
         }
     }
 

@@ -20,17 +20,18 @@ import java.util.logging.Logger;
 public class Servidor {
 
     public static void main(String[] args) {
-        Logger logger = Logger.getLogger(Servidor.class.getName());
+        Logger log = Logger.getLogger(Servidor.class.getName());
 
         try (ServerSocket listener = new ServerSocket(50123)) {
-            logger.log(Level.INFO, "Servidor executando...");
+            log.info("Servidor executando...");
 
             List<Participante> participantes = new ArrayList<>();
-            ExecutorService fofoqueiro = Executors.newFixedThreadPool(20);
+            ExecutorService executorService = Executors.newFixedThreadPool(20);
+            ExecutorService fofoqueiro = Executors.newFixedThreadPool(1);
             while (true) {
-                Participante participante = new Participante(listener.accept(), participantes);
+                Participante participante = new Participante(listener.accept(), participantes, fofoqueiro);
                 participantes.add(participante);
-                fofoqueiro.execute(participante);
+                executorService.execute(participante);
             }
 
         } catch (IOException ex) {
