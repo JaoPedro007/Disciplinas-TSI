@@ -6,8 +6,7 @@ package br.edu.utfpr.td.tsi;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -19,13 +18,14 @@ import java.util.logging.Logger;
  */
 public class Servidor {
 
+    static final Logger log = Logger.getLogger(Servidor.class.getName());
+
     public static void main(String[] args) {
-        Logger log = Logger.getLogger(Servidor.class.getName());
 
         try (ServerSocket listener = new ServerSocket(50123)) {
             log.info("Servidor executando...");
 
-            List<Participante> participantes = new ArrayList<>();
+            ConcurrentLinkedQueue<Participante> participantes = new ConcurrentLinkedQueue<>();
             ExecutorService executorService = Executors.newFixedThreadPool(20);
             ExecutorService fofoqueiro = Executors.newFixedThreadPool(1);
             while (true) {

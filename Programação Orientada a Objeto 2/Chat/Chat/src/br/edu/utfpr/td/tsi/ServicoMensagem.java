@@ -4,7 +4,11 @@
  */
 package br.edu.utfpr.td.tsi;
 
-import java.util.List;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -14,35 +18,37 @@ import java.util.logging.Level;
  */
 public class ServicoMensagem implements Runnable {
 
-    private String apelido;
-    private String texto;
-    private List<Participante> participantes;
-    static final Logger logger = Logger.getLogger(ServicoMensagem.class.getName());
+    private final String apelido;
+    private final String texto;
+    private final ConcurrentLinkedQueue<Participante> participantes;
 
-    public ServicoMensagem(String texto, List<Participante> participantes, String apelido) {
+    static final Logger log = Logger.getLogger(ServicoMensagem.class.getName());
+
+    public ServicoMensagem(String texto, ConcurrentLinkedQueue<Participante> participantes, String apelido) {
         this.texto = texto;
         this.participantes = participantes;
         this.apelido = apelido;
+        log.setLevel(Level.FINE);
     }
 
     @Override
     public void run() {
+
         for (Participante participante : participantes) {
             try {
-                // Adicionando sincronização para garantir acesso seguro à lista de participantes
-                synchronized (participante) {
-                    // Enviando a mensagem para o participante
-                    participante.enviarMensagem(formatarMensagem());
-                }
-            } catch (Exception e) {
-                logger.log(Level.SEVERE, "Erro ao enviar mensagem: {0}",
-                        new Object[]{e.getMessage()});
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                String dataFormatada = dateFormat.format(new Date());
+                String mensagemFormatada = String.format("%s (%s) - %s", dataFormatada, apelido, texto.toUpperCase());
+
+                PrintWriter out = new PrintWriter(participante.getSocket().getOutputStream(), true);
+                out.println(mensagemFormatada);
+                log.log(Level.FINE, mensagemFormatada);
+               
+
+            } catch (IOException e) {
+                log.log(Level.SEVERE, "Erro ao enviar mensagem: {0}", e);
             }
         }
     }
 
-    private String formatarMensagem() {
-        return String.format("%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS FINE %2$s - %3$s",
-                System.currentTimeMillis(), apelido, texto);
-    }
 }

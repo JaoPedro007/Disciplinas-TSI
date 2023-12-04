@@ -20,6 +20,8 @@ public class Cliente {
     static final Logger log = Logger.getLogger(Cliente.class.getName());
 
     public static void main(String[] args) throws Exception {
+        log.setLevel(Level.FINE);
+
         if (args.length != 2) {
             log.info("Passe o endereço IP do servidor e seu apelido");
             return;
@@ -38,16 +40,15 @@ public class Cliente {
                 while (scanner.hasNextLine()) {
                     out.println(scanner.nextLine());
                     String mensagemRecebida = in.nextLine();
-
                     log.info(mensagemRecebida);
                 }
 
             } catch (Exception e) {
-                log.severe("Voce escolheu sair");
+                log.warning("Voce escolheu sair");
             }
 
         } catch (ConnectException ex) {
-            log.log(Level.SEVERE, "Nao foi possivel se conectar ao servidor. Exception é: {0} ", ex.getMessage());
+            log.log(Level.SEVERE, "Nao foi possivel se conectar ao servidor: {0} ", ex.getMessage());
         }
 
     }
